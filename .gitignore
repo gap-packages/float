@@ -1,4 +1,6 @@
 Makefile
-bin
+bin/*
+sandbox
+extern/lib*
 config.log
 cnf/autom4te.cache

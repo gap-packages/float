@@ -1,3 +1,4 @@
 Makefile
 bin
 config.log
+cnf/autom4te.cache

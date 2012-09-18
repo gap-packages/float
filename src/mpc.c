@@ -405,6 +405,7 @@ static Obj STRING_MPC(Obj self, Obj f, Obj digits)
     c[slen++] = '+';
   slen += PRINT_MPFR(c+slen, 0, n, GET_MPC(f)->im, GMP_RNDN);
   c[slen++] = 'i';
+  c[slen] = 0;
   SET_LEN_STRING(str, slen);
   SHRINK_STRING(str);
 

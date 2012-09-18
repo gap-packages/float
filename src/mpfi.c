@@ -496,6 +496,7 @@ static Obj STRING_MPFI(Obj self, Obj f, Obj digits)
   c[slen++] = ',';
   slen += PRINT_MPFR(c+slen, 0, n, &MPFI_OBJ(f)->right, GMP_RNDU);
   c[slen++] = ']';
+  c[slen] = 0;
   SET_LEN_STRING(str, slen);
   SHRINK_STRING(str);
 

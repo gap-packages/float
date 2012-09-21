@@ -517,6 +517,13 @@ static Obj VIEWSTRING_MPFI(Obj self, Obj f, Obj digits)
   if (mpfi_is_empty(GET_MPFI(f)))
     return FLOAT_EMPTYSET_STRING;
 
+  if (mpfr_inf_p(&MPFI_OBJ(f)->left) || mpfr_inf_p(&MPFI_OBJ(f)->right)) {
+    if (mpfr_sgn(&MPFI_OBJ(f)->left) > 0) /* should be better handled... */
+      return FLOAT_INFINITY_STRING;
+    else
+      return FLOAT_NINFINITY_STRING;
+  }
+
   Obj g = NEW_MPFR(prec);
   mpfi_mid (MPFR_OBJ(g), GET_MPFI(f));
 

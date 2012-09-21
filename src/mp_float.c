@@ -30,6 +30,7 @@ static const char *Revision_mp_float_c =
 #include "mp_float.h"
 
 Obj FLOAT_INFINITY_STRING, /* pretty strings */
+  FLOAT_NINFINITY_STRING,
   FLOAT_EMPTYSET_STRING,
   FLOAT_REAL_STRING,
   FLOAT_I_STRING;
@@ -131,6 +132,7 @@ static void free_func (void *p, size_t s)
 static Int InitKernel (StructInitInfo *module)
 {
   ImportGVarFromLibrary("FLOAT_INFINITY_STRING", &FLOAT_INFINITY_STRING);
+  ImportGVarFromLibrary("FLOAT_NINFINITY_STRING", &FLOAT_NINFINITY_STRING);
   ImportGVarFromLibrary("FLOAT_EMPTYSET_STRING", &FLOAT_EMPTYSET_STRING);
   ImportGVarFromLibrary("FLOAT_REAL_STRING", &FLOAT_REAL_STRING);
   ImportGVarFromLibrary("FLOAT_I_STRING", &FLOAT_I_STRING);

@@ -31,6 +31,7 @@ mpz_ptr mpz_MPZ (Obj obj);
 			 "You can return an integer to continue");
 
 extern Obj FLOAT_INFINITY_STRING,
+  FLOAT_NINFINITY_STRING,
   FLOAT_EMPTYSET_STRING,
   FLOAT_REAL_STRING,
   FLOAT_I_STRING;

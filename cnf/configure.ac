@@ -33,7 +33,7 @@ fi
 AC_ARG_VAR([GAPDIR], [Location of the GAP root directory, e.g. ../..])
 
 if test -z "$GAPDIR"; then
-    for dir in ../.. /Applications/gap4r5; do
+    for dir in ../.. /Applications/gap4r5 /usr/local/src/gap /usr/local/gap; do
         if test -f $dir/sysinfo.gap; then
             GAPDIR=$dir
             break
@@ -71,7 +71,7 @@ if test "$XTARGET" != "$GAParch_system"; then
 fi
 AC_SUBST(TARGET)
 
-echo checking gap executable ... "$GAPPROG"
+echo checking gap executable... "$GAPPROG"
 
 if ! test -e "$GAPPROG"; then
     AC_ERROR([Could not find GAP executable $GAPPROG])
@@ -87,48 +87,53 @@ if ! test -e "$GAC"; then
 fi
 AC_SUBST(GAC)
 
+GACFLAGS=""
+DLL_TARGET="\$(LOCALBIN)"
+LIB_TARGET=""
+EXTERN="\$(CURDIR)/bin/$TARGET/extern"
+
 ################################################################
 # gmp configuration
 
-GMPDIR="$GAPDIR/bin/$TARGET/extern/gmp"
-GMPINCLUDE=""
-GMPLIB=""
+eval `grep '^GMP_[[A-Z]]*=' "$GAPDIR/bin/$TARGET/config.log"`
 
 AC_ARG_WITH(gmp,
- [  --with-gmp=<location>|yes|no|gap
+ [  --with-gmp=<location>
     Location at which the GMP library, needed for MPFR, was installed.
-    If the argument is omitted, the library is assumed to be reachable
-    under the standard search path (/usr, /usr/local,...).  Otherwise
-    you must give the <path> to the directory which contains the
-    library. The special value "gap", which is the default, asks MPFR
-    to use the version of gmp included in the GAP distribution.
+    If the argument is omitted, then MPFR will use the version of gmp
+    included in the GAP distribution.
  ],
- [if test "$withval" != gap; then GMPDIR="$withval"; fi]
+ [GMP_CFLAGS="-I$withval/include"; GMP_LDFLAGS="-L$withval/lib"; GMP_LIBS="-lgmp"]
 )
 
 AC_ARG_WITH(gmp-include,
  [  --with-gmp-include=<location>
     Location at which the GMP include files were installed.],
- [GMPINCLUDE="$withval"]
+ [GMP_CFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(gmp-lib,
  [  --with-gmp-lib=<location>
     Location at which the GMP library files were installed.],
- [GMPLIB="$withval"]
+ [GMP_LDFLAGS="-L$withval"; GMP_LIBS="-lgmp"]
 )
 
-if test "$GMPDIR" != yes; then
-if test "$GMPINCLUDE" == ""; then GMPINCLUDE="$GMPDIR/include"; fi
-if test "$GMPLIB" == ""; then GMPLIB="$GMPDIR/lib"; fi
+# check gmp presence
+CPPFLAGS="$CPPFLAGS $GMP_CFLAGS"
+GACFLAGS="$GACFLAGS -p $GMP_CFLAGS"
+AC_CHECK_HEADER(gmp.h,[],[AC_MSG_ERROR([library gmp not found. Specify its location using --with-gmp])],[])
+
+MP_FLOAT_LIB=""
+# buggy darwin doesn't chain the dll requirements to gmp; we include it again
+if test "$GMP_LDFLAGS" != ""; then
+   MP_FLOAT_LIB="$MP_FLOAT_LIB -L $GMP_LDFLAGS -L -Wl,-rpath,`echo $GMP_LDFLAGS | cut -c3-`"
 fi
+MP_FLOAT_LIB="$MP_FLOAT_LIB -L $GMP_LIBS"
 
 ################################################################
 # mpfr configuration
 
-EXTERN="\$(CURDIR)/bin/$TARGET/extern"
-
-MPFRDIR="$EXTERN"
+MPFRDIR="yes"
 MPFRINCLUDE=""
 MPFRLIB=""
 
@@ -138,10 +143,10 @@ AC_ARG_WITH(mpfr,
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern", which is the default, asks Float
+    library. The special value "extern" asks Float
     to compile a version of mpfr in the subdirectory extern/.
  ],
- [if test "$withval" != extern; then MPFRDIR="$withval"; fi]
+ [MPFRDIR="$withval"]
 )
 
 AC_ARG_WITH(mpfr-include,
@@ -156,17 +161,39 @@ AC_ARG_WITH(mpfr-lib,
  [MPFRLIB="$withval"]
 )
 
-if test "$MPFRDIR" != yes; then
-if test "$MPFRINCLUDE" == ""; then MPFRINCLUDE="$MPFRDIR/include"; fi
-if test "$MPFRLIB" == ""; then MPFRLIB="$MPFRDIR/lib"; fi
+if test "$MPFRDIR" != no; then
+
+MP_FLOAT_O="\$(LOCALBIN)/mp_float.o"
+DLL_TARGET="$DLL_TARGET \$(LOCALBIN)/mp_float.so"
+
+# check mpfr presence
+if test "$MPFRDIR" = extern; then
+    LIB_TARGET="$LIB_TARGET mpfrlib"
+else
+    if test "$MPFRDIR" != yes; then
+        if test "$MPFRINCLUDE" = ""; then MPFRINCLUDE="$MPFRDIR/include"; fi
+    	if test "$MPFRLIB" = ""; then MPFRLIB="$MPFRDIR/lib"; fi
+	CPPFLAGS="$CPPFLAGS -I$MPFRINCLUDE"
+	GACFLAGS="$GACFLAGS -p -I$MPFRINCLUDE"
+    fi
+    AC_CHECK_HEADER(mpfr.h,[],[AC_MSG_ERROR([library mpfr not found. Specify its location, or disable it using --without-mpfr])])
+fi
+GACFLAGS="$GACFLAGS -p -DWITH_MPFR"
+
+if test "$MPFRLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPFRLIB -L -Wl,-rpath,$MPFRLIB"; fi
+MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpfr"
+MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpfr.o"
+
 fi
 
 ################################################################
 # mpfi configuration
 
-if test "MPFRDIR" != no; then
+if test "MPFRDIR" = no; then
+    MPFIDIR="no"
+else
 
-MPFIDIR="$EXTERN"
+MPFIDIR="yes"
 MPFIINCLUDE=""
 MPFILIB=""
 
@@ -176,10 +203,10 @@ AC_ARG_WITH(mpfi,
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern", which is the default, asks Float
-    to compile a version of mpfi in the subdirectory extern/.
+    library. The special value "extern" asks Float to compile a version
+    of mpfi in the subdirectory extern/.
  ],
- [if test "$withval" != extern; then MPFIDIR="$withval"; fi]
+ [MPFIDIR="$withval"]
 )
 
 AC_ARG_WITH(mpfi-include,
@@ -194,9 +221,26 @@ AC_ARG_WITH(mpfi-lib,
  [MPFILIB="$withval"]
 )
 
-if test "$MPFIDIR" != yes; then
-if test "$MPFIINCLUDE" == ""; then MPFIINCLUDE="$MPFIDIR/include"; fi
-if test "$MPFILIB" == ""; then MPFILIB="$MPFIDIR/lib"; fi
+if test "$MPFIDIR" != no; then
+
+# check mpfi presence
+if test "$MPFIDIR" = extern; then
+    LIB_TARGET="$LIB_TARGET mpfilib"
+else
+    if test "$MPFIDIR" != yes; then
+        if test "$MPFIINCLUDE" = ""; then MPFIINCLUDE="$MPFIDIR/include"; fi
+	if test "$MPFILIB" = ""; then MPFILIB="$MPFIDIR/lib"; fi
+	CPPFLAGS="$CPPFLAGS -I$MPFIINCLUDE"
+	GACFLAGS="$GACFLAGS -p -I$MPFIINCLUDE"
+    fi
+    AC_CHECK_HEADER(mpfi.h,[],[AC_MSG_ERROR([library mpfi not found. Specify its location, or disable it using --without-mpfi])],[#include <mpfr.h>])
+fi
+GACFLAGS="$GACFLAGS -p -DWITH_MPFI"
+
+if test "$MPFILIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPFILIB -L -Wl,-rpath,$MPFILIB"; fi
+MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpfi"
+MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpfi.o"
+
 fi
 
 fi
@@ -204,9 +248,11 @@ fi
 ################################################################
 # mpc configuration
 
-if test "$MPFRDIR" != no; then
+if test "$MPFRDIR" = no; then
+    MPCDIR="no"
+else
 
-MPCDIR="$EXTERN"
+MPCDIR="yes"
 MPCINCLUDE=""
 MPCLIB=""
 
@@ -216,10 +262,10 @@ AC_ARG_WITH(mpc,
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern", which is the default, asks Float
-    to compile a version of mpc in the subdirectory extern/.
+    library. The special value "extern" asks Float to compile a version
+    of mpc in the subdirectory extern/.
  ],
- [if test "$withval" != extern; then MPCDIR="$withval"; fi]
+ [MPCDIR="$withval"]
 )
 
 AC_ARG_WITH(mpc-include,
@@ -234,9 +280,26 @@ AC_ARG_WITH(mpc-lib,
  [MPCLIB="$withval"]
 )
 
-if test "$MPCDIR" != yes; then
-if test "$MPCINCLUDE" == ""; then MPCINCLUDE="$MPCDIR/include"; fi
-if test "$MPCLIB" == ""; then MPCLIB="$MPCDIR/lib"; fi
+if test "$MPCDIR" != no; then
+
+# check mpc presence
+if test "$MPCDIR" = extern; then
+    LIB_TARGET="$LIB_TARGET mpclib"
+else
+    if test "$MPCDIR" != yes; then
+        if test "$MPCINCLUDE" = ""; then MPCINCLUDE="$MPCDIR/include"; fi
+	if test "$MPCLIB" = ""; then MPCLIB="$MPCDIR/lib"; fi
+	CPPFLAGS="$CPPFLAGS -I$MPCINCLUDE"
+	GACFLAGS="$GACFLAGS -p -I$MPCINCLUDE"
+    fi
+    AC_CHECK_HEADER(mpc.h,[],[AC_MSG_ERROR([library mpc not found. Specify its location, or disable it using --without-mpc])],[#include <mpfr.h>])
+fi
+GACFLAGS="$GACFLAGS -p -DWITH_MPC"
+
+if test "$MPCLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPCLIB -L -Wl,-rpath,$MPCLIB"; fi
+MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpc"
+MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpc.o \$(LOCALBIN)/mp_poly.o"
+
 fi
 
 fi
@@ -244,9 +307,11 @@ fi
 ################################################################
 # fplll configuration
 
-if test "$MPFRDIR" != no; then
+if test "$MPFRDIR" = no; then
+    FPLLLDIR="no"
+else
 
-FPLLLDIR="$EXTERN"
+FPLLLDIR="yes"
 FPLLLINCLUDE=""
 FPLLLLIB=""
 
@@ -256,10 +321,10 @@ AC_ARG_WITH(fplll,
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern", which is the default, asks Float
-    to compile a version of fplll in the subdirectory extern/.
+    library. The special value "extern" asks Float to compile a version
+    of fplll in the subdirectory extern/.
  ],
- [if test "$withval" != extern; then FPLLLDIR="$withval"; fi]
+ [FPLLLDIR="$withval"]
 )
 
 AC_ARG_WITH(fplll-include,
@@ -274,9 +339,26 @@ AC_ARG_WITH(fplll-lib,
  [FPLLLLIB="$withval"]
 )
 
-if test "$FPLLLDIR" != yes; then
-if test "$FPLLLINCLUDE" == ""; then FPLLLINCLUDE="$FPLLLDIR/include"; fi
-if test "$FPLLLLIB" == ""; then FPLLLLIB="$FPLLLDIR/lib"; fi
+if test "$FPLLLDIR" != no; then
+
+# check fplll presence
+if test "$FPLLLDIR" = extern; then
+    LIB_TARGET="$LIB_TARGET fpllllib"
+else
+    if test "$FPLLLDIR" != yes; then
+        if test "$FPLLLINCLUDE" = ""; then FPLLLINCLUDE="$FPLLLDIR/include"; fi
+	if test "$FPLLLLIB" = ""; then FPLLLLIB="$FPLLLDIR/lib"; fi
+	CPPFLAGS="$CPPFLAGS -I$FPLLLINCLUDE"
+	GACFLAGS="$GACFLAGS -p -I$FPLLLINCLUDE"
+    fi
+    AC_LANG([C++])
+    AC_CHECK_HEADER(fplll.h,[],[AC_MSG_ERROR([library fplll not found. Specify its location, or disable it using --without-fplll])],[#include <mpfr.h>])
+fi
+GACFLAGS="$GACFLAGS -p -DWITH_FPLLL"
+
+if test "$FPLLLLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$FPLLLLIB -L -Wl,-rpath,$FPLLLLIB"; fi
+    MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lfplll"
+    MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/fplll.o"
 fi
 
 fi
@@ -284,7 +366,7 @@ fi
 ################################################################
 # cxsc configuration
 
-CXSCDIR="$EXTERN"
+CXSCDIR="yes"
 CXSCINCLUDE=""
 CXSCLIB=""
 
@@ -297,7 +379,7 @@ AC_ARG_WITH(cxsc,
     library. The special value "extern", which is the default, asks Float
     to compile a version of cxsc in the subdirectory extern/.
  ],
- [if test "$withval" != extern; then CXSCDIR="$withval"; fi]
+ [CXSCDIR="$withval"]
 )
 
 AC_ARG_WITH(cxsc-include,
@@ -312,149 +394,46 @@ AC_ARG_WITH(cxsc-lib,
  [CXSCLIB="$withval"]
 )
 
-if test "$CXSCDIR" != yes; then
-if test "$CXSCINCLUDE" == ""; then CXSCINCLUDE="$CXSCDIR/include"; fi
-if test "$CXSCLIB" == ""; then CXSCLIB="$CXSCDIR/lib"; fi
+if test "$CXSCDIR" != no; then
+
+# check cxsc presence
+
+if test "$CXSCDIR" = "$EXTERN"; then
+    LIB_TARGET="$LIB_TARGET cxsclib"
+else
+    if test "$CXSCDIR" != yes; then
+        if test "$CXSCINCLUDE" = ""; then CXSCINCLUDE="$CXSCDIR/include"; fi
+	if test "$CXSCLIB" = ""; then CXSCLIB="$CXSCDIR/lib"; fi
+        CPPFLAGS="$CPPFLAGS -I$CXSCINCLUDE"
+	GACFLAGS="$GACFLAGS -p -I$CXSCINCLUDE"
+    fi
+    AC_LANG([C++])
+    AC_CHECK_HEADER(interval.hpp,[],[AC_MSG_ERROR([library cxsc not found. Specify its location, or disable using --without-cxsc])],[])
+fi
+GACFLAGS="$GACFLAGS -p -DWITH_CXSC"
+DLL_TARGET="$DLL_TARGET \$(LOCALBIN)/cxsc_float.so"
+CXSC_FLOAT_O="\$(LOCALBIN)/cxsc_float.o \$(LOCALBIN)/cxsc_poly.o"
+CXSC_FLOAT_LIB=""
+if test "$CXSCLIB" != ""; then CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -L$CXSCLIB -L -Wl,-rpath,$CXSCLIB"; fi
+CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -lcxsc"
+
 fi
 
 ################################################################
-# make target mpfr
+# generate files
 
-echo using GMP directory... $GMPDIR
 echo using MPFR directory... $MPFRDIR
 echo using MPFI directory... $MPFIDIR
 echo using MPC directory... $MPCDIR
 echo using FPLLL directory... $FPLLLDIR
 echo using CXSC directory... $CXSCDIR
 
-GACFLAGS=""
-DLL_TARGET="\$(LOCALBIN)"
-LIB_TARGET=""
-
-if test "$MPFRDIR" != no; then
-
-MP_FLOAT_LIB=""
-MP_FLOAT_O="\$(LOCALBIN)/mp_float.o"
-DLL_TARGET="$DLL_TARGET \$(LOCALBIN)/mp_float.so"
-
-# check gmp presence
-if test "$GMPINCLUDE" != ""; then
-   CPPFLAGS="$CPPFLAGS -I$GMPINCLUDE"
-   GACFLAGS="$GACFLAGS -p -I$GMPINCLUDE"
-fi
-AC_CHECK_HEADER(gmp.h,[],[AC_MSG_ERROR([library gmp not found. Specify its location using --with-gmp])],[])
-
-# buggy darwin doesn't chain the dll requirements to gmp; we include it again
-if test "$GMPLIB" != ""; then
-   MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$GMPLIB -L -Wl,-rpath,$GMPLIB"
-fi
-MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lgmp"
-
-# check mpfr presence
-if test "$MPFRINCLUDE" != ""; then
-   CPPFLAGS="$CPPFLAGS -I$MPFRINCLUDE"
-   GACFLAGS="$GACFLAGS -p -I$MPFRINCLUDE"
-fi
-if test "$MPFRDIR" == "$EXTERN"; then
-   LIB_TARGET="$LIB_TARGET mpfrlib"
-else
-   AC_CHECK_HEADER(mpfr.h,[],[AC_MSG_ERROR([library mpfr not found. Specify its location, or disable it using --without-mpfr])],[])
-fi
-GACFLAGS="$GACFLAGS -p -DWITH_MPFR"
-if test "$MPFRLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPFRLIB -L -Wl,-rpath,$MPFRLIB"; fi
-MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpfr"
-MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpfr.o"
-
-# check mpfi presence
-if test "$MPFIDIR" != no; then
-   if test "$MPFIINCLUDE" != ""; then
-      CPPFLAGS="$CPPFLAGS -I$MPFIINCLUDE"
-      GACFLAGS="$GACFLAGS -p -I$MPFIINCLUDE"
-   fi
-   if test "$MPFIDIR" == "$EXTERN"; then
-      LIB_TARGET="$LIB_TARGET mpfilib"
-   else
-      AC_CHECK_HEADER(mpfi.h,[],[AC_MSG_ERROR([library mpfi not found. Specify its location, or disable it using --without-mpfi])],[#include <mpfr.h>])
-   fi
-   GACFLAGS="$GACFLAGS -p -DWITH_MPFI"
-   if test "$MPFILIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPFILIB -L -Wl,-rpath,$MPFILIB"; fi
-   MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpfi"
-   MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpfi.o"
-fi
-
-# check mpc presence
-if test "$MPCDIR" != no; then
-   if test "$MPCINCLUDE" != ""; then
-      CPPFLAGS="$CPPFLAGS -I$MPCINCLUDE"
-      GACFLAGS="$GACFLAGS -p -I$MPCINCLUDE"
-   fi
-   if test "$MPCDIR" == "$EXTERN"; then
-      LIB_TARGET="$LIB_TARGET mpclib"
-   else
-      AC_CHECK_HEADER(mpc.h,[],[AC_MSG_ERROR([library mpc not found. Specify its location, or disable it using --without-mpc])],[#include <mpfr.h>])
-   fi
-   GACFLAGS="$GACFLAGS -p -DWITH_MPC"
-   if test "$MPCLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$MPCLIB -L -Wl,-rpath,$MPCLIB"; fi
-   MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lmpc"
-   MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/mpc.o \$(LOCALBIN)/mp_poly.o"
-fi
-
-# check fplll presence
-if test "$FPLLLDIR" != no; then
-   if test "$FPLLLINCLUDE" != ""; then
-      CPPFLAGS="$CPPFLAGS -I$FPLLLINCLUDE"
-      GACFLAGS="$GACFLAGS -p -I$FPLLLINCLUDE"
-   fi
-   if test "$FPLLLDIR" == "$EXTERN"; then
-      LIB_TARGET="$LIB_TARGET fpllllib"
-   else
-      AC_CHECK_HEADER(fplll.h,[],[AC_MSG_ERROR([library fplll not found. Specify its location, or disable it using --without-fplll])],[#include <mpfr.h>])
-   fi
-   GACFLAGS="$GACFLAGS -p -DWITH_FPLLL"
-   if test "$FPLLLLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$FPLLLLIB -L -Wl,-rpath,$FPLLLLIB"; fi
-   MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lfplll"
-   MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/fplll.o"
-fi
-
-fi
-
-################################################################
-# make target cxsc
-
-if test "$CXSCDIR" != no; then
-   CXSC_FLOAT_LIB=""
-   CXSC_FLOAT_O=""
-
-   if test "$CXSCINCLUDE" != ""; then
-      CPPFLAGS="$CPPFLAGS -I$CXSCINCLUDE"
-      GACFLAGS="$GACFLAGS -p -I$CXSCINCLUDE"
-   fi
-   if test "$CXSCDIR" == "$EXTERN"; then
-      LIB_TARGET="$LIB_TARGET cxsclib"
-   else
-      AC_LANG([C++])
-      AC_CHECK_HEADER(interval.hpp,[],[AC_MSG_ERROR([library cxsc not found. Specify its location, or disable using --without-cxsc])],[])
-   fi
-   GACFLAGS="$GACFLAGS -p -DWITH_CXSC"
-   DLL_TARGET="$DLL_TARGET \$(LOCALBIN)/cxsc_float.so"
-   CXSC_FLOAT_O="\$(LOCALBIN)/cxsc_float.o \$(LOCALBIN)/cxsc_poly.o"
-   if test "$CXSCLIB" != ""; then CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -L$CXSCLIB -L -Wl,-rpath,$CXSCLIB"; fi
-   if echo "$TARGET" | grep -qi darwin; then # buggy darwin, can't include dll
-      CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L $CXSCLIB/libcxsc.a"
-   else
-      CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -lcxsc"
-   fi
-fi
-
-################################################################
-# generate files
-
 WITHGMP=""
 INCLGMP=""
 LINKGMP=""
 if test "$GMPINCLUDE" != ""; then
    WITHGMP="$WITHGMP --with-gmp-include=$GMPINCLUDE"
-   INCLGMP="-I$GMPINCLUDE"
+   INCLGMP="$GMP_CFLAGS"
 fi
 if test "$GMPLIB" != ""; then
    WITHGMP="$WITHGMP --with-gmp-lib=$GMPLIB"
@@ -473,7 +452,7 @@ if test "$MPFRLIB" != ""; then
 fi
 
 # prevent parallel make on mpfr, mpc, mpfi before mpfr is compiled
-if test "$MPFRDIR" == "$EXTERN"; then MPFRDEPEND=mpfrlib; fi
+if test "$MPFRDIR" = extern; then MPFRDEPEND=mpfrlib; fi
 
 AC_SUBST(GAC)
 AC_SUBST(GAP)

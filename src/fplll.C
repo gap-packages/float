@@ -82,6 +82,19 @@ template <> void SET_Z(Integer &s, const Z_NR<mpz_t> &t)
   s = t;
 }
 
+// in principle, the following 2 methods are not needed. However, mac's llvm-g++ requires them.
+#ifdef __APPLE__
+void SET_Z(Integer &s, const Z_NR<double> &t)
+{
+  s = t.getData();
+}
+
+void SET_Z(Integer &s, const Z_NR<long> &t)
+{
+  s = t.getData();
+}
+#endif
+
 template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
 {
   if (!IS_PLIST(gapmat)) return INTOBJ_INT(-1);
@@ -216,7 +229,7 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
   return gapmat;
 }
 
-extern "C" Obj FPLLL (Obj self, Obj gapmat, Obj intType, Obj lllargs, Obj svpargs)
+static Obj FPLLL (Obj self, Obj gapmat, Obj intType, Obj lllargs, Obj svpargs)
 {
   if (intType == Fail) intType = INTOBJ_INT(0);
   if (!IS_INTOBJ(intType)) return INTOBJ_INT(-2);

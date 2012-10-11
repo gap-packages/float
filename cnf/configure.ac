@@ -30,6 +30,16 @@ if test $ns_cv_cc__nostackprotector = yes; then
      CFLAGS="$CFLAGS -fno-stack-protector"
 fi
 
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([float.h stdlib.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+
+################################################################
+# check for GAP
 AC_ARG_VAR([GAPDIR], [Location of the GAP root directory, e.g. ../..])
 
 if test -z "$GAPDIR"; then
@@ -176,7 +186,7 @@ else
 	CPPFLAGS="$CPPFLAGS -I$MPFRINCLUDE"
 	GACFLAGS="$GACFLAGS -p -I$MPFRINCLUDE"
     fi
-    AC_CHECK_HEADER(mpfr.h,[],[AC_MSG_ERROR([library mpfr not found. Specify its location, or disable it using --without-mpfr])])
+    AC_CHECK_HEADER(mpfr.h,[],[AC_MSG_ERROR([library mpfr not found. Specify its location, "extern" or disable it using --without-mpfr])])
 fi
 GACFLAGS="$GACFLAGS -p -DWITH_MPFR"
 
@@ -233,7 +243,7 @@ else
 	CPPFLAGS="$CPPFLAGS -I$MPFIINCLUDE"
 	GACFLAGS="$GACFLAGS -p -I$MPFIINCLUDE"
     fi
-    AC_CHECK_HEADER(mpfi.h,[],[AC_MSG_ERROR([library mpfi not found. Specify its location, or disable it using --without-mpfi])],[#include <mpfr.h>])
+    AC_CHECK_HEADER(mpfi.h,[],[AC_MSG_ERROR([library mpfi not found. Specify its location, "extern" or disable it using --without-mpfi])],[#include <mpfr.h>])
 fi
 GACFLAGS="$GACFLAGS -p -DWITH_MPFI"
 
@@ -292,7 +302,7 @@ else
 	CPPFLAGS="$CPPFLAGS -I$MPCINCLUDE"
 	GACFLAGS="$GACFLAGS -p -I$MPCINCLUDE"
     fi
-    AC_CHECK_HEADER(mpc.h,[],[AC_MSG_ERROR([library mpc not found. Specify its location, or disable it using --without-mpc])],[#include <mpfr.h>])
+    AC_CHECK_HEADER(mpc.h,[],[AC_MSG_ERROR([library mpc not found. Specify its location, "extern" or disable it using --without-mpc])],[#include <mpfr.h>])
 fi
 GACFLAGS="$GACFLAGS -p -DWITH_MPC"
 
@@ -352,13 +362,14 @@ else
 	GACFLAGS="$GACFLAGS -p -I$FPLLLINCLUDE"
     fi
     AC_LANG([C++])
-    AC_CHECK_HEADER(fplll.h,[],[AC_MSG_ERROR([library fplll not found. Specify its location, or disable it using --without-fplll])],[#include <mpfr.h>])
+    AC_CHECK_HEADER(fplll.h,[],[AC_MSG_ERROR([library fplll not found. Specify its location, "extern", or disable it using --without-fplll])],[#include <mpfr.h>])
 fi
 GACFLAGS="$GACFLAGS -p -DWITH_FPLLL"
 
 if test "$FPLLLLIB" != ""; then MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$FPLLLLIB -L -Wl,-rpath,$FPLLLLIB"; fi
-    MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lfplll"
-    MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/fplll.o"
+MP_FLOAT_LIB="$MP_FLOAT_LIB -L -lfplll"
+MP_FLOAT_O="$MP_FLOAT_O \$(LOCALBIN)/fplll.o"
+
 fi
 
 fi
@@ -376,8 +387,8 @@ AC_ARG_WITH(cxsc,
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern", which is the default, asks Float
-    to compile a version of cxsc in the subdirectory extern/.
+    library. The special value "extern" asks Float to compile a version
+    of cxsc in the subdirectory extern/.
  ],
  [CXSCDIR="$withval"]
 )
@@ -398,7 +409,7 @@ if test "$CXSCDIR" != no; then
 
 # check cxsc presence
 
-if test "$CXSCDIR" = "$EXTERN"; then
+if test "$CXSCDIR" = extern; then
     LIB_TARGET="$LIB_TARGET cxsclib"
 else
     if test "$CXSCDIR" != yes; then
@@ -408,7 +419,7 @@ else
 	GACFLAGS="$GACFLAGS -p -I$CXSCINCLUDE"
     fi
     AC_LANG([C++])
-    AC_CHECK_HEADER(interval.hpp,[],[AC_MSG_ERROR([library cxsc not found. Specify its location, or disable using --without-cxsc])],[])
+    AC_CHECK_HEADER(interval.hpp,[],[AC_MSG_ERROR([library cxsc not found. Specify its location, "extern" or disable using --without-cxsc])],[])
 fi
 GACFLAGS="$GACFLAGS -p -DWITH_CXSC"
 DLL_TARGET="$DLL_TARGET \$(LOCALBIN)/cxsc_float.so"
@@ -453,6 +464,16 @@ fi
 
 # prevent parallel make on mpfr, mpc, mpfi before mpfr is compiled
 if test "$MPFRDIR" = extern; then MPFRDEPEND=mpfrlib; fi
+
+if test "$MPFRDIR" = extern -o "$MPFIDIR" = extern -o "$MPCDIR" = extern -o "$FPLLLDIR" = extern; then
+    GACFLAGS="$GACFLAGS -p -I$EXTERN/include"
+    MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$EXTERN/lib -Wl,-rpath,$EXTERN/lib"
+fi
+
+if test "$CXSCDIR" = extern; then
+    GACFLAGS="$GACFLAGS -p -I$EXTERN/include"
+    CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -L$EXTERN/lib -Wl,-rpath,$EXTERN/lib"
+fi
 
 AC_SUBST(GAC)
 AC_SUBST(GAP)

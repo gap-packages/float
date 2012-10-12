@@ -467,12 +467,12 @@ if test "$MPFRDIR" = extern; then MPFRDEPEND=mpfrlib; fi
 
 if test "$MPFRDIR" = extern -o "$MPFIDIR" = extern -o "$MPCDIR" = extern -o "$FPLLLDIR" = extern; then
     GACFLAGS="$GACFLAGS -p -I$EXTERN/include"
-    MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$EXTERN/lib -Wl,-rpath,$EXTERN/lib"
+    MP_FLOAT_LIB="$MP_FLOAT_LIB -L -L$EXTERN/lib -L -Wl,-rpath,$EXTERN/lib"
 fi
 
 if test "$CXSCDIR" = extern; then
     GACFLAGS="$GACFLAGS -p -I$EXTERN/include"
-    CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -L$EXTERN/lib -Wl,-rpath,$EXTERN/lib"
+    CXSC_FLOAT_LIB="$CXSC_FLOAT_LIB -L -L$EXTERN/lib -L -Wl,-rpath,$EXTERN/lib"
 fi
 
 AC_SUBST(GAC)

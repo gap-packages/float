@@ -4,3 +4,4 @@ sandbox
 extern/lib*
 config.log
 cnf/autom4te.cache
+myconfigure

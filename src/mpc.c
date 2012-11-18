@@ -2,17 +2,12 @@
 **
 *W  mpc.c                       GAP source                  Laurent Bartholdi
 **
-*H  @(#)$Id$
-**
-*Y  Copyright (C) 2008 Laurent Bartholdi
+*Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
 **  This file contains the functions for the float package.
 **  complex floats are implemented using the MPC package.
 */
-const char * Revision_mpc_c =
-   "@(#)$Id$";
-
-#include <string.h>
+#include "floatconfig.h"
 #include <stdio.h>
 #include <gmp.h>
 
@@ -24,7 +19,7 @@ const char * Revision_mpc_c =
 #include "src/bool.h"
 #include "src/string.h"
 #include "src/plist.h"
-#include "mp_float.h"
+#include "floattypes.h"
 
 /****************************************************************
  * mpc's are stored as follows:

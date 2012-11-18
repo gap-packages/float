@@ -1,26 +1,38 @@
 /****************************************************************************
 **
-*W  cxsc_float.C                    GAP source              Laurent Bartholdi
+*W  cxsc.C                       GAP source                 Laurent Bartholdi
 **
-*H  @(#)$Id$
+*Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
-*Y  Copyright (C) 2008 Laurent Bartholdi
-**
-**  This file contains the main dll of the CXSC float package.
+**  This file contains the implementation of the CXSC float package.
 */
-static const char *Revision_cxsc_float_c =
-   "@(#)$Id$";
-
-#define BANNER_CXSC_FLOAT_H
+#include "floatconfig.h"
 
 #include <gmp.h>
 
 extern "C" {
-#include "src/compiled.h"
+#include "src/system.h"
 #include "src/macfloat.h"
+#include "src/objects.h"
+#include "src/gasman.h"
+#include "src/gap.h"
+#include "src/bool.h"
+#include "src/plist.h"
+#include "src/string.h"
+#include "src/gmpints.h"
+#include "src/calls.h"
+#include "src/opers.h"
 }
 #undef ZERO // clashes with ZERO in cxsc
-#include "cxsc_float.h"
+#include "except.hpp"
+#include "real.hpp"
+#include "complex.hpp"
+#include "interval.hpp"
+#include "cinterval.hpp"
+extern "C"
+{
+#include "floattypes.h"
+}
 #undef ZERO // make sure we use neither
 
 #include "cpoly.hpp"
@@ -597,6 +609,7 @@ static Obj ABS_CXSC_RI (Obj self, Obj f)
   return OBJ_RI(cxsc::abs(RI_OBJ(f)));
 }
 
+#define MAXDEGREE 1000
 #pragma GCC diagnostic ignored "-Wuninitialized"
 static Obj ROOTPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapintervals)
 {
@@ -604,7 +617,10 @@ static Obj ROOTPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapintervals)
   bool intervals = false, real = true, complex = false;
 
   CPolynomial poly(degree);
-  cxsc::complex coeffs[degree+1], roots[degree];
+  cxsc::complex coeffs[MAXDEGREE+1], roots[MAXDEGREE];
+
+  if (degree > MAXDEGREE)
+    return Fail;
 
   for (int i = 0; i <= degree; i++) {
     Obj c = ELM_PLIST(gapcoeffs,i+1);
@@ -630,7 +646,7 @@ static Obj ROOTPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapintervals)
   Obj result = NEW_PLIST(T_PLIST, degree);
   SET_LEN_PLIST(result, degree);
   if (intervals) {
-    cxsc::cinterval iroots[numroots];
+    cxsc::cinterval iroots[MAXDEGREE];
 
     for (int i = 0; i < numroots; i++) {
       CIPolynomial rp(degree);
@@ -638,7 +654,8 @@ static Obj ROOTPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapintervals)
       CPolyZero(poly,roots[i],rp,iroots[i],error);
       if (error) {
 	iroots[i] = roots[i];
-	Pr("#W CPOLYZERO failed to find enclosure for root %d; returning approximate root\n",i+1,0);
+	//!!! fix! call Info(InfoFloat,...)
+	printf("#W CPOLYZERO failed to find enclosure for root %d; returning approximate root\n",i+1);
       }
     }
 
@@ -1348,10 +1365,8 @@ void cxsc_terminate (void)
   ErrorQuit("cxsc::terminate: I'll be back!", 0,0);
 }
 
-/****************************************************************
- * initialize package
- ****************************************************************/
-static Int InitKernel (StructInitInfo *module)
+extern "C" {
+int InitCXSCKernel (void)
 {
   InitHdlrFuncsFromTable (GVarFuncs);
 
@@ -1372,46 +1387,14 @@ static Int InitKernel (StructInitInfo *module)
   return 0;
 }
 
-static Int InitLibrary (StructInitInfo *module)
+int InitCXSCLibrary (void)
 {
   InitGVarFuncsFromTable (GVarFuncs);
   return 0;
 }
-
-static StructInitInfo module = {
-#ifdef FLOATSTATIC
-  MODULE_STATIC,                        /* type                           */
-#else
-  MODULE_DYNAMIC,                       /* type                           */
-#endif
-    "cxsc_float",                       /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
-};
-
-extern "C" {
-#ifdef FLOAT_STATIC
-  StructInitInfo *Init__cxsc_float (void)
-#else
-  StructInitInfo *Init__Dynamic (void)
-#endif
-  {
-    module.revision_c = Revision_cxsc_float_c;
-    module.revision_h = Revision_cxsc_float_h;
-    FillInVersion( &module );
-    return &module;
-  }
 }
 
 /****************************************************************************
 **
-*E  cxsc_float.c  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+*E  cxsc.c. . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 */

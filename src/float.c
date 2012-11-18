@@ -1,21 +1,15 @@
 /****************************************************************************
 **
-*W  mp_float.c                     GAP source               Laurent Bartholdi
+*W  float.c                      GAP source                 Laurent Bartholdi
 **
-*H  @(#)$Id$
-**
-*Y  Copyright (C) 2008 Laurent Bartholdi
+*Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
 **  This file contains the main dll of the float package.
 **  It defers to mpfr.c, mpfi.c etc. for initialization
 */
-static const char *Revision_mp_float_c =
-   "@(#)$Id$";
-
 #undef TRACE_ALLOC
 
-#define BANNER_MP_FLOAT_H
-
+#include "floatconfig.h"
 #include <string.h>
 #include <stdio.h>
 #include <gmp.h>
@@ -27,7 +21,7 @@ static const char *Revision_mp_float_c =
 #include "src/gmpints.h"
 #include "src/bool.h"
 #include "src/string.h"
-#include "mp_float.h"
+#include "floattypes.h"
 
 Obj FLOAT_INFINITY_STRING, /* pretty strings */
   FLOAT_NINFINITY_STRING,
@@ -137,40 +131,46 @@ static Int InitKernel (StructInitInfo *module)
   ImportGVarFromLibrary("FLOAT_REAL_STRING", &FLOAT_REAL_STRING);
   ImportGVarFromLibrary("FLOAT_I_STRING", &FLOAT_I_STRING);
 
-#ifdef WITH_MPFR
+#ifdef USE_MPFR
   InitMPFRKernel();
 #endif
-#ifdef WITH_MPFI
+#ifdef USE_MPFI
   InitMPFIKernel();
 #endif
-#ifdef WITH_MPC
+#ifdef USE_MPC
   InitMPCKernel();
 #endif
-#ifdef WITH_FPLLL
+#ifdef USE_FPLLL
   InitFPLLLKernel();
 #endif
-#ifdef WITH_MPD
+#ifdef USE_MPD
   InitMPDKernel();
+#endif
+#ifdef USE_CXSC
+  InitCXSCKernel();
 #endif
   return 0;
 }
 
 static Int InitLibrary (StructInitInfo *module)
 {
-#ifdef WITH_MPFI
+#ifdef USE_MPFI
   InitMPFILibrary();
 #endif
-#ifdef WITH_MPFR
+#ifdef USE_MPFR
   InitMPFRLibrary();
 #endif
-#ifdef WITH_MPC
+#ifdef USE_MPC
   InitMPCLibrary();
 #endif
-#ifdef WITH_FPLLL
+#ifdef USE_FPLLL
   InitFPLLLLibrary();
 #endif
-#ifdef WITH_MPD
+#ifdef USE_MPD
   InitMPDLibrary();
+#endif
+#ifdef USE_CXSC
+  InitCXSCLibrary();
 #endif
 #if 0
   mp_set_memory_functions (alloc_func, realloc_func, free_func);
@@ -185,7 +185,7 @@ static StructInitInfo module = {
 #else
   MODULE_DYNAMIC,                       /* type                           */
 #endif
-    "mp_float",                         /* name                           */
+    "float",                            /* name                           */
     0,                                  /* revision entry of c file       */
     0,                                  /* revision entry of h file       */
     0,                                  /* version                        */
@@ -199,18 +199,16 @@ static StructInitInfo module = {
 };
 
 #ifdef FLOAT_STATIC
-StructInitInfo *Init__mp_float (void)
+StructInitInfo *Init__float (void)
 #else
 StructInitInfo *Init__Dynamic (void)
 #endif
 {
-  module.revision_c = Revision_mp_float_c;
-  module.revision_h = Revision_mp_float_h;
   FillInVersion( &module );
   return &module;
 }
 
 /****************************************************************************
 **
-*E  mp_float.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+*E  float.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . .ends here
 */

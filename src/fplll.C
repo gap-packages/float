@@ -12,6 +12,7 @@
  *
  ****************************************************************************/
 
+#include "floatconfig.h"
 #include <gmp.h>
 
 extern "C" {
@@ -20,10 +21,11 @@ extern "C" {
 #include "src/objects.h"
 #include "src/gasman.h"
 #include "src/gap.h"
-  //#include "src/gmpints.h"
 #include "src/bool.h"
 #include "src/plist.h"
-#include "mp_float.h"
+#include "src/calls.h"
+#include "src/opers.h"
+#include "floattypes.h"
 }
 #include <fplll.h>
 

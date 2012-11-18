@@ -13,6 +13,8 @@
 
 .PHONY: all doc clean distribute mrproper checkblocks tarballs wwwdir
 
+CFLAGS=@CFLAGS@
+
 PWDU:=$(shell dirname $(PWD))
 PWDUU:=$(shell dirname $(PWDU))
 
@@ -23,11 +25,6 @@ MPFILIB=extern/mpfi-1.5.1
 MPCLIB=extern/mpc-1.0.1
 CXSCLIB=extern/cxsc-2-5-3
 FPLLLLIB=extern/libfplll-4.0.1
-
-MYCC=./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @CFLAGS@ @GAP_CPPFLAGS@ -std=c99 -g -Wall
-MYCXX=error
-MYLD=./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -g
-JAVAC=@JAVAC@
 
 all: $(LOCALBIN) @MAKE_LIBTARGETS@ $(LOCALBIN)/float.so
 
@@ -67,28 +64,30 @@ $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 
 $(LOCALBIN)/%.lo: src/%.C
-	$(MYCXX) -d -o $@ -c $<
+	./libtool --mode=compile --tag=CC $(CXX) $(CFLAGS) @GAP_CPPFLAGS@ @CXSC_CFLAGS@ @FPLLL_CFLAGS@ -o $@ -c $<
 
 $(LOCALBIN)/%.lo: src/%.c
-	$(MYCC) -d -o $@ -c $<
+	./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @GAP_CPPFLAGS@ @MPFR_CFLAGS@ @MPFI_CFLAGS@ @MPC_CFLAGS@ -std=c99 -o $@ -c $<
 
 $(LOCALBIN)/float.so: @FLOAT_LO@
-	$(MYLD) -module -o $(LOCALBIN)/float.la $+ @LEVMAR_LDFLAGS@ @LEVMAR_LIBS@ -rpath $(PWD)/$(LOCALBIN)
+	./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -module -o $(LOCALBIN)/float.la $+ @MPFR_LDFLAGS@ @MPFR_LIBS@ @MPFI_LDFLAGS@ @MPFI_LIBS@ @MPC_LDFLAGS@ @MPC_LIBS@ @CXSC_LDFLAGS@ @CXSC_LIBS@ @FPLLL_LDFLAGS@ @FPLLL_LIBS@ -rpath $(PWD)/$(LOCALBIN)
 	cp $(LOCALBIN)/.libs/float.so $@
 
-$(LOCALBIN)/mp_float.lo: src/mp_float.c src/mp_float.h
+$(LOCALBIN)/float.lo: src/float.c src/floatconfig.h src/floattypes.h
 
-$(LOCALBIN)/mpfr.lo: src/mpfr.c src/mp_float.h
+$(LOCALBIN)/mpfr.lo: src/mpfr.c src/floatconfig.h src/floattypes.h
 
-$(LOCALBIN)/mpfi.lo: src/mpfi.c src/mp_float.h
+$(LOCALBIN)/mpfi.lo: src/mpfi.c src/floatconfig.h src/floattypes.h
 
-$(LOCALBIN)/mpc.lo: src/mpc.c src/mp_float.h
+$(LOCALBIN)/mpc.lo: src/mpc.c src/floatconfig.h src/floattypes.h
+
+$(LOCALBIN)/cxsc.lo: src/cxsc.C src/floatconfig.h src/floattypes.h
 
 $(LOCALBIN)/fplll.lo: src/fplll.C
 
-$(LOCALBIN)/mp_poly.lo: src/cpoly.C src/mp_poly.C
+$(LOCALBIN)/mp_poly.lo: src/cpoly.C src/mp_poly.C src/floatconfig.h src/floattypes.h
 
-$(LOCALBIN)/cxsc_poly.lo: src/cpoly.C src/cxsc_poly.C src/cxsc_float.h
+$(LOCALBIN)/cxsc_poly.lo: src/cpoly.C src/cxsc_poly.C src/floatconfig.h src/floattypes.h
 
 clean:
 	rm -rf .version config.log $(LOCALBIN) `find doc -type l`

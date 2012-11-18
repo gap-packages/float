@@ -2,16 +2,13 @@
 **
 *W  mpfr.c                       GAP source                 Laurent Bartholdi
 **
-*H  @(#)$Id$
-**
-*Y  Copyright (C) 2008 Laurent Bartholdi
+*Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
 **  This file contains the functions for the float package.
 **  floats are implemented using the MPFR package.
 */
-const char * Revision_mpfr_c =
-   "@(#)$Id$";
 
+#include "floatconfig.h"
 #include <string.h>
 #include <stdio.h>
 #include <gmp.h>
@@ -28,13 +25,13 @@ const char * Revision_mpfr_c =
 #include "src/plist.h"
 #include "src/calls.h"
 #include "src/opers.h"
-#include "mp_float.h"
+#include "floattypes.h"
 
 Obj TYPE_MPFR, IsMPFRFloat, GAP_INFINITY;
 
 #define MANTISSA_MPFR(p) ((mp_limb_t *) ((p)+1))
 
-inline mpfr_ptr GET_MPFR(Obj obj) {
+mpfr_ptr GET_MPFR(Obj obj) {
   while (!IS_DATOBJ(obj) || DoFilter(IsMPFRFloat, obj) != True) {
     obj = ErrorReturnObj("GET_MPFR: object must be an MPFR, not a %s",
 		       (Int)(InfoBags[TNUM_OBJ(obj)].name),0,
@@ -45,7 +42,7 @@ inline mpfr_ptr GET_MPFR(Obj obj) {
   return p;
 }
 
-inline Obj NEW_MPFR (mp_prec_t prec)
+Obj NEW_MPFR (mp_prec_t prec)
 {
   Obj f;
   f = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(__mpfr_struct)+mpfr_custom_get_size(prec));

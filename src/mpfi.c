@@ -2,16 +2,12 @@
 **
 *W  mpfi.c                       GAP source                 Laurent Bartholdi
 **
-*H  @(#)$Id$
-**
-*Y  Copyright (C) 2008 Laurent Bartholdi
+*Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
 **  This file contains the functions for the float package.
 **  interval floats are implemented using the MPFI package.
 */
-const char * Revision_mpfi_c =
-   "@(#)$Id$";
-
+#include "floatconfig.h"
 #include <string.h>
 #include <stdio.h>
 #include <gmp.h>
@@ -24,7 +20,7 @@ const char * Revision_mpfi_c =
 #include "src/bool.h"
 #include "src/string.h"
 #include "src/plist.h"
-#include "mp_float.h"
+#include "floattypes.h"
 
 #define LMANTISSA_MPFI(p) ((mp_limb_t *) (p+1))
 #define RMANTISSA_MPFI(p) (LMANTISSA_MPFI(p)+(mpfi_get_prec(p)+GMP_NUMB_BITS-1)/GMP_NUMB_BITS)

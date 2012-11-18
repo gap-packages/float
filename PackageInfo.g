@@ -13,7 +13,8 @@ Date := "19/11/2012",
 ## <!ENTITY Version "0.5.0">
 ## <!ENTITY Date "19/11/2012">
 ## <#/GAPDoc>
-ArchiveURL := Concatenation("http://www.uni-math.gwdg.de/laurent/Float/float-",~.Version),
+Date := "19/11/2012",
+ArchiveURL := Concatenation("https://github.com/laurentbartholdi/float/archive/",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -35,12 +36,12 @@ Persons := [
 
 Status := "distributed",
 
-README_URL := "http://www.uni-math.gwdg.de/laurent/Float/README.float",
-PackageInfoURL := "http://www.uni-math.gwdg.de/laurent/Float/PackageInfo.g",
+README_URL := "http://laurentbartholdi.github.com/float/README.float",
+PackageInfoURL := "http://laurentbartholdi.github.com/float/PackageInfo.g",
 AbstractHTML := "The <span class=\"pkgname\">Float</span> package allows \
                     GAP to manipulate floating-point numbers with arbitrary \
-                    precision. It is based on MPFR",
-PackageWWWHome := "http://www.uni-math.gwdg.de/laurent/Float/",
+                    precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
+PackageWWWHome := "http://laurentbartholdi.github.com/float/",
 
 PackageDoc := rec(
   BookName  := "Float",

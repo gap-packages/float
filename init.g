@@ -22,7 +22,7 @@ SetInfoLevel(InfoFloat, 1);
 Revision.float := rec();
 
 #############################################################################
-BindGlobal("MAKEDOC@", function()
+BindGlobal("DOC@FLOAT", function()
     MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",
             ["../lib/float.gd","../PackageInfo.g"],"float");
 end);

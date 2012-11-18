@@ -29,18 +29,23 @@
   The computer algebra system &GAP; is available at
   <URL>http://gap-system.org</URL>.
   <P/>
-  This documentation for <Package>Float</Package> is available  at
-  <URL>http://www.uni-math.gwdg.de/laurent/Float/manual.pdf</URL> in PDF format, and may be
-  accessed online at <URL>http://www.uni-math.gwdg.de/laurent/Float/</URL>.
+  This documentation for <Package>Float</Package> is available at
+  <URL>http://laurentbartholdi.github.com/float/manual.pdf</URL> in PDF format, and may be
+  accessed online at <URL>http://laurentbartholdi.github.com/float/</URL>.
   <P/>
-  The latest source of the package may be downloaded as
-  <URL>http://www.uni-math.gwdg.de/laurent/Float/float.tar.gz</URL> (tar, gzipped).
+  The latest release of the package may be downloaded as
+  <URL>https://github.com/laurentbartholdi/float/archive/&Version;.tar.gz</URL> (tar, gzipped) and
+  <URL>https://github.com/laurentbartholdi/float/archive/&Version;.zip</URL> (zip).
+  The latest repository version (possibly unstable) may be downloaded as
+  <URL>https://github.com/laurentbartholdi/float/tarball/master</URL> (tar, gzipped),
+  <URL>https://github.com/laurentbartholdi/float.git</URL> (git repository), or
+  explored at <URL>https://github.com/laurentbartholdi/float/tree/master/</URL>.
   </Alt>
   <P/>
     For comments or questions on <Package>Float</Package> please contact
     the author.
   </Abstract>
-  <Copyright>&copyright; 2011 by Laurent Bartholdi
+  <Copyright>&copyright; 2011-2012 by Laurent Bartholdi
   </Copyright>
   <Acknowledgements>Part of this work is supported by the "Swiss
   National Fund for Scientific Research (SNF)", the "German National Science Foundation (DFG)",

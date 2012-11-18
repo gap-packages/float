@@ -2,177 +2,126 @@
 ##
 #W Makefile.in                                              Laurent Bartholdi
 ##
-#H   @(#)$Id$
-##
-#Y Copyright (C) 2007, Laurent Bartholdi
+#Y Copyright (C) 2007-2012, Laurent Bartholdi
 ##
 #############################################################################
 ##
-##  This compiles the module polroots, and creates archives
+##  This compiles the C/Java modules, creates archives, or
+##  compiles the documentation
 ##
 #############################################################################
 
-GAC=@GAC@
-GAP=@GAPPROG@
-LOCALBIN=bin/@TARGET@
-EXTERN=$(CURDIR)/bin/@TARGET@/extern
-GACFLAGS=@GACFLAGS@ -p -g -p -fno-stack-protector
-GACPP=bin/@TARGET@/gac++
-MPFRLIB=mpfr-3.1.0
-MPFILIB=mpfi-1.5
-MPCLIB=mpc-0.9
-FPLLLLIB=libfplll-3.1.3
-CXSCLIB=cxsc-2-5-1
+.PHONY: all doc clean distribute mrproper checkblocks tarballs wwwdir
 
-.PHONY: all distribute doc clean mrproper wwwdir checkblocks \
-	lib mpfrlib mpfilib mpclib fpllllib cxsclib
+PWDU:=$(shell dirname $(PWD))
+PWDUU:=$(shell dirname $(PWDU))
 
-all: @LIB_TARGET@ @DLL_TARGET@
+LOCALBIN=bin/@GAPARCH@
+EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
+MPFRLIB=extern/mpfr-3.1.1
+MPFILIB=extern/mpfi-1.5.1
+MPCLIB=extern/mpc-1.0.1
+CXSCLIB=extern/cxsc-2-5-3
+FPLLLLIB=extern/libfplll-4.0.1
 
-lib: mpfrlib mpfilib mpclib fpllllib cxsclib
+MYCC=./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @CFLAGS@ @GAP_CPPFLAGS@ -std=c99 -g -Wall
+MYCXX=error
+MYLD=./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -g
+JAVAC=@JAVAC@
 
-extern/$(MPFRLIB).tar.bz2:
+all: $(LOCALBIN) @MAKE_LIBTARGETS@ $(LOCALBIN)/float.so
+
+distribute: wwwdir doc tarballs
+
+$(MPFRLIB).tar.bz2:
 	echo "I can't find $(MPFRLIB), so I'm going to download it"
-	(cd extern; wget --no-verbose http://www.mpfr.org/mpfr-3.1.0/mpfr-3.1.0.tar.bz2)
+	(cd extern; wget --no-verbose http://www.mpfr.org/mpfr-current/mpfr-3.1.1.tar.bz2)
 
-extern/$(MPFILIB).tar.bz2:
+$(MPFILIB).tar.bz2:
 	echo "I can't find $(MPFILIB), so I'm going to download it"
-	(cd extern; wget --no-verbose https://gforge.inria.fr/frs/download.php/27345/mpfi-1.5.tar.bz2)
+	(cd extern; wget --no-verbose https://gforge.inria.fr/frs/download.php/30129/mpfi-1.5.1.tar.bz2)
 
-extern/$(MPCLIB).tar.gz:
+$(MPCLIB).tar.gz:
 	echo "I can't find $(MPCLIB), so I'm going to download it"
-	(cd extern; wget --no-verbose http://www.multiprecision.org/mpc/download/mpc-0.9.tar.gz)
+	(cd extern; wget --no-verbose http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz)
 
-extern/$(CXSCLIB).tar.gz:
+$(CXSCLIB).tar.gz:
 	echo "I can't find $(CXSCLIB), so I'm going to download it"
-	(cd extern; wget --no-verbose http://www2.math.uni-wuppertal.de/~xsc/xsc/cxsc/cxsc-2-5-1.tar.gz)
+	(cd extern; wget --no-verbose http://www2.math.uni-wuppertal.de/~xsc/xsc/cxsc/cxsc-2-5-3.tar.gz)
 
-extern/$(FPLLLLIB).tar.gz:
+$(FPLLLLIB).tar.gz:
 	echo "I can't find $(FPLLLLIB), so I'm going to download it"
-	(cd extern; wget --no-verbose http://perso.ens-lyon.fr/xavier.pujol/fplll/libfplll-3.1.3.tar.gz)
+	(cd extern; wget --no-verbose http://xpujol.net/fplll/libfplll-4.0.1.tar.gz)
 
-mpfrlib: extern/$(MPFRLIB).tar.bz2
-	if ! test -r $(EXTERN)/include/mpfr.h; then \
-	    cd extern && \
-	    tar -x -f $(MPFRLIB).tar.bz2 -j && \
-	    cd $(MPFRLIB) && \
-	    ./configure @WITHGMP@ --prefix=$(EXTERN) && \
-	    $(MAKE) install; \
-	fi
+@MPFR_MAKELIB@
 
-mpfilib: @MPFRDEPEND@ extern/$(MPFILIB).tar.bz2
-	if ! test -r $(EXTERN)/include/mpfi.h; then \
-	    cd extern && \
-	    tar -x -f $(MPFILIB).tar.bz2 -j && \
-	    cd $(MPFILIB) && \
-	    ./configure @WITHGMP@ @WITHMPFR@ --prefix=$(EXTERN) && \
-	    $(MAKE) install; \
-	fi
+@MPFI_MAKELIB@
 
-mpclib: @MPFRDEPEND@ extern/$(MPCLIB).tar.gz
-	if ! test -r $(EXTERN)/include/mpc.h; then \
-	    cd extern && \
-	    tar -x -f $(MPCLIB).tar.gz -z && \
-	    cd $(MPCLIB) && \
-	    ./configure @WITHGMP@ @WITHMPFR@ --prefix=$(EXTERN) && \
-	    $(MAKE) install; \
-	fi
+@MPC_MAKELIB@
 
-fpllllib: @MPFRDEPEND@ extern/$(FPLLLLIB).tar.gz
-	if ! test -r $(EXTERN)/include/fplll.h; then \
-	    cd extern && \
-	    tar -x -f $(FPLLLLIB).tar.gz -z && \
-	    cd $(FPLLLLIB) && \
-	    ./configure CPPFLAGS="@INCLGMP@ @INCLMPFR@ $(CPPFLAGS)" LDFLAGS="@LINKGMP@ @LINKMPFR@ $(LDFLAGS)" --prefix=$(EXTERN) && \
-	    $(MAKE) install; \
-	fi
+@CXSC_MAKELIB@
 
-cxsclib: extern/$(CXSCLIB).tar.gz
-	mkdir -p $(EXTERN)
-	rm -f $(EXTERN)/cxsc
-	ln -s . $(EXTERN)/cxsc
-# a dirty hack: we'll pretend our home directory
-# is $(EXTERN), and the installation will go into $(EXTERN)/cxsc
-	if ! test -r $(EXTERN)/include/real.hpp; then \
-	    cd extern && \
-	    tar -x -f $(CXSCLIB).tar.gz -z && \
-	    cd $(CXSCLIB) && \
-	    (echo "yes"; for i in 1 2 3 4 5 6 7 8 9 10; do echo ""; done) | \
-		HOME=$(EXTERN) ./install_cxsc; \
-	fi
-
-distribute: doc wwwdir doc tarballs
-	rsync -arvp --delete www/ laurent@elanpc00.uni-math.gwdg.de:public_html/Float/
+@FPLLL_MAKELIB@
 
 $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 
-$(GACPP):
-	sed -e 's/"gcc"/"g++"/g' -e 's/\([* ]\.\)c/\1C/g' < $(GAC) > $(GACPP)
-	chmod a+x $(GACPP)
+$(LOCALBIN)/%.lo: src/%.C
+	$(MYCXX) -d -o $@ -c $<
 
-$(LOCALBIN)/%.o: src/%.C $(GACPP)
-	$(GACPP) $(GACFLAGS) -d -o $@ -c $<
+$(LOCALBIN)/%.lo: src/%.c
+	$(MYCC) -d -o $@ -c $<
 
-$(LOCALBIN)/%.o: src/%.c
-	$(GAC) $(GACFLAGS) -d -o $@ -c $<
+$(LOCALBIN)/float.so: @FLOAT_LO@
+	$(MYLD) -module -o $(LOCALBIN)/float.la $+ @LEVMAR_LDFLAGS@ @LEVMAR_LIBS@ -rpath $(PWD)/$(LOCALBIN)
+	cp $(LOCALBIN)/.libs/float.so $@
 
-$(LOCALBIN)/mp_float.so: @MP_FLOAT_O@ $(GACPP)
-	$(GACPP) $(GACFLAGS) -d -o $@ @MP_FLOAT_O@ @MP_FLOAT_LIB@
+$(LOCALBIN)/mp_float.lo: src/mp_float.c src/mp_float.h
 
-$(LOCALBIN)/cxsc_float.so: @CXSC_FLOAT_O@ $(GACPP)
-	$(GACPP) $(GACFLAGS) -d -o $@ @CXSC_FLOAT_O@ @CXSC_FLOAT_LIB@
+$(LOCALBIN)/mpfr.lo: src/mpfr.c src/mp_float.h
 
-$(LOCALBIN)/mp_float.o: src/mp_float.c src/mp_float.h
+$(LOCALBIN)/mpfi.lo: src/mpfi.c src/mp_float.h
 
-$(LOCALBIN)/mpfr.o: src/mpfr.c src/mp_float.h
+$(LOCALBIN)/mpc.lo: src/mpc.c src/mp_float.h
 
-$(LOCALBIN)/mpfi.o: src/mpfi.c src/mp_float.h
+$(LOCALBIN)/fplll.lo: src/fplll.C
 
-$(LOCALBIN)/mpc.o: src/mpc.c src/mp_float.h
+$(LOCALBIN)/mp_poly.lo: src/cpoly.C src/mp_poly.C
 
-$(LOCALBIN)/fplll.o: src/fplll.C
-
-$(LOCALBIN)/mp_poly.o: src/cpoly.C src/mp_poly.C
-
-$(LOCALBIN)/cxsc_poly.o: src/cpoly.C src/cxsc_poly.C src/cxsc_float.h
+$(LOCALBIN)/cxsc_poly.lo: src/cpoly.C src/cxsc_poly.C src/cxsc_float.h
 
 clean:
-	rm -rf .version $(LOCALBIN) `find doc -type l`
-
-configure: cnf/Makefile.in cnf/configure.ac
-	(cd cnf; autoconf; mv -f configure ..)
+	rm -rf .version config.log $(LOCALBIN) `find doc -type l`
 
 mrproper: clean
-	rm Makefile
+	rm Makefile config.h
+
+configure: cnf/Makefile.in cnf/configure.ac
+	(cd cnf; aclocal -Im4; autoconf; mv -f configure ..)
 
 .version: PackageInfo.g
-	grep '^Version :=' $< | awk -F'"' '{print $$2}' > $@
-
-wwwdir: .version tarballs
-	mkdir -p www
-	rm -f `find www -type l`
-	cp README www/README.float
-	cp PackageInfo.g www/PackageInfo.g
-	cp doc/chap0.html www/index.html
-	ln -s float-`cat .version`.tar.gz www/float.tar.gz
-	cp doc/manual.pdf www/manual.pdf
-	(cd doc; for i in *.html; do cp $$i ../www/$$i; done)
-	cp doc/manual.css www/manual.css
+	grep '^Version :=' $< | cut -f2 -d'"' | tr -d '\n' > $@
 
 doc: doc/chap0.html
 
-doc/chap0.html: doc/float.xml lib/float.gd
-	echo 'LoadPackage("float"); MAKEDOC@Float();' | $(GAP)
+doc/chap0.html: doc/float.xml doc/floatbib.xml lib/float.gd
+	echo 'LoadPackage("float"); DOC@FLOAT();' | @GAP_EXEC@ -r -q -T -l ";$(PWDUU)"
 
 checkblocks:
-	grep '<#GAPDoc' lib/*.g[di] | awk -F'"' '{print $$2}' | sort > @@-blocks
+	grep '<#GAPDoc' PackageInfo.g gap/*d | awk -F'"' '{print $$2}' | sort > @@-blocks
 	grep '<#Include' doc/float.xml | awk -F'"' '{print $$2}' | sort > @@-in
 	comm -3 @@-blocks @@-in
-	rm @@-blocks @@-in
+	@rm @@-blocks @@-in
 
 tarballs: .version doc
-	mkdir -p www
-	tar cfz www/float-`cat .version`.tar.gz --exclude '*~' --exclude sandbox --exclude bin --exclude www --exclude CVS --exclude .version --exclude cnf/autom4te.cache --exclude 'Makefile*' --exclude config.log --exclude 'extern/*-[0-9]*' -C .. float
+	mkdir -p zips
+	tar -c -f zips/float-`cat .version`.tar.gz -z --exclude '*~' --exclude '.[a-z]*' --exclude 'config.[ls]*' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude zips --exclude bin --exclude extern -C .. float
+	ln -sf float-`cat .version`.tar.gz zips/float.tar.gz
 
-#E Makefile . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+wwwdir: doc/chap0.html tarballs
+	cp PackageInfo.g doc/
+	cp README doc/README.float
+	(cd doc; git add *.html manual.pdf manual.css PackageInfo.g README.float; git commit -m 'New html files'; git push github master:gh-pages --force)
+	rm doc/PackageInfo.g doc/README.float
+
+#E Makefile.in . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

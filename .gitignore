@@ -26,6 +26,5 @@ doc/*.ilg
 doc/*.ind
 doc/*.out
 doc/*.toc
-myconfigure
 src/floatconfig.h
 zips

@@ -84,6 +84,7 @@ if test "$MPC" = extern; then
 MPC_MAKELIB=`printf 'mpc: $(MPCLIB).tar.gz %s
 	mkdir -p $(EXTERN)/include $(EXTERN)/lib
 	if ! test -r $(EXTERN)/include/mpc.h; then \\
+	    rm -rf $(MPCLIB) && \\
 	    tar -x -f $(MPCLIB).tar.gz -z -C extern && \\
 	    cd $(MPCLIB) && \\
 	    ./configure %s %s --prefix=$(EXTERN) && \\

@@ -654,7 +654,7 @@ static Obj ROOTPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapintervals)
       CPolyZero(poly,roots[i],rp,iroots[i],error);
       if (error) {
 	iroots[i] = roots[i];
-	//!!! fix! call Info(InfoFloat,...)
+	//fix! call InfoDecision(InfoFloat,1) and then maybe InfoDoPrint(...)
 	printf("#W CPOLYZERO failed to find enclosure for root %d; returning approximate root\n",i+1);
       }
     }

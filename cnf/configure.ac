@@ -6,7 +6,7 @@
 ##
 #############################################################################
 
-AC_PREREQ(2.68)
+AC_PREREQ(2.65)
 LT_PREREQ([2.4.2])
 AC_INIT(float,,laurent.bartholdi@gmail.com)
 AC_CONFIG_SRCDIR([src/float.c])

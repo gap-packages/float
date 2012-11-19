@@ -37,7 +37,7 @@ $(MPFRLIB).tar.bz2:
 
 $(MPFILIB).tar.bz2:
 	echo "I can't find $(MPFILIB), so I'm going to download it"
-	(cd extern; wget --no-verbose https://gforge.inria.fr/frs/download.php/30129/mpfi-1.5.1.tar.bz2)
+	(cd extern; wget --no-verbose --no-check-certificate https://gforge.inria.fr/frs/download.php/30129/mpfi-1.5.1.tar.bz2)
 
 $(MPCLIB).tar.gz:
 	echo "I can't find $(MPCLIB), so I'm going to download it"
@@ -71,7 +71,7 @@ $(LOCALBIN)/%.lo: src/%.c
 	./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @GAP_CPPFLAGS@ @MPFR_CFLAGS@ @MPFI_CFLAGS@ @MPC_CFLAGS@ -std=c99 -o $@ -c $<
 
 $(LOCALBIN)/float.so: @FLOAT_LO@
-	./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -module -o $(LOCALBIN)/float.la $+ @MPFR_LDFLAGS@ @MPFR_LIBS@ @MPFI_LDFLAGS@ @MPFI_LIBS@ @MPC_LDFLAGS@ @MPC_LIBS@ @CXSC_LDFLAGS@ @CXSC_LIBS@ @FPLLL_LDFLAGS@ @FPLLL_LIBS@ -rpath $(PWD)/$(LOCALBIN)
+	./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -module -o $(LOCALBIN)/float.la $+ @MPFR_LDFLAGS@ @MPFR_LIBS@ @MPFI_LDFLAGS@ @MPFI_LIBS@ @MPC_LDFLAGS@ @MPC_LIBS@ @CXSC_LDFLAGS@ @CXSC_LIBS@ @FPLLL_LDFLAGS@ @FPLLL_LIBS@ -rpath $(EXTERN)/lib
 	cp $(LOCALBIN)/.libs/float.so $@
 
 $(LOCALBIN)/float.lo: src/float.c src/floatconfig.h src/floattypes.h

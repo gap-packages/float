@@ -27,5 +27,4 @@ doc/*.ind
 doc/*.out
 doc/*.toc
 myconfigure
-.version
 src/floatconfig.h

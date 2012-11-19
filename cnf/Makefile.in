@@ -6,7 +6,7 @@
 ##
 #############################################################################
 ##
-##  This compiles the C/Java modules, creates archives, or
+##  This compiles the C modules, creates archives, or
 ##  compiles the documentation
 ##
 #############################################################################
@@ -17,6 +17,7 @@ CFLAGS=@CFLAGS@
 
 PWDU:=$(shell dirname $(PWD))
 PWDUU:=$(shell dirname $(PWDU))
+VERSION:=$(shell grep '^Version :=' PackageInfo.g | cut -f2 -d'"')
 
 LOCALBIN=bin/@GAPARCH@
 EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
@@ -90,16 +91,13 @@ $(LOCALBIN)/mp_poly.lo: src/cpoly.C src/mp_poly.C src/floatconfig.h src/floattyp
 $(LOCALBIN)/cxsc_poly.lo: src/cpoly.C src/cxsc_poly.C src/floatconfig.h src/floattypes.h
 
 clean:
-	rm -rf .version config.log $(LOCALBIN) `find doc -type l`
+	rm -rf config.log $(LOCALBIN) `find doc -type l`
 
 mrproper: clean
 	rm Makefile config.h
 
 configure: cnf/Makefile.in cnf/configure.ac
 	(cd cnf; aclocal -Im4; autoconf; mv -f configure ..)
-
-.version: PackageInfo.g
-	grep '^Version :=' $< | cut -f2 -d'"' | tr -d '\n' > $@
 
 doc: doc/chap0.html
 
@@ -112,10 +110,10 @@ checkblocks:
 	comm -3 @@-blocks @@-in
 	@rm @@-blocks @@-in
 
-tarballs: .version doc
+tarballs: doc
 	mkdir -p zips
-	tar -c -f zips/float-`cat .version`.tar.gz -z --exclude '*~' --exclude '.[a-z]*' --exclude 'config.[ls]*' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude zips --exclude bin --exclude extern -C .. float
-	ln -sf float-`cat .version`.tar.gz zips/float.tar.gz
+	tar -c -f zips/float-$(VERSION).tar.gz -z --exclude '*~' --exclude '.[a-z]*' --exclude 'config.[ls]*' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude zips --exclude bin --exclude extern -C .. float
+	ln -sf float-$(VERSION).tar.gz zips/float.tar.gz
 
 wwwdir: doc/chap0.html tarballs
 	cp PackageInfo.g doc/

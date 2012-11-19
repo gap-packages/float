@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id$ -->
-
-<!DOCTYPE Book SYSTEM "gapdoc.dtd"
- [ <!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&tgt;</Alt>'>]>
-<Book Name="FR">
+<!DOCTYPE Book SYSTEM "gapdoc.dtd" [
+ <!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&tgt;</Alt>'>
+ <#Include Label="Version">
+]>
+<Book Name="FLOAT">
 
 <TitlePage>
   <Title>Floating-point numbers</Title>
-  <Version>Version <#Include Label="Version"></Version>
+  <Version>Version &Version;</Version>
   <TitleComment>
     MPFR- and CXSC-based library for GAP
   </TitleComment>
@@ -17,7 +17,7 @@
 		 <Alt Not="HTML">laurent.bartholdi@gmail.com</Alt></Email> 
 	  <Homepage>http://www.uni-math.gwdg.de/laurent/</Homepage>
   </Author>
-  <Date>$Date$</Date>
+  <Date>&Date;</Date>
   <Address>
   Mathematisches Institut<Br/>Bunsenstraße 3-5<Br/>D-37073 Göttingen<Br/>Germany
   </Address>

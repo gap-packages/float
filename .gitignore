@@ -12,7 +12,7 @@ www
 *~
 floatbib.xml.bib
 .DS_Store
-doc/chap*
+doc/chap*txt
 doc/manual.*
 doc/*.aux
 doc/*.pnr

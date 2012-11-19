@@ -34,7 +34,7 @@ Persons := [
   )
 ],
 
-Status := "distributed",
+Status := "deposited",
 
 README_URL := "http://laurentbartholdi.github.com/float/README.float",
 PackageInfoURL := "http://laurentbartholdi.github.com/float/PackageInfo.g",

@@ -7,10 +7,10 @@
 SetPackageInfo( rec(
 PackageName := "Float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.5.1",
+Version := "0.5.2",
 Date := "27/11/2012",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.5.1">
+## <!ENTITY Version "0.5.2">
 ## <!ENTITY Date "27/11/2012">
 ## <#/GAPDoc>
 ArchiveURL := Concatenation("https://github.com/downloads/laurentbartholdi/float/float-",~.Version),
@@ -60,9 +60,20 @@ Dependencies := rec(
   ExternalConditions := []                      
 ),
 
-AvailabilityTest := ReturnTrue,
+AvailabilityTest := function()
+    local f;
+    f := Filename(DirectoriesPackagePrograms("float"),"float.so");
+    if f=fail then
+        LogPackageLoadingMessage(PACKAGE_WARNING,
+            [Concatenation("The DLL program `",
+                Filename(DirectoriesPackagePrograms("float")[1],"float.so"),
+                    "' was not compiled, and is needed for the FLOAT package."),
+             "Run `./configure && make' in its home directory"]);
+    fi;
+    return f<>fail;
+end,
                     
-BannerString := Concatenation("Loading FLOAT ", String( ~.Version ), " ...\n"),
+BannerString := Concatenation("Loading FLOAT ", String(~.Version), " ...\n"),
 
 Autoload := false,
 TestFile := "tst/testall.g",

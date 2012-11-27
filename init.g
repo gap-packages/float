@@ -46,10 +46,9 @@ fi;
 CallFuncList(function()
     local f;
     f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f=fail then
-	Error("float: couldn't find the kernel module ",f,". Was it compiled?");
+    if f<>fail then
+        LoadDynamicModule(f);
     fi;
-    LoadDynamicModule(f);
 end,[]);
 
 #############################################################################

@@ -46,13 +46,10 @@ fi;
 CallFuncList(function()
     local f;
     f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f<>fail then
-        LoadDynamicModule(f);
-        if not ISBOUND_GLOBAL("MPFR_INT") then
-            Unbind(GAPInfo.PackagesLoaded.float);
-            Error("float: Something went wrong when loading the kernel module ",f);
-        fi;
+    if f=fail then
+	Error("float: couldn't find the kernel module ",f,". Was it compiled?");
     fi;
+    LoadDynamicModule(f);
 end,[]);
 
 #############################################################################

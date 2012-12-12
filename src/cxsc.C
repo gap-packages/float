@@ -329,7 +329,7 @@ static Obj INT_CXSC (Obj self, Obj f)
   cxsc::real r = RP_OBJ(f);
   if (r < 0.0)
     r = -r, sign = -1;
-  for (Int i = 1 << NR_SMALL_INT_BITS; i; i >>= 1)
+  for (Int i = 1L << NR_SMALL_INT_BITS; i; i >>= 1)
     if (r >= i)
       r = r-i, n = n+i;
   if (r >= 1.0)

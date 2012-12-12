@@ -33,6 +33,8 @@ AC_C_INLINE
 
 # Locates GAP
 AC_FIND_GAP
+GMP_CFLAGS="$GAP_CPPFLAGS"
+GMP_LDFLAGS="-L$GMP_ROOT/lib" # not very good, maybe the libraries are not there
 
 AC_SYS_IS_CYGWIN
 AC_SYS_IS_DARWIN
@@ -59,10 +61,27 @@ if test "$MPFR" = extern -o "$MPFI" = extern -o "$MPC" = extern -o "$CXSC" = ext
     LDFLAGS+=' -rpath $(EXTERN)/lib'
 fi
 
+# how to get files from the web
+WGET=""
+AC_PATH_PROG(WGET,wget)
+if test "$WGET" != ""; then
+    WGET="$WGET --no-verbose"; WGET_NOCERTIFICATE="--no-certificate";
+else
+    AC_PATH_PROG(WGET,curl)
+    if test "$WGET" != ""; then
+        WGET="$WGET -s -O"; WGET_NOCERTIFICATE="";
+    else
+        AC_WARN([Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl.])
+    fi
+fi
+AC_SUBST(WGET)
+AC_SUBST(WGET_NOCERTIFICATE)
+
 ################################################################
 # generate files
 
 mkdir -p bin/$GAPARCH
+mkdir -p extern
 CONFIG_STATUS=bin/$GAPARCH/config.status
 
 AC_CONFIG_FILES([$GAP_MAKEFILE:cnf/Makefile.in])

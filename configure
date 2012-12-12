@@ -633,6 +633,8 @@ ac_includes_default="\
 ac_default_prefix=${PWD}
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+WGET_NOCERTIFICATE
+WGET
 FLOAT_LO
 FPLLL_MAKELIB
 FPLLL_LIBS
@@ -16619,6 +16621,8 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
+GMP_CFLAGS="$GAP_CPPFLAGS"
+GMP_LDFLAGS="-L$GMP_ROOT/lib" # not very good, maybe the libraries are not there
 
 
 
@@ -17491,7 +17495,7 @@ FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s
 	    rm -rf $(FPLLLLIB) && \\
 	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\
 	    cd $(FPLLLLIB) && \\
-	    ./configure CPPFLAGS="%s %s $CPPFLAGS" LDFLAGS="%s %s $LDFLAGS" %s %s --prefix=$(EXTERN) && \\
+	    ./configure CPPFLAGS="%s %s $(CPPFLAGS)" LDFLAGS="%s %s $(LDFLAGS)" %s %s --prefix=$(EXTERN) && \\
 	    $(MAKE) install; \\
 	fi\n' "$MPFR_DEPEND" "$GMP_CFLAGS" "$MPFR_CFLAGS" "$GMP_LDFLAGS" "$MPFR_LDFLAGS" "$GMP_WITH" "$MPFR_WITH"`
 
@@ -17533,10 +17537,106 @@ if test "$MPFR" = extern -o "$MPFI" = extern -o "$MPC" = extern -o "$CXSC" = ext
     LDFLAGS+=' -rpath $(EXTERN)/lib'
 fi
 
+# how to get files from the web
+WGET=""
+# Extract the first word of "wget", so it can be a program name with args.
+set dummy wget; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_WGET+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $WGET in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_WGET="$WGET" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_WGET="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+WGET=$ac_cv_path_WGET
+if test -n "$WGET"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $WGET" >&5
+$as_echo "$WGET" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test "$WGET" != ""; then
+    WGET="$WGET --no-verbose"; WGET_NOCERTIFICATE="--no-certificate";
+else
+    # Extract the first word of "curl", so it can be a program name with args.
+set dummy curl; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_WGET+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $WGET in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_WGET="$WGET" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_WGET="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+WGET=$ac_cv_path_WGET
+if test -n "$WGET"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $WGET" >&5
+$as_echo "$WGET" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+    if test "$WGET" != ""; then
+        WGET="$WGET -s -O"; WGET_NOCERTIFICATE="";
+    else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl." >&5
+$as_echo "$as_me: WARNING: Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl." >&2;}
+    fi
+fi
+
+
+
 ################################################################
 # generate files
 
 mkdir -p bin/$GAPARCH
+mkdir -p extern
 CONFIG_STATUS=bin/$GAPARCH/config.status
 
 ac_config_files="$ac_config_files $GAP_MAKEFILE:cnf/Makefile.in"

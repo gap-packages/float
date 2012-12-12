@@ -89,7 +89,7 @@ FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s
 	    rm -rf $(FPLLLLIB) && \\
 	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\
 	    cd $(FPLLLLIB) && \\
-	    ./configure CPPFLAGS="%s %s $CPPFLAGS" LDFLAGS="%s %s $LDFLAGS" %s %s --prefix=$(EXTERN) && \\
+	    ./configure CPPFLAGS="%s %s $(CPPFLAGS)" LDFLAGS="%s %s $(LDFLAGS)" %s %s --prefix=$(EXTERN) && \\
 	    $(MAKE) install; \\
 	fi\n' "$MPFR_DEPEND" "$GMP_CFLAGS" "$MPFR_CFLAGS" "$GMP_LDFLAGS" "$MPFR_LDFLAGS" "$GMP_WITH" "$MPFR_WITH"`
 

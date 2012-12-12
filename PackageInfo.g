@@ -7,11 +7,11 @@
 SetPackageInfo( rec(
 PackageName := "Float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.5.3",
-Date := "11/12/2012",
+Version := "0.5.4",
+Date := "12/12/2012",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.5.3">
-## <!ENTITY Date "11/12/2012">
+## <!ENTITY Version "0.5.4">
+## <!ENTITY Date "12/12/2012">
 ## <#/GAPDoc>
 ArchiveURL := Concatenation("https://github.com/downloads/laurentbartholdi/float/float-",~.Version),
 # was Concatenation("https://github.com/laurentbartholdi/float/archive/",~.Version)

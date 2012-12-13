@@ -13,8 +13,7 @@ Date := "12/12/2012",
 ## <!ENTITY Version "0.5.4">
 ## <!ENTITY Date "12/12/2012">
 ## <#/GAPDoc>
-ArchiveURL := Concatenation("https://github.com/downloads/laurentbartholdi/float/float-",~.Version),
-# was Concatenation("https://github.com/laurentbartholdi/float/archive/",~.Version)
+ArchiveURL := Concatenation("https://github.com/laurentbartholdi/float/archive/",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 

@@ -30,7 +30,7 @@ FPLLLLIB=extern/libfplll-4.0.1
 
 all: $(LOCALBIN) @MAKE_LIBTARGETS@ $(LOCALBIN)/float.so
 
-distribute: wwwdir doc tarballs
+distribute: wwwdir doc
 
 $(MPFRLIB).tar.bz2:
 	@echo "I can't find $(MPFRLIB), so I'm going to download it"
@@ -116,7 +116,9 @@ tarballs: doc
 	tar -c -f zips/float-$(VERSION).tar.gz -z --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude zips --exclude bin --exclude extern -C .. float
 	ln -sf float-$(VERSION).tar.gz zips/float.tar.gz
 
-wwwdir: doc/chap0.html tarballs
+wwwdir: doc
+	git tag -f $(VERSION)
+	git push --tags
 	cp PackageInfo.g doc/
 	cp README doc/README.float
 	(cd doc; git add *.html manual.pdf manual.css PackageInfo.g README.float; git commit -m 'New html files'; git push github master:gh-pages --force)

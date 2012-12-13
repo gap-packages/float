@@ -56,7 +56,7 @@ Dependencies := rec(
   GAP := ">=4.5.0",
   NeededOtherPackages := [["GAPDoc",">=1.0"]],
   SuggestedOtherPackages := [],
-  ExternalConditions := []                      
+  ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 
 AvailabilityTest := function()

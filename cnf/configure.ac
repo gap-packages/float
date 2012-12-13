@@ -65,7 +65,7 @@ fi
 WGET=""
 AC_PATH_PROG(WGET,wget)
 if test "$WGET" != ""; then
-    WGET="$WGET --no-verbose"; WGET_NOCERTIFICATE="--no-certificate";
+    WGET="$WGET --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
 else
     AC_PATH_PROG(WGET,curl)
     if test "$WGET" != ""; then

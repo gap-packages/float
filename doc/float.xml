@@ -124,7 +124,7 @@ gap> IncreaseInterval(last,-0.002); # now becomes empty
 ∅
 gap> MinimalPolynomial(Rationals,Sqrt(2.0));
 -2*x_1^2+1
-gap> Cyc(y);
+gap> Cyc(last);
 E(8)-E(8)^3
 gap>
 gap> SetFloats(MPC); # complex numbers

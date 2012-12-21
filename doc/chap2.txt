@@ -1,0 +1,58 @@
+  
+  [1X2 [33X[0;0YFloat package[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YA sample run[133X[101X
+  
+  [33X[0;0YThe extended floating-point capabilities of [5XGAP[105X are installed by loading the
+  package  via [10XLoadPackage("float");[110X and selecting new floating-point handlers
+  via   [10XSetFloats(MPFR)[110X,  [10XSetFloats(MPFI)[110X,  [10XSetFloats(MPC)[110X  or[10XSetFloats(CXSC)[110X,
+  depending on whether high-precision real, interval or complex arithmetic are
+  desired,  or  whether  a  fast  package  containing  all  four  real/complex
+  element/interval arithmetic is desired:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("float");[127X[104X
+    [4X[28XLoading FLOAT 0.3 ...[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSetFloats(MPFR); # floating-point[127X[104X
+    [4X[25Xgap>[125X [27Xx := 4*Atan(1.0);[127X[104X
+    [4X[28X.314159e1[128X[104X
+    [4X[25Xgap>[125X [27XSin(x);[127X[104X
+    [4X[28X.169569e-30[128X[104X
+    [4X[25Xgap>[125X [27XSetFloats(MPFR,1000); # 1000 bits[127X[104X
+    [4X[25Xgap>[125X [27Xx := 4*Atan(1.0);[127X[104X
+    [4X[28X.314159e1[128X[104X
+    [4X[25Xgap>[125X [27XSin(x);[127X[104X
+    [4X[28X.125154e-300[128X[104X
+    [4X[25Xgap>[125X [27XString(x,300);[127X[104X
+    [4X[28X".3141592653589793238462643383279502884197169399375105820974944592307816406286\[128X[104X
+    [4X[28X208998628034825342117067982148086513282306647093844609550582231725359408128481\[128X[104X
+    [4X[28X117450284102701938521105559644622948954930381964428810975665933446128475648233\[128X[104X
+    [4X[28X78678316527120190914564856692346034861045432664821339360726024914127e1"[128X[104X
+    [4X[28Xgap>[128X[104X
+    [4X[25Xgap>[125X [27XSetFloats(MPFI); # intervals[127X[104X
+    [4X[25Xgap>[125X [27Xx := 4*Atan(1.0);[127X[104X
+    [4X[28X.314159e1(99)[128X[104X
+    [4X[25Xgap>[125X [27XAbsoluteDiameter(x); Sup(x); Inf(x);[127X[104X
+    [4X[28X.100441e-29[128X[104X
+    [4X[28X.314159e1[128X[104X
+    [4X[28X.314159e1[128X[104X
+    [4X[25Xgap>[125X [27XSin(x);[127X[104X
+    [4X[28X-.140815e-29(97)[128X[104X
+    [4X[25Xgap>[125X [27X0.0 in last;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X1.0; # exact representation[127X[104X
+    [4X[28X.1e1(∞)[128X[104X
+    [4X[25Xgap>[125X [27XIncreaseInterval(last,0.001); # now only 8 significant bits[127X[104X
+    [4X[28X.1e1(8)[128X[104X
+    [4X[25Xgap>[125X [27XIncreaseInterval(last,-0.002); # now becomes empty[127X[104X
+    [4X[28X∅[128X[104X
+    [4X[25Xgap>[125X [27XMinimalPolynomial(Rationals,Sqrt(2.0));[127X[104X
+    [4X[28X-2*x_1^2+1[128X[104X
+    [4X[25Xgap>[125X [27XCyc(last);[127X[104X
+    [4X[28XE(8)-E(8)^3[128X[104X
+    [4X[28Xgap>[128X[104X
+    [4X[25Xgap>[125X [27XSetFloats(MPC); # complex numbers[127X[104X
+  [4X[32X[104X
+  

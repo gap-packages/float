@@ -60,7 +60,7 @@ temp_status=true
 CPPFLAGS="$CPPFLAGS $CXSC_CFLAGS"
 AC_CHECK_HEADER(real.hpp,,[temp_status=false])
 LDFLAGS="$LDFLAGS $CXSC_LDFLAGS"
-AC_CHECK_LIB(cxsc,cxsc_sqrt,,[temp_status=false])
+AC_CHECK_LIB(cxsc,z_zadd,,[temp_status=false])
 AC_LANG_POP([C++])
 
 if test "$temp_status" = false; then

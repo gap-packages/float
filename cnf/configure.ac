@@ -52,8 +52,8 @@ AC_CHECK_FPLLL
 FLOAT_LO='$(LOCALBIN)/float.lo'
 if test "$MPFR" != no; then FLOAT_LO+=' $(LOCALBIN)/mpfr.lo'; fi
 if test "$MPFI" != no; then FLOAT_LO+=' $(LOCALBIN)/mpfi.lo'; fi
-if test "$MPC" != no; then FLOAT_LO+=' $(LOCALBIN)/mpc.lo'; fi
-if test "$CXSC" != no; then FLOAT_LO+=' $(LOCALBIN)/cxsc.lo'; fi
+if test "$MPC" != no; then FLOAT_LO+=' $(LOCALBIN)/mpc.lo $(LOCALBIN)/mp_poly.lo'; fi
+if test "$CXSC" != no; then FLOAT_LO+=' $(LOCALBIN)/cxsc.lo $(LOCALBIN)/cxsc_poly.lo'; fi
 if test "$FPLLL" != no; then FLOAT_LO+=' $(LOCALBIN)/fplll.lo'; fi
 AC_SUBST(FLOAT_LO)
 
@@ -65,11 +65,11 @@ fi
 WGET=""
 AC_PATH_PROG(WGET,wget)
 if test "$WGET" != ""; then
-    WGET="$WGET --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
+    WGET="$WGET --tries=1 --timeout=10 --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
 else
-    AC_PATH_PROG(WGET,curl)
-    if test "$WGET" != ""; then
-        WGET="$WGET -s -O"; WGET_NOCERTIFICATE="";
+    AC_PATH_PROG(CURL,curl)
+    if test "$CURL" != ""; then
+        WGET="$CURL --retry 1 --connect-timeout 10 -s -O"; WGET_NOCERTIFICATE="";
     else
         AC_WARN([Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl.])
     fi

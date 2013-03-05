@@ -2,16 +2,14 @@
 ##  
 ##  PackageInfo.g for the package `float'                   Laurent Bartholdi
 ##
-## $Id$
-##
 SetPackageInfo( rec(
 PackageName := "Float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.5.5",
-Date := "13/12/2012",
+Version := "0.5.6",
+Date := "05/03/2013",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.5.5">
-## <!ENTITY Date "13/12/2012">
+## <!ENTITY Version "0.5.6">
+## <!ENTITY Date "05/03/2013">
 ## <#/GAPDoc>
 ArchiveURL := Concatenation("https://github.com/laurentbartholdi/float/archive/",~.Version),
 ArchiveFormats := ".tar.gz",

@@ -14,6 +14,7 @@
 .PHONY: all doc clean distribute mrproper checkblocks tarballs wwwdir
 
 CFLAGS=@CFLAGS@
+CXXFLAGS=@CXXFLAGS@
 WGET=@WGET@
 
 PWDU:=$(shell dirname $(PWD))

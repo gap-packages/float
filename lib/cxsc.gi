@@ -395,6 +395,15 @@ INSTALLFLOATCREATOR("for integers", [IsCXSCFloat,IsInt],
     return f;
 end);
 
+INSTALLFLOATCREATOR("for strings", [IsCXSCFloat,IsString],
+        function(filter,s)
+    if 'i' in s or 'I' in s then
+        return CP_CXSC_STRING(s);
+    else
+        return RP_CXSC_STRING(s);
+    fi;
+end);
+
 INSTALLFLOATCREATOR("for strings", [IsCXSCReal,IsFloat],
         function(filter,s)
     return RP_CXSC_STRING(s);

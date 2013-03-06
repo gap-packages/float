@@ -508,20 +508,55 @@ static Obj CP_CXSC_STRING (Obj self, Obj str)
 {
   TEST_IS_STRING(CP_CXSC_STRING,str);
 
-  std::string s = CSTR_STRING(str);
+  char *s = CSTR_STRING(str);
   Obj f = NEW_CP();
-  if (s[0] == '(')
-    s >> CP_OBJ(f);
-  else {
-    real r;
-    char last = s[s.length()-1];
-    s >> r;
-    if (last == 'i' || last == 'I')
-      CP_OBJ(f) = complex(0.0,r);
-    else
-      CP_OBJ(f) = r;
-  } 
-  return f;
+  if (s[0] == '(') {
+    std::string(s) >> CP_OBJ(f);
+    return f;
+  }
+
+  int sign = 1;
+  bool inreal = true, empty = true;
+  double newf;
+
+  for (char *p = s;;) {
+    switch (*p) {
+    case '-':
+    case '+':
+    case 0:
+      if (!empty) { /* drop the last read float */
+	if (inreal)
+	  Re(CP_OBJ(f)) += newf;
+	else
+	  Im(CP_OBJ(f)) += newf;
+	empty = inreal = true;
+	sign = 1;
+      }
+      if (!*p)
+	return f;
+      if (*p == '-')
+	sign = -sign;
+    case '*': p++; break;
+    case 'i':
+    case 'I': if (inreal) {
+	inreal = false;
+	if (empty) /* accept 'i' as '1*i' */
+	  Im(CP_OBJ(f)) = sign;
+      } else return Fail;
+      p++; break;
+    default:
+      {
+	int bytesread;
+	sscanf (p, "%lf%n", &newf, &bytesread);
+	if (bytesread == 0 && inreal)
+	  return Fail; /* no valid characters read */
+	if (sign == -1)
+	  newf = -newf;
+	empty = false;
+	p += bytesread;
+      }
+    }
+  }
 }
 
 static Obj RI_CXSC_STRING (Obj self, Obj str)
@@ -1097,8 +1132,15 @@ static Obj EXTREPOFOBJ_CXSC_CI(Obj self, Obj f)
 
 static cxsc::real get_real (Obj l, int pos)
 {
-  Obj mant = ELM_PLIST(l,pos);
-  int exp = INT_INTOBJ(ELM_PLIST(l,pos+1));
+  if (LEN_PLIST(l) < pos+1)
+    ErrorQuit("OBJBYEXTREP: length of argument must be at least %d", pos+1,0);
+
+  Obj mant = ELM_PLIST(l,pos), expobj = ELM_PLIST(l,pos+1);
+
+  if (!IS_INTOBJ(expobj) || !(IS_INTOBJ(mant) || TNUM_OBJ(mant)==T_INTPOS || TNUM_OBJ(mant)==T_INTNEG))
+    ErrorQuit("OBJBYEXTREP: argument must be a list of integers", 0,0);
+
+  int exp = INT_INTOBJ(expobj);
 
   if (EqInt(mant,INTOBJ_INT(0)))
     switch (exp) {

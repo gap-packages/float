@@ -413,7 +413,7 @@ static Obj VIEWSTRING_MPC(Obj self, Obj f, Obj digits)
   Obj str = NEW_STRING(2*(prec*302/1000+10)+3);
   int slen = 0, n;
 
-  TEST_IS_INTOBJ("STRING_MPC",digits);
+  TEST_IS_INTOBJ("VIEWSTRING_MPC",digits);
   n = INT_INTOBJ(digits);
   if (n == 1) n = 2;
 

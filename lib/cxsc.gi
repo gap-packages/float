@@ -33,6 +33,12 @@ InstallMethod(String, "cxsc:*", [IsCXSCFloat],
 BindGlobal("CXSC_STRING", function(s)
     if 'i' in s or 'I' in s then
         return CP_CXSC_STRING(s);
+    elif '(' in s and '[' in s then
+        return CI_CXSC_STRING(s);
+    elif '(' in s then
+        return CP_CXSC_STRING(s);
+    elif '[' in s then
+        return RI_CXSC_STRING(s);
     else
         return RP_CXSC_STRING(s);
     fi;

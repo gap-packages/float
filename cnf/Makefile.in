@@ -23,7 +23,7 @@ VERSION:=$(shell grep '^Version :=' PackageInfo.g | cut -f2 -d'"')
 
 LOCALBIN=bin/@GAPARCH@
 EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
-MPFRLIB=extern/mpfr-3.1.1
+MPFRLIB=extern/mpfr-3.1.2
 MPFILIB=extern/mpfi-1.5.1
 MPCLIB=extern/mpc-1.0.1
 CXSCLIB=extern/cxsc-2-5-3
@@ -35,7 +35,7 @@ distribute: wwwdir doc
 
 $(MPFRLIB).tar.bz2:
 	@echo "I can't find $(MPFRLIB), so I'm going to download it"
-	(cd extern; $(WGET) http://www.mpfr.org/mpfr-current/mpfr-3.1.1.tar.bz2)
+	(cd extern; $(WGET) http://www.mpfr.org/mpfr-3.1.2/mpfr-3.1.2.tar.bz2)
 
 $(MPFILIB).tar.bz2:
 	@echo "I can't find $(MPFILIB), so I'm going to download it"

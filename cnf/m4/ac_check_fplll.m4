@@ -63,7 +63,8 @@ AC_LANG_PUSH([C++])
 temp_status=true
 CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
 AC_CHECK_HEADER(fplll.h,,[temp_status=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS -lfplll -lgmp"
+LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS"
+LIBS="$LIBS -lfplll -lgmp"
 AC_MSG_CHECKING([for lllReduction in -lfplll])
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],
     [ZZ_mat<mpz_t> M(3,3); lllReduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes])],[temp_status=false; AC_MSG_RESULT([no])])

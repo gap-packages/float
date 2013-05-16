@@ -67,7 +67,7 @@ $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 
 $(LOCALBIN)/%.lo: src/%.C
-	./libtool --mode=compile --tag=CC $(CXX) $(CFLAGS) @GAP_CPPFLAGS@ @CXSC_CFLAGS@ @FPLLL_CFLAGS@ -o $@ -c $<
+	./libtool --mode=compile --tag=CC $(CXX) $(CFLAGS) @FPLLL_CFLAGS@ @CXSC_CFLAGS@ @GAP_CPPFLAGS@   -o $@ -c $<
 
 $(LOCALBIN)/%.lo: src/%.c
 	./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @GAP_CPPFLAGS@ @MPFR_CFLAGS@ @MPFI_CFLAGS@ @MPC_CFLAGS@ -std=c99 -o $@ -c $<

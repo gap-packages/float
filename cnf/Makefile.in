@@ -67,13 +67,13 @@ $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 
 $(LOCALBIN)/%.lo: src/%.C
-	./libtool --mode=compile --tag=CC $(CXX) $(CFLAGS) @FPLLL_CFLAGS@ @CXSC_CFLAGS@ @GAP_CPPFLAGS@   -o $@ -c $<
+	./libtool --mode=compile --tag=CC $(CXX) $(CFLAGS) @FPLLL_CFLAGS@ @CXSC_CFLAGS@ @GAP_CPPFLAGS@ -o $@ -c $<
 
 $(LOCALBIN)/%.lo: src/%.c
-	./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @GAP_CPPFLAGS@ @MPFR_CFLAGS@ @MPFI_CFLAGS@ @MPC_CFLAGS@ -std=c99 -o $@ -c $<
+	./libtool --mode=compile --tag=CC $(CC) $(CFLAGS) @MPFR_CFLAGS@ @MPFI_CFLAGS@ @MPC_CFLAGS@ @GAP_CPPFLAGS@ -std=c99 -o $@ -c $<
 
 $(LOCALBIN)/float.so: @FLOAT_LO@
-	./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -module -o $(LOCALBIN)/float.la $+ @MPFR_LDFLAGS@ @MPFR_LIBS@ @MPFI_LDFLAGS@ @MPFI_LIBS@ @MPC_LDFLAGS@ @MPC_LIBS@ @CXSC_LDFLAGS@ @CXSC_LIBS@ @FPLLL_LDFLAGS@ @FPLLL_LIBS@ -rpath $(EXTERN)/lib
+	./libtool --mode=link --tag=CC $(CC) $(CFLAGS) -avoid-version -module -o $(LOCALBIN)/float.la $+ @MPFR_LDFLAGS@ @MPFR_LIBS@ @MPFI_LDFLAGS@ @MPFI_LIBS@ @MPC_LDFLAGS@ @MPC_LIBS@ @CXSC_LDFLAGS@ @CXSC_LIBS@ @FPLLL_LDFLAGS@ @FPLLL_LIBS@ -rpath $(EXTERN)/lib
 	cp $(LOCALBIN)/.libs/float.so $@
 
 $(LOCALBIN)/float.lo: src/float.c src/floatconfig.h src/floattypes.h

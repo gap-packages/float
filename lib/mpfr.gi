@@ -77,7 +77,7 @@ InstallValue(MPFR, rec(
     r.PI := MPFR_PI(prec);
     r.1_PI := Inverse(r.PI);
     r.2PI := MPFR_INT(2)*r.PI;
-    r.2_PI := Inverse(r.2PI);
+    r.2_PI := MPFR_INT(2)*r.1_PI;
     r.2_SQRTPI := MPFR_INT(2)/Sqrt(r.PI);
     r.PI_2 := r.PI/MPFR_INT(2);
     r.PI_4 := r.PI_2/MPFR_INT(2);
@@ -102,8 +102,9 @@ CallFuncList(function(arg)
     od;
 end,   [["AINV",AINV_MPFR],
         ["AINV_MUT",AINV_MPFR],
-        ["INV",INV_MPFR],
-        ["INV_MUT",INV_MPFR],
+        ["InverseMutable",INV_MPFR],
+        ["InverseImmutable",INV_MPFR],
+	["InverseSameMutability",INV_MPFR],
         ["Int",INT_MPFR],
         ["AbsoluteValue",ABS_MPFR],
         ["ZeroMutable",ZERO_MPFR],

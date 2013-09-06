@@ -77,7 +77,7 @@ InstallValue(MPC, rec(
     r.PI := MPC_MPFR(MPFR_PI(prec));
     r.1_PI := Inverse(r.PI);
     r.2PI := MPC_INT(2)*r.PI;
-    r.2_PI := Inverse(r.2PI);
+    r.2_PI := MPC_INT(2)*r.1_PI;
     r.2_SQRTPI := MPC_INT(2)/Sqrt(r.PI);
     r.PI_2 := r.PI/MPC_INT(2);
     r.PI_4 := r.PI_2/MPC_INT(2);

@@ -76,7 +76,7 @@ InstallValue(MPFI, rec(
     r.PI := MPFI_PI(prec);
     r.1_PI := Inverse(r.PI);
     r.2PI := MPFI_INT(2)*r.PI;
-    r.2_PI := Inverse(r.2PI);
+    r.2_PI := MPFI_INT(2)*r.1_PI;
     r.2_SQRTPI := MPFI_INT(2)/Sqrt(r.PI);
     r.PI_2 := r.PI/MPFI_INT(2);
     r.PI_4 := r.PI_2/MPFI_INT(2);

@@ -12,9 +12,9 @@
 
 extern "C" {
 #include "src/system.h"
-#include "src/macfloat.h"
-#include "src/objects.h"
 #include "src/gasman.h"
+#include "src/objects.h"
+#include "src/macfloat.h"
 #include "src/gap.h"
 #include "src/bool.h"
 #include "src/plist.h"

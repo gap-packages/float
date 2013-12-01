@@ -19,7 +19,7 @@
 //
 static xreal cauchy(const int deg, xcomplex *P)
 {
-  xreal x, xm, f, dx, df, tmp[deg+1];
+  xreal x, xm, f, dx, df, *tmp = new xreal[deg+1];
 
   for(int i = 0; i<=deg; i++){ tmp[i] = xabs(P[i]); };
 
@@ -58,6 +58,8 @@ static xreal cauchy(const int deg, xcomplex *P)
     dx = f / df;
     x -= dx;				// Newton step
   }
+
+  delete tmp;
 
   return x;
 }
@@ -274,7 +276,7 @@ static bool fxshft(const int l2, int deg, xcomplex *P, xcomplex *p, xcomplex *H,
    bool bol, conv;	 	       // boolean for convergence of stage 2
    bool test, pasd;
    xcomplex old_T, old_S, Ps, t;
-   xcomplex Tmp[deg+1];
+   xcomplex *tmp = new xcomplex[deg+1];
 
    Ps = polyev(deg, *s, P, p);
    test = true;
@@ -300,16 +302,16 @@ static bool fxshft(const int l2, int deg, xcomplex *P, xcomplex *p, xcomplex *H,
                // The weak convergence test has been passwed twice, start the third stage
                // Iteration, after saving the current H polynomial and shift
                for(int i = 0; i < deg; i++) 
-                  Tmp[i] = H[i]; 
+                  tmp[i] = H[i]; 
                old_S = *s;
 
                conv = vrshft(10, deg, P, p, H, h, zero, s);
-               if(conv) return conv;
+               if(conv) goto done;
 
                //The iteration failed to converge. Turn off testing and restore h,s,pv and T
                test = false;
                for(int i = 0; i < deg; i++)
-                  H[i] = Tmp[i];
+                  H[i] = tmp[i];
                *s = old_S;
 
                Ps = polyev(deg, *s, P, p);
@@ -325,6 +327,8 @@ static bool fxshft(const int l2, int deg, xcomplex *P, xcomplex *p, xcomplex *H,
 
    // Attempt an iteration with final H polynomial from second stage
    conv = vrshft(10, deg, P, p, H, h, zero, s);
+ done:
+   delete tmp;
    return conv;
 }
 
@@ -337,7 +341,6 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
 
   xcomplex PhiDiff(-0.069756473,0.99756405);
   xcomplex PhiRand(1.0/sqrt(2.0),-1.0/sqrt(2.0));
-  xcomplex P[degree+1], H[degree+1], h[degree+1], p[degree+1], zero, s, bnd;
   unsigned int conv = 0;
 
   while(poly[0] == 0) {
@@ -347,6 +350,10 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
       return -1;
   };
 
+  xcomplex *P = new xcomplex[degree+1], *p = new xcomplex[degree+1],
+    *H = new xcomplex[degree+1], *h = new xcomplex[degree+1],
+    zero, s, bnd;
+
   int deg = degree;
 
   // Remove the zeros at the origin if any
@@ -355,7 +362,7 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
     deg--;
   }
 
-  if (deg == 0) return degree;
+  if (deg == 0) goto done;
  
   // Make a copy of the coefficients
   for(int i = 0; i <= deg; i++) { P[i] = poly[i]; }
@@ -366,7 +373,8 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
 
   if(deg <= 1){
     Roots[degree-1] = - P[1] / P[0];
-    return degree;
+    deg = 0;
+    goto done;
   }
   
   // compute a bound of the moduli of the roots (Newton-Raphson)
@@ -403,5 +411,10 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
 
   // The zerofinder has failed on two major passes
   // return empty handed with the number of roots found (less than the original degree)
+ done:
+  delete p;
+  delete P;
+  delete h;
+  delete H;
   return degree - deg;
 }

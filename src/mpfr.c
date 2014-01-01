@@ -231,6 +231,7 @@ static Obj MPFR_INTPREC(Obj self, Obj i, Obj prec)
 static Obj INT_MPFR(Obj self, Obj f)
 {
   mpz_t z;
+
   if (mpfr_zero_p(GET_MPFR(f)))
     return INTOBJ_INT(0);
   if (mpfr_inf_p(GET_MPFR(f)))
@@ -238,7 +239,10 @@ static Obj INT_MPFR(Obj self, Obj f)
   if (!mpfr_number_p(GET_MPFR(f)))
     return Fail;
 
-  mpz_init2 (z, mpfr_get_exp(GET_MPFR(f))+1);
+  long prec = mpfr_get_exp(GET_MPFR(f));
+
+  if (prec < 0) prec = 0;
+  mpz_init2 (z, prec+1);
   mpfr_get_z (z, GET_MPFR(f), GMP_RNDZ);
   Obj res = INT_mpz(z);
   mpz_clear(z);

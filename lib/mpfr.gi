@@ -299,7 +299,7 @@ InstallMethod(Rat, "float", [IsMPFRFloat],
     if x < 0.0_r then sign := -1; x := -x; else sign := 1; fi;
     repeat
       a_i := Int(x);
-      if i >= 2 and M[1][1] * a_i > maxpartial then break; fi;
+      if i >= 1 and a_i > maxpartial then break; fi;
       M := M * [[a_i,1],[1,0]];
       if x = Float(a_i) then break; fi;
       x := 1.0_r / (x - a_i);

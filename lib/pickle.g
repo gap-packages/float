@@ -1,5 +1,21 @@
 # picklers
 
+InstallMethod( IO_Pickle, "for a IEEE754 float", [ IsFile, IsIEEE754FloatRep ],
+  function( f, v )
+    if IO_Write(f,"I3EF")=fail or IO_Pickle(f,ExtRepOfObj(v))<>IO_OK then
+        return IO_Error;
+    fi;
+    return IO_OK;
+end);
+
+IO_Unpicklers.I3EF :=
+  function( f )
+    local r;
+    r := IO_Unpickle(f);
+    if not IsList(r) then return IO_Error; fi;
+    return NewFloat(IsIEEE754FloatRep,r);
+end;
+  
 if IsBound(MPFR_INT) then
 InstallMethod( IO_Pickle, "for a MPFR float", [ IsFile, IsMPFRFloat ],
   function( f, v )

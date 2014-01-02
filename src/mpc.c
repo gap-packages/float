@@ -222,6 +222,12 @@ static Obj OBJBYEXTREP_MPC(Obj self, Obj list)
   int i;
   mp_prec_t prec = 0;
 
+  while (LEN_PLIST(list) != 4) {
+    list = ErrorReturnObj("OBJBYEXTREP_MPC: object must be a list of length 4, not a %s",
+		       (Int)(InfoBags[TNUM_OBJ(list)].name),0,
+		       "You can return a list to continue" );
+  }
+
   for (i = 0; i < 4; i += 2) {
     Obj m = ELM_PLIST(list,i+1);
     mp_prec_t newprec;
@@ -388,7 +394,7 @@ static Obj STRING_MPC(Obj self, Obj f, Obj digits)
 {
   mp_prec_t prec = mpc_get_prec(GET_MPC(f));
   Obj str = NEW_STRING(2*(prec*302/1000+10)+3);
-  int slen = 0, n;
+  int slen = 0, smid, n;
 
   TEST_IS_INTOBJ("STRING_MPC",digits);
   n = INT_INTOBJ(digits);
@@ -396,9 +402,13 @@ static Obj STRING_MPC(Obj self, Obj f, Obj digits)
 
   char *c = CSTR_STRING(str);
   slen += PRINT_MPFR(c+slen, 0, n, GET_MPC(f)->re, GMP_RNDN);
-  if (mpfr_sgn(GET_MPC(f)->im) >= 0)
-    c[slen++] = '+';
+  c[slen++] = '+';
+  smid = slen;
   slen += PRINT_MPFR(c+slen, 0, n, GET_MPC(f)->im, GMP_RNDN);
+  if (c[smid] == '-') {
+    while (smid <= slen) { c[smid-1] = c[smid]; smid++; }
+    slen--;
+  }
   c[slen++] = 'i';
   c[slen] = 0;
   SET_LEN_STRING(str, slen);

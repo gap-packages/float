@@ -73,7 +73,6 @@ InstallMethod( \in, [IsCXSCFloat,IsCXSCPseudoField], ReturnTrue);
 # constants
 ################################################################
 InstallValue(CXSC, rec(creator := CXSC_STRING,
-    objbyextrep := fail,
     eager := 'X',
     filter := IsCXSCFloat,
     field := CXSC_PSEUDOFIELD,
@@ -93,6 +92,15 @@ InstallValue(CXSC, rec(creator := CXSC_STRING,
         I := CP_CXSC_RP_RP(CXSC_INT(0),CXSC_INT(1)),
         2IPI := CP_CXSC_RP_RP(CXSC_INT(0),CXSC_NEWCONSTANT(7))
 )));
+
+InstallMethod(ObjByExtRep, [IsCXSCFloatFamily,IsCyclotomicCollection],
+        function(family,obj)
+    if Length(obj)=2 then
+        return OBJBYEXTREP_CXSC_RP(obj);
+    else
+        Error("Ambiguous: is ",obj," a complex or interval CXSC? Use NewFloat(...)");
+    fi;
+end);
 
 EAGER_FLOAT_LITERAL_CONVERTERS.X := CXSC_STRING;
 EAGER_FLOAT_LITERAL_CONVERTERS.R := RP_CXSC_STRING;

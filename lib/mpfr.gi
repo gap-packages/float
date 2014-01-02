@@ -63,7 +63,6 @@ SetOne(MPFRFloatsFamily,MPFR_INT(1));
 
 InstallValue(MPFR, rec(
     creator := MPFRFLOAT_STRING,
-    objbyextrep := OBJBYEXTREP_MPFR,
     eager := 'r',
     filter := IsMPFRFloat,
     field := MPFR_PSEUDOFIELD,
@@ -91,6 +90,11 @@ InstallValue(MPFR, rec(
     r.LOG10E := Inverse(r.LN10);
     r.LOG2E := Inverse(r.LN2);
 end)));
+
+InstallMethod(ObjByExtRep, [IsMPFRFloatFamily,IsCyclotomicCollection],
+        function(family,obj)
+    return OBJBYEXTREP_MPFR(obj);
+end);
 
 ################################################################
 # unary operations

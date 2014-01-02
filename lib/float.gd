@@ -35,6 +35,8 @@ DeclareOperation("MakeFloat",[IsFloat,IsFloat,IsInt]);
 if IsBound(MPFR_INT) then
 DeclareRepresentation("IsMPFRFloat", IsFloat and IsDataObjectRep, []);
 BIND_GLOBAL("MPFRFloatsFamily", NewFamily("MPFRFloatsFamily", IsMPFRFloat));
+DeclareProperty("IsMPFRFloatFamily",IsFloatFamily);
+SetIsMPFRFloatFamily(MPFRFloatsFamily,true);
 BIND_GLOBAL("TYPE_MPFR", NewType(MPFRFloatsFamily, IsMPFRFloat));
 DeclareGlobalVariable("MPFR");
 fi;
@@ -60,6 +62,8 @@ fi;
 if IsBound(MPFI_INT) then
 DeclareRepresentation("IsMPFIFloat", IsFloatInterval and IsDataObjectRep, []);
 BIND_GLOBAL("MPFIFloatsFamily", NewFamily("MPFIFloatsFamily", IsMPFIFloat));
+DeclareProperty("IsMPFIFloatFamily",IsFloatFamily);
+SetIsMPFIFloatFamily(MPFIFloatsFamily,true);
 BIND_GLOBAL("TYPE_MPFI", NewType(MPFIFloatsFamily, IsMPFIFloat));
 DeclareGlobalVariable("MPFI");
 fi;
@@ -85,6 +89,8 @@ fi;
 if IsBound(MPC_INT) then
 DeclareRepresentation("IsMPCFloat", IsComplexFloat and IsDataObjectRep, []);
 BIND_GLOBAL("MPCFloatsFamily", NewFamily("MPCFloatsFamily", IsMPCFloat));
+DeclareProperty("IsMPCFloatFamily",IsFloatFamily);
+SetIsMPCFloatFamily(MPCFloatsFamily,true);
 BIND_GLOBAL("TYPE_MPC", NewType(MPCFloatsFamily, IsMPCFloat));
 DeclareGlobalVariable("MPC");
 
@@ -134,6 +140,8 @@ DeclareCategoryCollections("IsCXSCBox");
 DeclareCategoryCollections("IsCXSCBoxCollection");
 
 BIND_GLOBAL("CXSCFloatsFamily", NewFamily("CXSCFloatsFamily", IsCXSCFloat));
+DeclareProperty("IsCXSCFloatFamily",IsFloatFamily);
+SetIsCXSCFloatFamily(CXSCFloatsFamily,true);
 
 BindGlobal("TYPE_CXSC_RP", NewType(CXSCFloatsFamily, IsCXSCReal));
 BindGlobal("TYPE_CXSC_CP", NewType(CXSCFloatsFamily, IsCXSCComplex));

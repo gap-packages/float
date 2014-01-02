@@ -63,7 +63,6 @@ SetOne(MPCFloatsFamily,MPC_INT(1));
 
 InstallValue(MPC, rec(
     creator := MPCFLOAT_STRING,
-    objbyextrep := OBJBYEXTREP_MPFI,
     eager := 'c',
     filter := IsMPCFloat,
     field := MPC_PSEUDOFIELD,
@@ -95,6 +94,11 @@ InstallValue(MPC, rec(
     r.2IPI := r.I*r.2PI;
     r.OMEGA := MPC_2MPFR(MPFR_INT(1),Sqrt(MPFR_INTPREC(3,prec)))/MPC_INT(2);
 end)));
+
+InstallMethod(ObjByExtRep, [IsMPCFloatFamily,IsCyclotomicCollection],
+        function(family,obj)
+    return OBJBYEXTREP_MPC(obj);
+end);
 
 ################################################################
 # unary operations

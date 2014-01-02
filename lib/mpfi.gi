@@ -63,7 +63,6 @@ SetOne(MPFIFloatsFamily,MPFI_INT(1));
 
 InstallValue(MPFI, rec(
     creator := MPFIFLOAT_STRING,
-    objbyextrep := OBJBYEXTREP_MPFI,
     eager := 'i',
     filter := IsMPFIFloat,
     field := MPFI_PSEUDOFIELD,
@@ -90,6 +89,11 @@ InstallValue(MPFI, rec(
     r.LOG10E := Inverse(r.LN10);
     r.LOG2E := Inverse(r.LN2);
 end)));
+
+InstallMethod(ObjByExtRep, [IsMPFIFloatFamily,IsCyclotomicCollection],
+        function(family,obj)
+    return OBJBYEXTREP_MPFI(obj);
+end);
 
 ################################################################
 # unary operations

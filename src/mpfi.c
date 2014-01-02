@@ -127,7 +127,7 @@ static Obj EXTREPOFOBJ_MPFI(Obj self, Obj f)
   mpz_t z;
   mpz_init2 (z, prec);
 
-  for (i = 0; i < 1; i++) {
+  for (i = 0; i < 2; i++) {
     Obj ig;
     mp_exp_t e;
 
@@ -165,6 +165,12 @@ static Obj OBJBYEXTREP_MPFI(Obj self, Obj list)
 {
   int i;
   mp_prec_t prec = 0;
+
+  while (LEN_PLIST(list) != 4) {
+    list = ErrorReturnObj("OBJBYEXTREP_MPFI: object must be a list of length 4, not a %s",
+		       (Int)(InfoBags[TNUM_OBJ(list)].name),0,
+		       "You can return a list to continue" );
+  }
 
   for (i = 0; i < 4; i += 2) {
     Obj m = ELM_PLIST(list,i+1);
@@ -545,12 +551,11 @@ static Obj VIEWSTRING_MPFI(Obj self, Obj f, Obj digits)
 
 static Obj MPFI_STRING(Obj self, Obj s, Obj prec)
 {
-  while (!IsStringConv(s))
-    {
-      s = ErrorReturnObj("MPFI_STRING: object to be converted must be a string, not a %s",
-			 (Int)(InfoBags[TNUM_OBJ(s)].name),0,
-			 "You can return a string to continue" );
-    }
+  while (!IsStringConv(s)) {
+    s = ErrorReturnObj("MPFI_STRING: object to be converted must be a string, not a %s",
+		       (Int)(InfoBags[TNUM_OBJ(s)].name),0,
+		       "You can return a string to continue" );
+  }
   TEST_IS_INTOBJ("MPFI_STRING",prec);
   int n = INT_INTOBJ(prec);
   if (n == 0)

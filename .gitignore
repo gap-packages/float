@@ -1,4 +1,5 @@
 Makefile
+Changelog
 libtool
 bin/*
 sandbox

@@ -101,6 +101,16 @@ mrproper: clean
 configure: cnf/Makefile.in cnf/configure.ac
 	(cd cnf; aclocal -Im4; autoconf; mv -f configure ..)
 
+Changelog:
+	gitlog-to-changelog > $@
+
+tarball: Changelog
+	mkdir float-temp
+	cp Changelog float-temp
+	(cd float-temp; wget https://www.github.com/laurentbartholdi/float/archive/master.tar.gz; tar xfz master.tar.gz; (cd float-master; rm `find . -name .gitignore`; mv ../Changelog .); mv float-master float-$(VERSION); tar cf - float-$(VERSION) | xz -9 > ../float-$(VERSION).tar.xz)
+	rm -rf float-temp
+	gpg --detach-sig --yes float-$(VERSION).tar.xz
+
 doc: doc/chap0.html
 
 doc/chap0.html: doc/float.xml doc/floatbib.xml lib/float.gd

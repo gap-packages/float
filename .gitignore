@@ -1,4 +1,11 @@
 Makefile
+aclocal.m4
+autom4te.cache
+build-aux/ltmain.sh
+configure
+config.log
+m4/lt*
+m4/libtool.m4
 Changelog
 libtool
 bin/*
@@ -8,7 +15,6 @@ config.log
 cnf/autom4te.cache
 Makefile-*
 confdefs.h
-config.log
 www
 *.dSYM
 *~

@@ -10,9 +10,9 @@ AC_PREREQ(2.65)
 LT_PREREQ([2.4.2])
 AC_INIT(float,,laurent.bartholdi@gmail.com)
 AC_CONFIG_SRCDIR([src/float.c])
-AC_CONFIG_AUX_DIR([cnf])
-AC_CONFIG_MACRO_DIR([cnf/m4])
-AC_CONFIG_HEADER([src/floatconfig.h:cnf/config.h.in])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_HEADER([src/floatconfig.h:config.h.in])
 LT_INIT([disable-static dlopen win32-dll])
 
 AC_PREFIX_DEFAULT([${PWD}])
@@ -84,7 +84,7 @@ mkdir -p bin/$GAPARCH
 mkdir -p extern
 CONFIG_STATUS=bin/$GAPARCH/config.status
 
-AC_CONFIG_FILES([$GAP_MAKEFILE:cnf/Makefile.in])
+AC_CONFIG_FILES([$GAP_MAKEFILE:Makefile.in])
 
 if test "$GAP_MAKEFILE" != Makefile; then
     ln -sf "$GAP_MAKEFILE" Makefile

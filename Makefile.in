@@ -11,7 +11,7 @@
 ##
 #############################################################################
 
-.PHONY: all doc clean distribute mrproper checkblocks tarballs wwwdir
+.PHONY: all doc clean distribute mrproper checkblocks tarball wwwdir
 
 CFLAGS=@CFLAGS@
 CXXFLAGS=@CXXFLAGS@
@@ -98,18 +98,21 @@ clean:
 mrproper: clean
 	rm Makefile config.h
 
-configure: cnf/Makefile.in cnf/configure.ac
-	(cd cnf; aclocal -Im4; autoconf; mv -f configure ..)
+configure: Makefile.in configure.ac
+	glibtoolize --force
+	aclocal -Im4
+	autoconf
 
 Changelog:
 	gitlog-to-changelog > $@
 
-tarball: Changelog
-	mkdir float-temp
-	cp Changelog float-temp
-	(cd float-temp; wget https://www.github.com/laurentbartholdi/float/archive/master.tar.gz; tar xfz master.tar.gz; (cd float-master; rm `find . -name .gitignore`; mv ../Changelog .); mv float-master float-$(VERSION); tar cf - float-$(VERSION) | xz -9 > ../float-$(VERSION).tar.xz)
-	rm -rf float-temp
-	gpg --detach-sig --yes float-$(VERSION).tar.xz
+tarball: Changelog doc
+	mkdir float-$(VERSION)
+	tar -c -f - --exclude Makefile --exclude float-$(VERSION) --exclude 'float-*xz*' --exclude 'lt*sh' --exclude 'lt*m4' --exclude 'libtool*' --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude bin --exclude extern . | (cd  float-$(VERSION); tar xf -)
+	tar -c -f - float-$(VERSION) | xz -9 > float-$(VERSION).tar.xz
+	rm -rf float-$(VERSION)
+	gpg --default-key 184873BE --armor --detach-sign --yes float-$(VERSION).tar.xz
+	scp float-$(VERSION).tar.xz* rlaurent.uni-math.gwdg.de:public_html/archive/
 
 doc: doc/chap0.html
 
@@ -121,11 +124,6 @@ checkblocks:
 	grep '<#Include' doc/float.xml | awk -F'"' '{print $$2}' | sort > @@-in
 	comm -3 @@-blocks @@-in
 	@rm @@-blocks @@-in
-
-tarballs: doc
-	mkdir -p zips
-	tar -c -f zips/float-$(VERSION).tar.gz -z --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude zips --exclude bin --exclude extern -C .. float
-	ln -sf float-$(VERSION).tar.gz zips/float.tar.gz
 
 wwwdir: doc
 	git tag -f $(VERSION)

@@ -93,7 +93,7 @@ $(LOCALBIN)/mp_poly.lo: src/cpoly.C src/mp_poly.C src/floatconfig.h src/floattyp
 $(LOCALBIN)/cxsc_poly.lo: src/cpoly.C src/cxsc_poly.C src/floatconfig.h src/floattypes.h
 
 clean:
-	rm -rf config.log $(LOCALBIN) `find doc -type l`
+	rm -rf aclocal.m4 config.log autom4te.cache configure libtool $(LOCALBIN) `find doc -type l`
 
 mrproper: clean
 	rm Makefile config.h

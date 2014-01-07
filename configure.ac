@@ -12,7 +12,7 @@ AC_INIT(float,,laurent.bartholdi@gmail.com)
 AC_CONFIG_SRCDIR([src/float.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADER([src/floatconfig.h:config.h.in])
+AC_CONFIG_HEADER([src/floatconfig.h:src/config.h.in])
 LT_INIT([disable-static dlopen win32-dll])
 
 AC_PREFIX_DEFAULT([${PWD}])

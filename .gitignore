@@ -6,6 +6,7 @@ configure
 config.log
 m4/lt*
 m4/libtool.m4
+stamp-*
 Changelog
 libtool
 bin/*

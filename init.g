@@ -2,9 +2,7 @@
 ##
 #W init.g                                                   Laurent Bartholdi
 ##
-#H   @(#)$Id$
-##
-#Y Copyright (C) 2008, Laurent Bartholdi
+#Y Copyright (C) 2008-2014, Laurent Bartholdi
 ##
 #############################################################################
 ##
@@ -25,6 +23,8 @@ Revision.float := rec();
 BindGlobal("DOC@FLOAT", function()
     MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",
             ["../lib/float.gd","../PackageInfo.g"],"float");
+    CopyHTMLStyleFiles("doc");
+    GAPDocManualLab("Float");
 end);
 
 if GAPInfo.TermEncoding = "UTF-8" then

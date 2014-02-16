@@ -10,17 +10,20 @@
 #undef TRACE_ALLOC
 
 #include "floatconfig.h"
+
+#undef PACKAGE
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_URL
+#undef PACKAGE_VERSION
+
 #include <string.h>
 #include <stdio.h>
 #include <gmp.h>
 
-#include "src/system.h"
-#include "src/gasman.h"
-#include "src/objects.h"
-#include "src/gap.h"
-#include "src/gmpints.h"
-#include "src/bool.h"
-#include "src/string.h"
+#include "src/compiled.h"
 #include "floattypes.h"
 
 Obj FLOAT_INFINITY_STRING, /* pretty strings */

@@ -8,6 +8,15 @@
 **  complex floats are implemented using the MPC package.
 */
 #include "floatconfig.h"
+
+#undef PACKAGE
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_URL
+#undef PACKAGE_VERSION
+
 #include <stdio.h>
 #include <gmp.h>
 

@@ -57,4 +57,8 @@ wwwdir: doc
 	(cd doc; git add *.html manual.pdf manual.css PackageInfo.g README.float; git commit -m 'New html files'; git push github master:gh-pages --force)
 	rm doc/PackageInfo.g doc/README.float
 
+all: all-recursive
+	mkdir -p bin/@GAPARCH@
+	cp src/.libs/float.so bin/@GAPARCH@/
+
 #E Makefile.am . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

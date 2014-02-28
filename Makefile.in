@@ -86,9 +86,10 @@ target_triplet = @target@
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) COPYING README \
-	build-aux/compile build-aux/config.guess build-aux/config.sub \
-	build-aux/depcomp build-aux/install-sh build-aux/missing \
-	build-aux/ltmain.sh $(top_srcdir)/build-aux/compile \
+	THANKS build-aux/compile build-aux/config.guess \
+	build-aux/config.sub build-aux/depcomp build-aux/install-sh \
+	build-aux/missing build-aux/ltmain.sh \
+	$(top_srcdir)/build-aux/compile \
 	$(top_srcdir)/build-aux/config.guess \
 	$(top_srcdir)/build-aux/config.sub \
 	$(top_srcdir)/build-aux/install-sh \
@@ -877,6 +878,10 @@ wwwdir: doc
 	cp README doc/README.float
 	(cd doc; git add *.html manual.pdf manual.css PackageInfo.g README.float; git commit -m 'New html files'; git push github master:gh-pages --force)
 	rm doc/PackageInfo.g doc/README.float
+
+all: all-recursive
+	mkdir -p bin/@GAPARCH@
+	cp src/.libs/float.so bin/@GAPARCH@/
 
 #E Makefile.am . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 

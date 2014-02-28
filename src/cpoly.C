@@ -45,7 +45,7 @@ static xreal cauchy(const int deg, xcomplex *P)
     x = xm;
   }
   dx = x;
-   
+
    // Do Newton iteration until x converges to two decimal places
   while(xabs(dx / x) > 0.005) {
     f  = tmp[0];
@@ -59,7 +59,7 @@ static xreal cauchy(const int deg, xcomplex *P)
     x -= dx;				// Newton step
   }
 
-  delete tmp;
+  delete[] tmp;
 
   return x;
 }
@@ -327,8 +327,10 @@ static bool fxshft(const int l2, int deg, xcomplex *P, xcomplex *p, xcomplex *H,
 
    // Attempt an iteration with final H polynomial from second stage
    conv = vrshft(10, deg, P, p, H, h, zero, s);
+
  done:
-   delete tmp;
+   delete[] tmp;
+
    return conv;
 }
 
@@ -379,7 +381,7 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
   
   // compute a bound of the moduli of the roots (Newton-Raphson)
   bnd = cauchy(deg, P);
-     
+
   // Outer loop to control 2 Major passes with different sequences of shifts
   for(int cnt1 = 1; cnt1 <= 2; cnt1++) {
     // First stage  calculation , no shift
@@ -412,9 +414,9 @@ extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec
   // The zerofinder has failed on two major passes
   // return empty handed with the number of roots found (less than the original degree)
  done:
-  delete p;
-  delete P;
-  delete h;
-  delete H;
+  delete[] p;
+  delete[] P;
+  delete[] h;
+  delete[] H;
   return degree - deg;
 }

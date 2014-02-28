@@ -29,11 +29,19 @@ struct xreal {
   static const mp_prec_t default_prec = 32;
 
   // constructor
+#ifdef DEBUG_MALLOC
+  xreal() { printf("alloc() %p...",z); mpfr_init2(z,default_prec); printf("done\n"); }
+  xreal(const double a){ printf("alloc(double %lf) %p...",a,z); mpfr_init2(z,default_prec); mpfr_set_d(z,a,default_rnd); printf("done\n"); }
+  xreal(int m, int e){ printf("alloc(int %d,int %d) %p...",m,e,z); mpfr_init2(z,default_prec); mpfr_set_si_2exp(z,m,e,default_rnd); printf("done\n"); }
+  xreal(const xreal &newz) { printf("alloc(xreal %p) %p...",newz.z,z); mpfr_init2(z,default_prec); mpfr_set_fr (z,newz.z,default_rnd); printf("done\n"); }
+  ~xreal() { printf("free() %p...",z); mpfr_clear(z); printf("done\n"); }
+#else
   xreal() { mpfr_init2(z,default_prec); }
   xreal(const double a){ mpfr_init2(z,default_prec); mpfr_set_d(z,a,default_rnd); }
   xreal(int m, int e){ mpfr_init2(z,default_prec); mpfr_set_si_2exp(z,m,e,default_rnd); }
   xreal(const xreal &newz) { mpfr_init2(z,default_prec); mpfr_set_fr (z,newz.z,default_rnd); }
   ~xreal() { mpfr_clear(z); }
+#endif
 
   // operations
   xreal operator - () const { xreal newz; mpfr_neg(newz.z,z,default_rnd); return newz; };

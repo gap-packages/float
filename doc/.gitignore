@@ -1,3 +1,19 @@
-chap*.html chap*.txt
-*.aux *.bbl *.blg *.brf *.ilg *.idx *.ind *.log *.pnr *.toc *.out
-manual.pdf manual.six fr.tex frbib.xml.bib
+chap*.html
+chap*.txt
+chooser.html
+*.aux
+*.bbl
+*.blg
+*.brf
+*.ilg
+*.idx
+*.ind
+*.log
+*.pnr
+*.tex
+*.toc
+*.out
+manual.pdf
+manual.six
+floatbib.xml.bib
+manual.lab

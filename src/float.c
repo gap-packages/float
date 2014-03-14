@@ -207,7 +207,6 @@ StructInitInfo *Init__float (void)
 StructInitInfo *Init__Dynamic (void)
 #endif
 {
-  FillInVersion( &module );
   return &module;
 }
 

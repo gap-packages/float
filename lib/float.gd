@@ -2,14 +2,10 @@
 ##
 #W  float.gd                       GAP library              Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2008 Laurent Bartholdi
 ##
 ##  This file deals with general float functions
 ##
-Revision.float.float_gd :=
-  "@(#)$Id$";
 
 # with precision
 DeclareConstructor("NewFloat",[IsFloat,IsFloat,IsInt]);

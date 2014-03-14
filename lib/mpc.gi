@@ -2,14 +2,10 @@
 ##
 #W  mpc.gi                        GAP library               Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2008 Laurent Bartholdi
 ##
 ##  This file deals with complex floats
 ##
-Revision.float.mpc_gi :=
-  "@(#)$Id$";
 
 ################################################################
 # viewers

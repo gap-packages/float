@@ -2,14 +2,10 @@
 ##
 #W  mpfr.gi                        GAP library              Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2008 Laurent Bartholdi
 ##
 ##  This file deals with floats
 ##
-Revision.float.mpfr_gi :=
-  "@(#)$Id$";
 
 ################################################################
 # viewers

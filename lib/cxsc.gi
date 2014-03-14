@@ -2,14 +2,10 @@
 ##
 #W  cxsc.gi                        GAP library              Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2008 Laurent Bartholdi
 ##
 ##  This file deals with floats
 ##
-Revision.float.cxsc_gi :=
-  "@(#)$Id$";
 
 ################################################################
 # viewers

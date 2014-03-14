@@ -2,15 +2,11 @@
 **
 *W  mpd.c                       GAP source                  Laurent Bartholdi
 **
-*H  @(#)$Id$
-**
 *Y  Copyright (C) 2008 Laurent Bartholdi
 **
 **  This file contains the functions for the float package.
 **  complex floats are implemented using the MPD package.
 */
-const char * Revision_mpd_c =
-   "@(#)$Id$";
 
 #define BANNER_FLOAT_H
 

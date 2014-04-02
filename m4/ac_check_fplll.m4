@@ -84,8 +84,8 @@ fi
 
 if test "$FPLLL" = extern; then
 
-FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
 	if ! test -r $(EXTERN)/include/fplll.h; then \\
 	    rm -rf $(FPLLLLIB) && \\
 	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\

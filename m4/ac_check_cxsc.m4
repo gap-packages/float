@@ -80,10 +80,10 @@ if test "$CXSC" = extern; then
 # a dirty hack: we'll pretend our home directory
 # is $(EXTERN), and the installation will go into $(EXTERN)/cxsc
 
-CXSC_MAKELIB=`printf 'cxsc: $(CXSCLIB).tar.gz
-	mkdir -p $(EXTERN)
-	rm -f $(EXTERN)/cxsc
-	ln -s . $(EXTERN)/cxsc
+CXSC_MAKELIB=`printf 'cxsc: $(CXSCLIB).tar.gz \\
+	mkdir -p $(EXTERN) \\
+	rm -f $(EXTERN)/cxsc \\
+	ln -s . $(EXTERN)/cxsc \\
 	if ! test -r $(EXTERN)/include/real.hpp; then \\
 	    rm -rf $(CXSCLIB) && \\
 	    tar -x -f $(CXSCLIB).tar.gz -z -C extern && \\

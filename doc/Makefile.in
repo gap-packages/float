@@ -93,7 +93,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/ac_check_cxsc.m4 \
 	$(top_srcdir)/m4/ac_check_mpfr.m4 \
 	$(top_srcdir)/m4/ac_find_gap.m4 $(top_srcdir)/m4/ac_sys_is.m4 \
 	$(top_srcdir)/m4/ax_cc_maxopt.m4 \
-	$(top_srcdir)/m4/ax_check_compiler_flags.m4 \
+	$(top_srcdir)/m4/ax_check_compile_flag.m4 \
 	$(top_srcdir)/m4/ax_compiler_vendor.m4 \
 	$(top_srcdir)/m4/ax_gcc_archflag.m4 \
 	$(top_srcdir)/m4/ax_gcc_x86_cpuid.m4 \

@@ -14,7 +14,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([src/floatconfig.h:config.h.in])
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 LT_INIT([disable-static dlopen win32-dll])
 
 AC_PREFIX_DEFAULT([${PWD}])

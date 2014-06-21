@@ -77,8 +77,8 @@ fi
 
 if test "$MPFR" = extern; then
 
-MPFR_MAKELIB=`printf 'mpfr: $(MPFRLIB).tar.bz2
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+MPFR_MAKELIB=`printf 'mpfr: $(MPFRLIB).tar.bz2  \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
 	if ! test -r $(EXTERN)/include/mpfr.h; then \\
 	    rm -rf $(MPFRLIB) && \\
 	    tar -x -f $(MPFRLIB).tar.bz2 -j -C extern && \\

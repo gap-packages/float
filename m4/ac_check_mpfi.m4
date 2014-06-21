@@ -81,8 +81,8 @@ fi
 
 if test "$MPFI" = extern; then
 
-MPFI_MAKELIB=`printf 'mpfi: $(MPFILIB).tar.bz2 %s
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+MPFI_MAKELIB=`printf 'mpfi: $(MPFILIB).tar.bz2 %s  \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
 	if ! test -r $(EXTERN)/include/mpfi.h; then \\
 	    rm -rf $(MPFILIB) && \\
 	    tar -x -f $(MPFILIB).tar.bz2 -j -C extern && \\

@@ -34,8 +34,7 @@
   accessed online at <URL>http://laurentbartholdi.github.com/float/</URL>.
   <P/>
   The latest release of the package may be downloaded as
-  <URL>https://github.com/laurentbartholdi/float/archive/&Version;.tar.gz</URL> (tar, gzipped) and
-  <URL>https://github.com/laurentbartholdi/float/archive/&Version;.zip</URL> (zip).
+  <URL>http://www.uni-math.gwdg.de/laurent/archive/float-&Version;.tar.gz</URL> (tar, gzipped).
   The latest repository version (possibly unstable) may be downloaded as
   <URL>https://github.com/laurentbartholdi/float/tarball/master</URL> (tar, gzipped),
   <URL>https://github.com/laurentbartholdi/float.git</URL> (git repository), or
@@ -45,7 +44,7 @@
     For comments or questions on <Package>Float</Package> please contact
     the author.
   </Abstract>
-  <Copyright>&copyright; 2011-2012 by Laurent Bartholdi
+  <Copyright>&copyright; 2011-2014 by Laurent Bartholdi
   </Copyright>
   <Acknowledgements>Part of this work is supported by the "Swiss
   National Fund for Scientific Research (SNF)", the "German National Science Foundation (DFG)",

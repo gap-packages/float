@@ -31,11 +31,11 @@ Changelog:
 
 tarball: Changelog doc
 	mkdir float-$(VERSION)
-	tar -c -f - --exclude Makefile --exclude float-$(VERSION) --exclude 'float-*xz*' --exclude 'lt*sh' --exclude 'lt*m4' --exclude 'libtool*' --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'float/Makefile*' --exclude autom4te.cache --exclude sandbox --exclude bin --exclude extern . | (cd  float-$(VERSION); tar xf -)
-	tar -c -f - float-$(VERSION) | xz -9 > float-$(VERSION).tar.xz
+	COPYFILE_DISABLE=true tar -c -f - --exclude Makefile --exclude float-$(VERSION) --exclude 'float-*xz*' --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'Makefile' --exclude autom4te.cache --exclude autom4te.cache --exclude bin --exclude 'stamp-*' --exclude extern . | (cd float-$(VERSION); tar xf -)
+	COPYFILE_DISABLE=true tar -c -z -f float-$(VERSION).tar.gz float-$(VERSION)
 	rm -rf float-$(VERSION)
-	gpg --default-key 184873BE --armor --detach-sign --yes float-$(VERSION).tar.xz
-	scp float-$(VERSION).tar.xz* rlaurent.uni-math.gwdg.de:public_html/archive/
+	gpg --default-key 184873BE --armor --detach-sign --yes float-$(VERSION).tar.gz
+	scp float-$(VERSION).tar.gz* rlaurent.uni-math.gwdg.de:public_html/archive/
 
 doc: doc/chap0.html
 

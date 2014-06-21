@@ -191,10 +191,12 @@ typedef Obj (*ObjFunc)(); // I never could get the () and * right
     Inc1_CXSC_arg(name##_RI,"cxsc::ri"),		\
     Inc1_CXSC_arg(name##_CI,"cxsc::ci")
 
+typedef long long llong;
+
 static Obj CXSC_INT (Obj self, Obj f)
 {
   TEST_IS_INTOBJ(CXSC_INT,f);
-  return OBJ_RP(INT_INTOBJ(f));
+  return OBJ_RP(Double(INT_INTOBJ(f)));
 }
 
 #define VAL_MACFLOAT(obj) (*(Double *)ADDR_OBJ(obj))
@@ -338,8 +340,8 @@ static Obj INT_CXSC (Obj self, Obj f)
   if (r < 0.0)
     r = -r, sign = -1;
   for (Int i = 1L << NR_SMALL_INT_BITS; i; i >>= 1)
-    if (r >= i)
-      r = r-i, n = n+i;
+    if (r >= Double(i))
+      r = r-Double(i), n = n+i;
   if (r >= 1.0)
     return Fail;
   else
@@ -1159,9 +1161,9 @@ static cxsc::real get_real (Obj l, int pos)
     case 4: return cxsc::QuietNaN;
     }
 
-  cxsc::real m = INT_INTOBJ(RemInt(mant,INTOBJ_INT(1 << 27)));
+  cxsc::real m = Double(INT_INTOBJ(RemInt(mant,INTOBJ_INT(1 << 27))));
   cxsc::times2pown(m,-27);
-  m += INT_INTOBJ(QuoInt(mant,INTOBJ_INT(1 << 27)));
+  m += Double(INT_INTOBJ(QuoInt(mant,INTOBJ_INT(1 << 27))));
   cxsc::times2pown(m,exp+27-INT_INTOBJ(FuncLog2Int(Fail,mant)));
   return m;
 }

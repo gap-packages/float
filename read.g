@@ -2,8 +2,6 @@
 ##
 #W read.g                                                   Laurent Bartholdi
 ##
-#H   @(#)$Id$
-##
 #Y Copyright (C) 2008, Laurent Bartholdi
 ##
 #############################################################################

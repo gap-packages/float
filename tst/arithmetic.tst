@@ -2,8 +2,6 @@
 ##
 #W  arithmetic.tst              Float Package               Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2011,  Laurent Bartholdi
 ##
 #############################################################################

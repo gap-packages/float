@@ -17,8 +17,6 @@
 InfoFloat := NewInfoClass("InfoFloat");
 SetInfoLevel(InfoFloat, 1);
 
-Revision.float := rec();
-
 #############################################################################
 BindGlobal("DOC@FLOAT", function()
     MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",

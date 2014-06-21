@@ -2,14 +2,10 @@
 ##
 #W  fplll.gi                      GAP library               Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2012 Laurent Bartholdi
 ##
 ##  This file deals with fplll's implementation of LLL lattice reduction
 ##
-Revision.float.fplll_gi :=
-  "@(#)$Id$";
 
 #!!! implement all options, arguments etc. to control quality of reduction
 InstallMethod(FPLLLReducedBasis, [IsMatrix], function(m)

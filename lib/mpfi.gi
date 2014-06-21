@@ -2,14 +2,10 @@
 ##
 #W  mpfi.gi                        GAP library              Laurent Bartholdi
 ##
-#H  @(#)$Id$
-##
 #Y  Copyright (C) 2008 Laurent Bartholdi
 ##
 ##  This file deals with interval floats
 ##
-Revision.float.mpfi_gi :=
-  "@(#)$Id$";
 
 ################################################################
 # viewers

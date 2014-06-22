@@ -191,8 +191,6 @@ typedef Obj (*ObjFunc)(); // I never could get the () and * right
     Inc1_CXSC_arg(name##_RI,"cxsc::ri"),		\
     Inc1_CXSC_arg(name##_CI,"cxsc::ci")
 
-typedef long long llong;
-
 static Obj CXSC_INT (Obj self, Obj f)
 {
   TEST_IS_INTOBJ(CXSC_INT,f);

@@ -31,7 +31,7 @@ Changelog:
 
 tarball: Changelog doc
 	mkdir float-$(VERSION)
-	COPYFILE_DISABLE=true tar -c -f - --exclude Makefile --exclude float-$(VERSION) --exclude 'float-*xz*' --exclude '*~' --exclude '.[a-z]*' --exclude 'config.log' --exclude 'Makefile' --exclude autom4te.cache --exclude autom4te.cache --exclude bin --exclude 'stamp-*' --exclude extern . | (cd float-$(VERSION); tar xf -)
+	COPYFILE_DISABLE=true tar -c -f - --exclude float-$(VERSION) --exclude 'float-*gz*' --exclude '*~' --exclude '.[a-z]*' --exclude 'stamp-*' --exclude config.log --exclude Makefile --exclude autom4te.cache --exclude bin --exclude extern . | (cd float-$(VERSION); tar xf -)
 	COPYFILE_DISABLE=true tar -c -z -f float-$(VERSION).tar.gz float-$(VERSION)
 	rm -rf float-$(VERSION)
 	gpg --default-key 184873BE --armor --detach-sign --yes float-$(VERSION).tar.gz

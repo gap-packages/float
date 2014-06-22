@@ -674,8 +674,11 @@ static Obj ROOTPOLY_MPC (Obj self, Obj coeffs, Obj precision)
   mpc_t op[degree+1], zero[degree];
   mp_prec_t prec = INT_INTOBJ(precision);
 
-  if (degree < 1)
-    return Fail;
+  if (degree < 1) {
+    result = NEW_PLIST(T_PLIST,0);
+    SET_LEN_PLIST(result,0);
+    return result;
+  }
 
   for (i = 0; i <= degree; i++) {
     mpc_init2(op[degree-i],mpc_get_prec(GET_MPC(ELM_PLIST(coeffs,i+1))));

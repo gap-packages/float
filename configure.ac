@@ -51,6 +51,26 @@ AC_CHECK_MPC
 AC_CHECK_CXSC
 AC_CHECK_FPLLL
 
+if test "$MAKE_LIBTARGETS" != ""; then # disable external compilation
+  AC_ERROR([You need to first install the external libraries$MAKE_LIBTARGETS, and then rerun './configure'])
+fi
+
+# how to get files from the web
+WGET=""
+AC_PATH_PROG(WGET,wget)
+if test "$WGET" != ""; then
+    WGET="$WGET --tries=1 --timeout=10 --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
+else
+    AC_PATH_PROG(CURL,curl)
+    if test "$CURL" != ""; then
+        WGET="$CURL --retry 1 --connect-timeout 10 -s -O"; WGET_NOCERTIFICATE="";
+    else
+        AC_WARN([Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl.])
+    fi
+fi
+AC_SUBST(WGET)
+AC_SUBST(WGET_NOCERTIFICATE)
+
 ################################################################
 # generate files
 

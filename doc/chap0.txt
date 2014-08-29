@@ -3,10 +3,10 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.6.0
+                                 Version 0.6.1
   
   
-                                   21/06/2014
+                                   29/06/2014
   
   
                                Laurent Bartholdi
@@ -60,7 +60,9 @@
   3 [33X[0;0YPolynomials[133X
     3.1 [33X[0;0YThe Floats pseudo-field[133X
     3.2 [33X[0;0YRoots of polynomials[133X
-    3.3 [33X[0;0YLLL lattice reduction[133X
+    3.3 [33X[0;0YFinding integer relations[133X
+      3.3-1 PSLQ
+    3.4 [33X[0;0YLLL lattice reduction[133X
   4 [33X[0;0YImplemented packages[133X
     4.1 [33X[0;0YMPFR[133X
       4.1-1 IsMPFRFloat

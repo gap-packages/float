@@ -39,6 +39,9 @@ BindGlobal("defaultgamma@", 2.0/Sqrt(3.0));
 ##
 ##     <P/><M>\beta</M> and <M>\gamma</M> are algorithm tuning parameters, and
 ##     default to <M>4/10</M> and <M>2/\sqrt(3)</M> respectively.
+##
+##     <P/>The second form implements the "Multi-pair" variant of the algorithm, which is
+##     better suited to parallelization.
 ## <Example><![CDATA[
 ## gap> PSLQ([1.0,(1+Sqrt(5.0))/2],1.e-2);
 ## [ 55, -34 ] # Fibonacci numbers

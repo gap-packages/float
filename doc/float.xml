@@ -167,6 +167,10 @@ complex polynomial.
 
 </Section>
 
+<Section><Heading>Finding integer relations</Heading>
+<#Include Label="PSLQ">
+</Section>
+
 <Section><Heading>LLL lattice reduction</Heading>
 
 A faster implementation of the LLL lattice reduction algorithm has
@@ -205,6 +209,7 @@ also been implemented. It is accessible via the commands
 
 </Body>
 
+<Bibliography Databases="floatbib.xml"/>
 <TheIndex/>
 
 </Book>

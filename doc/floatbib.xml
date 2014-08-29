@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE file SYSTEM "bibxmlext.dtd">
+<file>
+<entry id="MR1836930"><article>
+  <author>
+    <name><first>David H.</first><last>Bailey</last></name>
+    <name><first>David J.</first><last>Broadhurst</last></name>
+  </author>  
+  <title>Parallel integer relation detection: techniques and
+              applications</title>
+  <journal>Math. Comp.</journal>
+  <year>2001</year>
+  <volume>70</volume>
+  <number>236</number>
+  <pages>1719--1736 (electronic)</pages>
+  <issn>0025-5718</issn>
+  <mrnumber>1836930 (2002b:11174)</mrnumber>
+  <mrclass>11Y16</mrclass>
+  <mrreviewer>David Bradley</mrreviewer>
+  <url>http://dx.doi.org/10.1090/S0025-5718-00-01278-3</url>
+  <other type="coden">MCMPAF</other>
+  <other type="doi">10.1090/S0025-5718-00-01278-3</other>
+  <other type="fjournal">Mathematics of Computation</other>
+</article></entry>
+</file>

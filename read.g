@@ -15,6 +15,7 @@
 #R Read the install files.
 ##
 ReadPackage("float", "lib/polynomial.gi");
+ReadPackage("float", "lib/pslq.gi");
 
 if IsBound(MPFR_INT) then
     ReadPackage("float", "lib/mpfr.gi");

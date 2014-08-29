@@ -20,7 +20,7 @@ SetInfoLevel(InfoFloat, 1);
 #############################################################################
 BindGlobal("DOC@FLOAT", function()
     MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",
-            ["../lib/float.gd","../PackageInfo.g"],"float");
+            ["../lib/float.gd","../lib/pslq.gi","../PackageInfo.g"],"float");
     CopyHTMLStyleFiles("doc");
     GAPDocManualLab("Float");
 end);

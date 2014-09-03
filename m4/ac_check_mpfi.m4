@@ -11,6 +11,16 @@ MPFI=unknown
 MPFI_WITH=""
 MPFI_DEPEND=""
 
+MPFI_MAKELIB=`printf 'mpfi: $(MPFILIB).tar.bz2 %s \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
+	if ! test -r $(EXTERN)/include/mpfi.h; then \\
+	    rm -rf $(MPFILIB) && \\
+	    tar -x -f $(MPFILIB).tar.bz2 -j -C extern && \\
+	    cd $(MPFILIB) && \\
+	    ./configure %s %s --prefix=$(EXTERN) && \\
+	    $(MAKE) install; \\
+	fi\n\n\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
+
 AC_ARG_WITH(mpfi,
  [  --with-mpfi=<location>
     Location at which the MPFI library was installed.
@@ -80,16 +90,6 @@ fi
 fi
 
 if test "$MPFI" = extern; then
-
-MPFI_MAKELIB=`printf 'mpfi: $(MPFILIB).tar.bz2 %s  \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
-	if ! test -r $(EXTERN)/include/mpfi.h; then \\
-	    rm -rf $(MPFILIB) && \\
-	    tar -x -f $(MPFILIB).tar.bz2 -j -C extern && \\
-	    cd $(MPFILIB) && \\
-	    ./configure %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
 
 MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpfi"
 MPFI_CFLAGS='-I$(EXTERN)/include'

@@ -52,7 +52,7 @@ AC_CHECK_CXSC
 AC_CHECK_FPLLL
 
 if test "$MAKE_LIBTARGETS" != ""; then # disable external compilation
-  AC_ERROR([You need to first install the external libraries$MAKE_LIBTARGETS, and then rerun './configure'])
+    AC_WARN([The Makefile will have to first compile the external libraries$MAKE_LIBTARGETS; this is a hack, so cross your fingers.])
 fi
 
 # how to get files from the web
@@ -75,7 +75,8 @@ AC_SUBST(WGET_NOCERTIFICATE)
 # generate files
 
 mkdir -p bin/$GAPARCH
-##mkdir -p extern
+mkdir -p extern
+
 ##CONFIG_STATUS=bin/$GAPARCH/config.status
 ##
 ##AC_CONFIG_FILES([$GAP_MAKEFILE:Makefile.in])

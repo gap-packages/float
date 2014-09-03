@@ -11,6 +11,16 @@ FPLLL=unknown
 FPLLL_WITH=""
 FPLLL_DEPEND=""
 
+FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
+	if ! test -r $(EXTERN)/include/fplll.h; then \\
+	    rm -rf $(FPLLLLIB) && \\
+	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\
+	    cd $(FPLLLLIB) && \\
+	    ./configure CPPFLAGS="%s %s $(CPPFLAGS)" LDFLAGS="%s %s $(LDFLAGS)" %s %s --prefix=$(EXTERN) && \\
+	    $(MAKE) install; \\
+	fi\n' "$MPFR_DEPEND" "$GMP_CFLAGS" "$MPFR_CFLAGS" "$GMP_LDFLAGS" "$MPFR_LDFLAGS" "$GMP_WITH" "$MPFR_WITH"`
+
 AC_ARG_WITH(fplll,
  [  --with-fplll=<location>
     Location at which the FPLLL library was installed.
@@ -83,16 +93,6 @@ fi
 fi
 
 if test "$FPLLL" = extern; then
-
-FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
-	if ! test -r $(EXTERN)/include/fplll.h; then \\
-	    rm -rf $(FPLLLLIB) && \\
-	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\
-	    cd $(FPLLLLIB) && \\
-	    ./configure CPPFLAGS="%s %s $(CPPFLAGS)" LDFLAGS="%s %s $(LDFLAGS)" %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$MPFR_DEPEND" "$GMP_CFLAGS" "$MPFR_CFLAGS" "$GMP_LDFLAGS" "$MPFR_LDFLAGS" "$GMP_WITH" "$MPFR_WITH"`
 
 MAKE_LIBTARGETS="$MAKE_LIBTARGETS fplll"
 FPLLL_CFLAGS='-I$(EXTERN)/include'

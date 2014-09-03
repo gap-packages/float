@@ -11,6 +11,16 @@ MPC=unknown
 MPC_WITH=""
 MPC_DEPEND=""
 
+MPC_MAKELIB=`printf 'mpc: $(MPCLIB).tar.gz %s  \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
+	if ! test -r $(EXTERN)/include/mpc.h; then \\
+	    rm -rf $(MPCLIB) && \\
+	    tar -x -f $(MPCLIB).tar.gz -z -C extern && \\
+	    cd $(MPCLIB) && \\
+	    ./configure %s %s --prefix=$(EXTERN) && \\
+	    $(MAKE) install; \\
+	fi\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
+
 AC_ARG_WITH(mpc,
  [  --with-mpc=<location>
     Location at which the MPC library was installed.
@@ -80,16 +90,6 @@ fi
 fi
 
 if test "$MPC" = extern; then
-
-MPC_MAKELIB=`printf 'mpc: $(MPCLIB).tar.gz %s  \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
-	if ! test -r $(EXTERN)/include/mpc.h; then \\
-	    rm -rf $(MPCLIB) && \\
-	    tar -x -f $(MPCLIB).tar.gz -z -C extern && \\
-	    cd $(MPCLIB) && \\
-	    ./configure %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
 
 MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpc"
 MPC_CFLAGS='-I$(EXTERN)/include'

@@ -60,11 +60,57 @@ $(FPLLLLIB).tar.gz:
 	mkdir -p extern
 	(cd extern; $(WGET) http://xpujol.net/fplll/libfplll-4.0.1.tar.gz)
 
-# @MPFR_MAKELIB@
-# @MPFI_MAKELIB@
-# @MPC_MAKELIB@
-# @CXSC_MAKELIB@
-# @FPLLL_MAKELIB@
+mpfr: $(MPFRLIB).tar.bz2
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+	if ! test -r $(EXTERN)/include/mpfr.h; then \
+	    rm -rf $(MPFRLIB) && \
+	    tar -x -f $(MPFRLIB).tar.bz2 -j -C extern && \
+	    cd $(MPFRLIB) && \
+	    ./configure $(WITH_GMP) --prefix=$(EXTERN) && \
+	    $(MAKE) install; \
+	fi
+
+mpfi: $(MPFILIB).tar.bz2 
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+	if ! test -r $(EXTERN)/include/mpfi.h; then \
+	    rm -rf $(MPFILIB) && \
+	    tar -x -f $(MPFILIB).tar.bz2 -j -C extern && \
+	    cd $(MPFILIB) && \
+	    ./configure $(WITH_GMP) --prefix=$(EXTERN) && \
+	    $(MAKE) install; \
+	fi
+
+mpc: $(MPCLIB).tar.gz
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+	if ! test -r $(EXTERN)/include/mpc.h; then \
+	    rm -rf $(MPCLIB) && \
+	    tar -x -f $(MPCLIB).tar.gz -z -C extern && \
+	    cd $(MPCLIB) && \
+	    ./configure $(WITH_GMP) --prefix=$(EXTERN) && \
+	    $(MAKE) install; \
+	fi
+
+cxsc: $(CXSCLIB).tar.gz
+	mkdir -p $(EXTERN)
+	rm -f $(EXTERN)/cxsc
+	ln -s . $(EXTERN)/cxsc
+	if ! test -r $(EXTERN)/include/real.hpp; then \
+	    rm -rf $(CXSCLIB) && \
+	    tar -x -f $(CXSCLIB).tar.gz -z -C extern && \
+	    cd $(CXSCLIB) && \
+	    (echo "yes"; for i in 1 2 3 4 5 6 7 8 9 10; do echo ""; done) | \
+		HOME=$(EXTERN) ./install_cxsc; \
+	fi
+
+fplll: $(FPLLLLIB).tar.gz
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib
+	if ! test -r $(EXTERN)/include/fplll.h; then \
+	    rm -rf $(FPLLLLIB) && \
+	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \
+	    cd $(FPLLLLIB) && \
+	    ./configure CPPFLAGS="-I$(GMP_ROOT)/include $(CPPFLAGS)" LDFLAGS="-L$(GMP_ROOT)/lib $(LDFLAGS)" $(WITH_GMP) --prefix=$(EXTERN) && \
+	    $(MAKE) install; \
+	fi
 
 Changelog:
 	gitlog-to-changelog > $@
@@ -97,7 +143,7 @@ wwwdir: doc
 	(cd doc; git add *.html manual.pdf manual.css PackageInfo.g README.float; git commit -m 'New html files'; git push github master:gh-pages --force)
 	rm doc/PackageInfo.g doc/README.float
 
-all: all-recursive
+all: @MAKE_LIBTARGETS@ all-recursive
 	mkdir -p bin/@GAPARCH@
 	cp src/.libs/float.so bin/@GAPARCH@/
 

@@ -6,6 +6,8 @@
 ##
 #############################################################################
 
+EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
+
 libdir = $(GAPROOT)/pkg/$(PACKAGE)/bin/$(GAPARCH)
 
 lib_LTLIBRARIES = float.la

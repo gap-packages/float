@@ -11,6 +11,21 @@ CXSC=unknown
 CXSC_WITH=""
 CXSC_DEPEND=""
 
+# a dirty hack: we'll pretend our home directory
+# is $(EXTERN), and the installation will go into $(EXTERN)/cxsc
+
+CXSC_MAKELIB=`printf 'cxsc: $(CXSCLIB).tar.gz \\
+	mkdir -p $(EXTERN) \\
+	rm -f $(EXTERN)/cxsc \\
+	ln -s . $(EXTERN)/cxsc \\
+	if ! test -r $(EXTERN)/include/real.hpp; then \\
+	    rm -rf $(CXSCLIB) && \\
+	    tar -x -f $(CXSCLIB).tar.gz -z -C extern && \\
+	    cd $(CXSCLIB) && \\
+	    (echo "yes"; for i in 1 2 3 4 5 6 7 8 9 10; do echo ""; done) | \\
+		HOME=$(EXTERN) ./install_cxsc; \\
+	fi\n'`
+
 AC_ARG_WITH(cxsc,
  [  --with-cxsc=<location>
     Location at which the CXSC library was installed.
@@ -76,21 +91,6 @@ fi
 fi
 
 if test "$CXSC" = extern; then
-
-# a dirty hack: we'll pretend our home directory
-# is $(EXTERN), and the installation will go into $(EXTERN)/cxsc
-
-CXSC_MAKELIB=`printf 'cxsc: $(CXSCLIB).tar.gz \\
-	mkdir -p $(EXTERN) \\
-	rm -f $(EXTERN)/cxsc \\
-	ln -s . $(EXTERN)/cxsc \\
-	if ! test -r $(EXTERN)/include/real.hpp; then \\
-	    rm -rf $(CXSCLIB) && \\
-	    tar -x -f $(CXSCLIB).tar.gz -z -C extern && \\
-	    cd $(CXSCLIB) && \\
-	    (echo "yes"; for i in 1 2 3 4 5 6 7 8 9 10; do echo ""; done) | \\
-		HOME=$(EXTERN) ./install_cxsc; \\
-	fi\n'`
 
 MAKE_LIBTARGETS="$MAKE_LIBTARGETS cxsc"
 CXSC_CFLAGS='-I$(EXTERN)/include'

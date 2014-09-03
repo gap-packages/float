@@ -11,6 +11,16 @@ MPFR=unknown
 MPFR_WITH=""
 MPFR_DEPEND=""
 
+MPFR_MAKELIB=`printf 'mpfr: $(MPFRLIB).tar.bz2  \\
+	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
+	if ! test -r $(EXTERN)/include/mpfr.h; then \\
+	    rm -rf $(MPFRLIB) && \\
+	    tar -x -f $(MPFRLIB).tar.bz2 -j -C extern && \\
+	    cd $(MPFRLIB) && \\
+	    ./configure %s --prefix=$(EXTERN) && \\
+	    $(MAKE) install; \\
+	fi\n' "$GMP_WITH"`
+
 AC_ARG_WITH(mpfr,
  [  --with-mpfr=<location>
     Location at which the MPFR library was installed.
@@ -76,16 +86,6 @@ fi
 fi
 
 if test "$MPFR" = extern; then
-
-MPFR_MAKELIB=`printf 'mpfr: $(MPFRLIB).tar.bz2  \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
-	if ! test -r $(EXTERN)/include/mpfr.h; then \\
-	    rm -rf $(MPFRLIB) && \\
-	    tar -x -f $(MPFRLIB).tar.bz2 -j -C extern && \\
-	    cd $(MPFRLIB) && \\
-	    ./configure %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$GMP_WITH"`
 
 MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpfr"
 MPFR_CFLAGS='-I$(EXTERN)/include'

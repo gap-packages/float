@@ -23,17 +23,7 @@
 #include <gmp.h>
 
 #include <mpfr.h>
-#include "src/system.h"
-#include "src/gasman.h"
-#include "src/objects.h"
-#include "src/gap.h"
-#include "src/gmpints.h"
-#include "src/bool.h"
-#include "src/string.h"
-#include "src/macfloat.h"
-#include "src/plist.h"
-#include "src/calls.h"
-#include "src/opers.h"
+#include "src/compiled.h"
 #include "floattypes.h"
 
 Obj TYPE_MPFR, IsMPFRFloat, GAP_INFINITY;

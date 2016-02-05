@@ -21,14 +21,7 @@
 #include <stdio.h>
 #include <gmp.h>
 
-#include "src/system.h"
-#include "src/gasman.h"
-#include "src/objects.h"
-#include "src/gap.h"
-#include "src/gmpints.h"
-#include "src/bool.h"
-#include "src/string.h"
-#include "src/plist.h"
+#include "src/compiled.h"
 #include "floattypes.h"
 
 #define LMANTISSA_MPFI(p) ((mp_limb_t *) (p+1))

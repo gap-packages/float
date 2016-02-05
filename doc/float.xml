@@ -30,16 +30,16 @@
   <URL>http://gap-system.org</URL>.
   <P/>
   This documentation for <Package>Float</Package> is available at
-  <URL>http://laurentbartholdi.github.com/float/manual.pdf</URL> in PDF format, and may be
-  accessed online at <URL>http://laurentbartholdi.github.com/float/</URL>.
+  <URL>http://gap-packages.github.io/float/manual.pdf</URL> in PDF format, and may be
+  accessed online at <URL>http://gap-packages.github.io/float/</URL>.
   <P/>
   The latest release of the package may be downloaded as
   <URL>http://www.uni-math.gwdg.de/laurent/archive/float-&Version;.tar.gz</URL> (tar, gzipped).
   The latest repository version (possibly unstable) may be downloaded as
-  <URL>https://github.com/laurentbartholdi/float/tarball/master</URL> (tar, gzipped),
-  <URL>https://github.com/laurentbartholdi/float.git</URL> (git repository),
+  <URL>https://github.com/gap-packages/float/tarball/master</URL> (tar, gzipped),
+  <URL>https://github.com/gap-packages/float.git</URL> (git repository),
   <URL>https://packages.debian.org/search?keywords=gap-float&amp;searchon=names&amp;suite=all&amp;section=all</URL> (debian package), or
-  explored at <URL>https://github.com/laurentbartholdi/float/tree/master/</URL>.
+  explored at <URL>https://github.com/gap-packages/float/tree/master/</URL>.
   </Alt>
   <P/>
     For comments or questions on <Package>Float</Package> please contact

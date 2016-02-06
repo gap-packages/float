@@ -25,15 +25,7 @@
 #include <gmp.h>
 
 extern "C" {
-#include "src/system.h"
-#include "src/gasman.h"
-#include "src/objects.h"
-#include "src/macfloat.h"
-#include "src/gap.h"
-#include "src/bool.h"
-#include "src/plist.h"
-#include "src/calls.h"
-#include "src/opers.h"
+#include "src/compiled.h"
 #include "floattypes.h"
 }
 #include <fplll.h>

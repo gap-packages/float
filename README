@@ -8,7 +8,7 @@ based on the C libraries MPFR, MPFI, MPC and CXSC.
 The package is distributed in source form, and does not require anything
 else than a running GAP 4.7 or later. For updates, check
 
-     https://github.com/laurentbartholdi/float/
+     https://github.com/gap-packages/float/
   
 To use the package, your must first compile it; this is done by invoking
 `./configure' and then `make' in the main directory (where this file is).

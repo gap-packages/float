@@ -33,12 +33,12 @@ Persons := [
 
 Status := "deposited",
 
-README_URL := "http://laurentbartholdi.github.com/float/README.float",
-PackageInfoURL := "http://laurentbartholdi.github.com/float/PackageInfo.g",
+README_URL := "http://gap-packages.github.io/float/README.float",
+PackageInfoURL := "http://gap-packages.github.io/float/PackageInfo.g",
 AbstractHTML := "The <span class=\"pkgname\">Float</span> package allows \
                     GAP to manipulate floating-point numbers with arbitrary \
                     precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
-PackageWWWHome := "http://laurentbartholdi.github.com/float/",
+PackageWWWHome := "http://gap-packages.github.io/float/",
 
 PackageDoc := rec(
   BookName  := "Float",

@@ -2,7 +2,7 @@
 ##
 #W init.g                                                   Laurent Bartholdi
 ##
-#Y Copyright (C) 2008-2014, Laurent Bartholdi
+#Y Copyright (C) 2008-2016, Laurent Bartholdi
 ##
 #############################################################################
 ##
@@ -18,13 +18,6 @@ InfoFloat := NewInfoClass("InfoFloat");
 SetInfoLevel(InfoFloat, 1);
 
 #############################################################################
-BindGlobal("DOC@FLOAT", function()
-    MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",
-            ["../lib/float.gd","../lib/pslq.gi","../PackageInfo.g"],"float");
-    CopyHTMLStyleFiles("doc");
-    GAPDocManualLab("Float");
-end);
-
 if GAPInfo.TermEncoding = "UTF-8" then
     BindGlobal("FLOAT_INFINITY_STRING","∞"); # UChar(8734)
     BindGlobal("FLOAT_NINFINITY_STRING","-∞"); # UChar(8734)
@@ -44,7 +37,9 @@ fi;
 CallFuncList(function()
     local f;
     f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f<>fail then
+    if f=fail then
+        Info(InfoPackageLoading,1,"No dynamic library loaded for Float -- couldn't find file");
+    else
         LoadDynamicModule(f);
     fi;
 end,[]);

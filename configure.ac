@@ -2,7 +2,7 @@
 ##
 #W  configure.ac                                            Laurent Bartholdi
 ##
-#Y Copyright (C) 2012-2014, Laurent Bartholdi
+#Y Copyright (C) 2012-2016, Laurent Bartholdi
 ##
 #############################################################################
 
@@ -35,7 +35,9 @@ AC_C_INLINE
 # Locates GAP
 AC_FIND_GAP
 GMP_CFLAGS="$GAP_CPPFLAGS"
-GMP_LDFLAGS="-L$GMP_ROOT/lib" # not very good, maybe the libraries are not there
+GMP_LDFLAGS="-L$ARCHPATH/extern/gmp/lib"
+AC_SUBST(GMP_CFLAGS)
+AC_SUBST(GMP_LDFLAGS)
 
 AC_SYS_IS_CYGWIN
 AC_SYS_IS_DARWIN
@@ -50,6 +52,8 @@ AC_CHECK_MPFI
 AC_CHECK_MPC
 AC_CHECK_CXSC
 AC_CHECK_FPLLL
+
+echo XXXX $MPFR_LDFLAGS XXXX
 
 if test "$MAKE_LIBTARGETS" != ""; then # disable external compilation
     AC_WARN([The Makefile will have to first compile the external libraries$MAKE_LIBTARGETS; this is a hack, so cross your fingers.])
@@ -88,6 +92,5 @@ mkdir -p extern
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
-	doc/Makefile
 	])
 AC_OUTPUT

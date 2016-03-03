@@ -6,7 +6,9 @@
 ##
 #############################################################################
 
-EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
+EXTERN=$(CURDIR)/../bin/@GAPARCH@/extern
+GMP_CFLAGS=@GMP_CFLAGS@
+GMP_LDFLAGS=@GMP_LDFLAGS@
 
 libdir = $(GAPROOT)/pkg/$(PACKAGE)/bin/$(GAPARCH)
 

@@ -1,0 +1,72 @@
+  
+  [1X3 [33X[0;0YPolynomials[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YThe Floats pseudo-field[133X[101X
+  
+  [33X[0;0YPolynomials  with  floating-point  coefficients  may  be manipulated in [5XGAP[105X;
+  though  they behave, in subtle ways, quite differently than polynomials over
+  rings.[133X
+  
+  [33X[0;0YThe  "pseudo-field"  of  floating-point  numbers is an object in [5XGAP[105X, called
+  [10XFLOAT_PSEUDOFIELD[110X.  (It  is  not  really  a  field, e.g. because addition of
+  floating-point  numbers  in  not  associative).  It  may  be  used to create
+  indeterminates, for example as[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Indeterminate(FLOAT_PSEUDOFIELD,"x");[127X[104X
+    [4X[28Xx[128X[104X
+    [4X[25Xgap>[125X [27X2*x^2+3;[127X[104X
+    [4X[28X2.0*x^2+3.0[128X[104X
+    [4X[25Xgap>[125X [27XValue(last,10);[127X[104X
+    [4X[28X203.0[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YRoots of polynomials[133X[101X
+  
+  [33X[0;0YThe Jenkins-Traub algorithm has been implemented, in arbitrary precision for
+  MPFR and MPC.[133X
+  
+  [33X[0;0YFurthermore,  CXSC can provide complex enclosures for the roots of a complex
+  polynomial.[133X
+  
+  
+  [1X3.3 [33X[0;0YFinding integer relations[133X[101X
+  
+  [33X[0;0YThe  PSLQ  algorithm has been implemented by Steve A. Linton, as an external
+  contribution to [5XFloat[105X. This algorithm receives as input a vector of floats [22Xx[122X
+  and  a  required  precision  [22Xϵ[122X,  and seeks an integer vector [22Xv[122X such that [22X|x⋅
+  v|<ϵ[122X. The implementation follows quite closely the original article [BB01].[133X
+  
+  [1X3.3-1 PSLQ[101X
+  
+  [29X[2XPSLQ[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X] ) [32X function
+  [29X[2XPSLQ_MP[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X[, [3Xbeta[103X]] ) [32X function
+  [6XReturns:[106X  [33X[0;10YAn integer vector [22Xv[122X with [22X|x⋅ v|<ϵ[122X.[133X
+  
+  [33X[0;0YThe  PSLQ  algorithm  by  Bailey and Broadhurst (see [BB01]) searches for an
+  integer relation between the entries in [22Xx[122X.[133X
+  
+  [33X[0;0Y[22Xβ[122X  and  [22Xγ[122X are algorithm tuning parameters, and default to [22X4/10[122X and [22X2/sqrt(3)[122X
+  respectively.[133X
+  
+  [33X[0;0YThe  second form implements the "Multi-pair" variant of the algorithm, which
+  is better suited to parallelization.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPSLQ([1.0,(1+Sqrt(5.0))/2],1.e-2);[127X[104X
+    [4X[28X[ 55, -34 ] # Fibonacci numbers[128X[104X
+    [4X[25Xgap>[125X [27XRootsFloat([1,-4,2]*1.0);[127X[104X
+    [4X[28X[ 0.292893, 1.70711 ] # roots of 2x^2-4x+1[128X[104X
+    [4X[25Xgap>[125X [27XPSLQ(List([0..2],i->last[1]^i),1.e-7);[127X[104X
+    [4X[28X[ 1, -4, 2 ] # a degree-2 polynomial fitting well[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.4 [33X[0;0YLLL lattice reduction[133X[101X
+  
+  [33X[0;0YA faster implementation of the LLL lattice reduction algorithm has also been
+  implemented.  It  is  accessible  via  the commands [10XFPLLLReducedBasis(m)[110X and
+  [10XFPLLLShortestVector(m)[110X.[133X
+  

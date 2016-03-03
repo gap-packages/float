@@ -1,102 +1,78 @@
 #############################################################################
 ##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+##  PackageInfo.g for the package `float'                   Laurent Bartholdi
 ##
-
 SetPackageInfo( rec(
-
-PackageName := "GitHubPagesForGAP",
-
-Subtitle := "A GitHubPages generator for GAP packages",
-Version := "0.1",
-Date := "21/03/2014", # dd/mm/yyyy format
-
+PackageName := "float",
+Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
+Version := "0.7.0",
+Date := "03/03/2016",
+## <#GAPDoc Label="Version">
+## <!ENTITY Version "0.7.0">
+## <!ENTITY Date "03/03/2016">
+## <#/GAPDoc>
+ArchiveURL := Concatenation("https://github.com/gap-packages/float/releases/download/v",~.Version,"/float-",~.Version),
+ArchiveFormats := ".tar.gz",
 Persons := [
-  rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
+  rec( 
+    LastName      := "Bartholdi",
+    FirstNames    := "Laurent",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "max.horn@math.uni-giessen.de",
-    WWWHome       := "http://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "AG Algebra\n",
+    Email         := "laurent.bartholdi@gmail.com",
+    WWWHome       := "http://www.uni-math.gwdg.de/laurent",
+    PostalAddress := Concatenation( [
                        "Mathematisches Institut\n",
-                       "Justus-Liebig-Universität Gießen\n",
-                       "Arndtstraße 2\n",
-                       "35392 Gießen\n",
-                       "Germany" ),
-    Place         := "Gießen",
-    Institution   := "Justus-Liebig-Universität Gießen"
-  ),
-
-  rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
-  ),
-
-  rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
-    IsAuthor      := false,
-    IsMaintainer  := true,
-    #Email         := "janitor@example.com",
-  ),
+                       "Bunsenstraße 3—5\n",
+                       "D-37073 Göttingen\n",
+                       "Germany" ] ),
+    Place         := "Göttingen",
+    Institution   := "Georg-August Universität zu Göttingen"
+  )
 ],
 
-Status := "other",
+Status := "deposited",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "fingolfin",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
-
-PackageWWWHome := Concatenation("http://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
-
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub pages.",
+README_URL := "http://gap-packages.github.io/float/README.float",
+PackageInfoURL := "http://gap-packages.github.io/float/PackageInfo.g",
+AbstractHTML := "The <span class=\"pkgname\">Float</span> package allows \
+                    GAP to manipulate floating-point numbers with arbitrary \
+                    precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
+PackageWWWHome := "http://gap-packages.github.io/float/",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  BookName  := "Float",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHubPages generator for GAP packages",
+  LongTitle := "Floating-point numbers",
+  Autoload  := true
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.5.5",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
+  GAP := ">=4.5.0",
+  NeededOtherPackages := [["GAPDoc",">=1.0"]],
+  SuggestedOtherPackages := [],
+  ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 
-AvailabilityTest := ReturnTrue,
+AvailabilityTest := function()
+    local f;
+    f := Filename(DirectoriesPackagePrograms("float"),"float.so");
+    if f=fail then
+        LogPackageLoadingMessage(PACKAGE_WARNING,
+            [Concatenation("The DLL program `",
+                Filename(DirectoriesPackagePrograms("float")[1],"float.so"),
+                    "' was not compiled, and is needed for the FLOAT package."),
+             "Run `./configure && make' in its home directory"]);
+    fi;
+    return f<>fail;
+end,
+                    
+BannerString := Concatenation("Loading FLOAT ", String(~.Version), " ...\n"),
 
-Keywords := ["GitHub pages", "GAP"]
-
+Autoload := false,
+TestFile := "tst/testall.g",
+Keywords := ["floating-point"]
 ));
-
-

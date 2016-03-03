@@ -53,8 +53,6 @@ AC_CHECK_MPC
 AC_CHECK_CXSC
 AC_CHECK_FPLLL
 
-echo XXXX $MPFR_LDFLAGS XXXX
-
 if test "$MAKE_LIBTARGETS" != ""; then # disable external compilation
     AC_WARN([The Makefile will have to first compile the external libraries$MAKE_LIBTARGETS; this is a hack, so cross your fingers.])
 fi

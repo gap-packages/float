@@ -3,7 +3,7 @@
 #fi;
 #AutoDoc(rec(gapdoc := rec(files:=["PackageInfo.g"])));
 
-MakeGAPDocDoc(Concatenation(GAPInfo.PackagesLoaded.float[1],"/doc"),"float",
+MakeGAPDocDoc("doc","float",
             ["../lib/float.gd","../lib/pslq.gi","../PackageInfo.g"],"float");
 CopyHTMLStyleFiles("doc");
 GAPDocManualLab("Float");

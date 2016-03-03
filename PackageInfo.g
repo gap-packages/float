@@ -11,7 +11,7 @@ Date := "03/03/2016",
 ## <!ENTITY Version "0.7.0">
 ## <!ENTITY Date "03/03/2016">
 ## <#/GAPDoc>
-ArchiveURL := Concatenation("http://www.uni-math.gwdg.de/laurent/archive/float-",~.Version),
+ArchiveURL := Concatenation("https://github.com/gap-packages/float/releases/download/v",~.Version,"/float-",~.Version),
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 

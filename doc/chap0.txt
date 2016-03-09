@@ -3,7 +3,7 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.7.0
+                                 Version 0.7.1
   
   
                                    03/03/2016

@@ -5,14 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.7.0",
+Version := "0.7.1",
 Date := "03/03/2016",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.7.0">
+## <!ENTITY Version "0.7.1">
 ## <!ENTITY Date "03/03/2016">
 ## <#/GAPDoc>
-ArchiveURL := Concatenation("https://github.com/gap-packages/float/releases/download/v",~.Version,"/float-",~.Version),
-ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
     LastName      := "Bartholdi",
@@ -33,15 +31,26 @@ Persons := [
 
 Status := "deposited",
 
-README_URL := "http://gap-packages.github.io/float/README.float",
-PackageInfoURL := "http://gap-packages.github.io/float/PackageInfo.g",
-AbstractHTML := "The <span class=\"pkgname\">Float</span> package allows \
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.", ~.PackageName ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
+ArchiveFormats := ".tar.gz",
+
+AbstractHTML := "The <span class=\"pkgname\">float</span> package allows \
                     GAP to manipulate floating-point numbers with arbitrary \
                     precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
 PackageWWWHome := "http://gap-packages.github.io/float/",
 
 PackageDoc := rec(
-  BookName  := "Float",
+  BookName  := "float",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -64,13 +73,13 @@ AvailabilityTest := function()
         LogPackageLoadingMessage(PACKAGE_WARNING,
             [Concatenation("The DLL program `",
                 Filename(DirectoriesPackagePrograms("float")[1],"float.so"),
-                    "' was not compiled, and is needed for the FLOAT package."),
+                    "' was not compiled, and is needed for the float package."),
              "Run `./configure && make' in its home directory"]);
     fi;
     return f<>fail;
 end,
                     
-BannerString := Concatenation("Loading FLOAT ", String(~.Version), " ...\n"),
+BannerString := Concatenation("Loading ", ~.PackageName, " ", String(~.Version), " ...\n"),
 
 Autoload := false,
 TestFile := "tst/testall.g",

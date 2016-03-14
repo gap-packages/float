@@ -13,7 +13,7 @@
     MPFR- and CXSC-based library for GAP
   </TitleComment>
   <Author>Laurent Bartholdi
-          <Email><Alt Only="HTML">laurent dot bartholdi at gmail dot com</Alt>
+          <Email><Alt Only="HTML">laurent.bartholdi@gmail.com</Alt>
 		 <Alt Not="HTML">laurent.bartholdi@gmail.com</Alt></Email> 
 	  <Homepage>http://www.uni-math.gwdg.de/laurent/</Homepage>
   </Author>
@@ -34,7 +34,7 @@
   accessed online at <URL>http://gap-packages.github.io/float/</URL>.
   <P/>
   The latest release of the package may be downloaded as
-  <URL>http://www.uni-math.gwdg.de/laurent/archive/float-&Version;.tar.gz</URL> (tar, gzipped).
+  <URL>https://github.com/gap-packages/float/releases/download/v&Version;/float-&.Version;.tar.gz</URL> (tar, gzipped).
   The latest repository version (possibly unstable) may be downloaded as
   <URL>https://github.com/gap-packages/float/tarball/master</URL> (tar, gzipped),
   <URL>https://github.com/gap-packages/float.git</URL> (git repository),
@@ -45,7 +45,7 @@
     For comments or questions on <Package>Float</Package> please contact
     the author.
   </Abstract>
-  <Copyright>&copyright; 2011-2014 by Laurent Bartholdi
+  <Copyright>&copyright; 2011-2016 by Laurent Bartholdi
   </Copyright>
   <Acknowledgements>Part of this work is supported by the "Swiss
   National Fund for Scientific Research (SNF)", the "German National Science Foundation (DFG)",
@@ -87,7 +87,7 @@ depending on whether high-precision real, interval or complex arithmetic are des
 whether a fast package containing all four real/complex element/interval arithmetic is desired:
 <Example><![CDATA[
 gap> LoadPackage("float");
-Loading FLOAT 0.3 ...
+Loading FLOAT 0.7.0 ...
 true
 gap> SetFloats(MPFR); # floating-point
 gap> x := 4*Atan(1.0);
@@ -128,6 +128,12 @@ gap> Cyc(last);
 E(8)-E(8)^3
 gap>
 gap> SetFloats(MPC); # complex numbers
+gap> z := 5.0-1.0i;
+.5e1-.1e1i
+gap> (1+1.0i)*last^4*(239+1.0i);
+.228488e6
+gap> Exp(6.2835i);
+.1e1+.314693e-3i
 ]]></Example>
 
 </Section>

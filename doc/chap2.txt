@@ -13,7 +13,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLoadPackage("float");[127X[104X
-    [4X[28XLoading FLOAT 0.3 ...[128X[104X
+    [4X[28XLoading FLOAT 0.7.0 ...[128X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSetFloats(MPFR); # floating-point[127X[104X
     [4X[25Xgap>[125X [27Xx := 4*Atan(1.0);[127X[104X
@@ -54,5 +54,11 @@
     [4X[28XE(8)-E(8)^3[128X[104X
     [4X[28Xgap>[128X[104X
     [4X[25Xgap>[125X [27XSetFloats(MPC); # complex numbers[127X[104X
+    [4X[25Xgap>[125X [27Xz := 5.0-1.0i;[127X[104X
+    [4X[28X.5e1-.1e1i[128X[104X
+    [4X[25Xgap>[125X [27X(1+1.0i)*last^4*(239+1.0i);[127X[104X
+    [4X[28X.228488e6[128X[104X
+    [4X[25Xgap>[125X [27XExp(6.2835i);[127X[104X
+    [4X[28X.1e1+.314693e-3i[128X[104X
   [4X[32X[104X
   

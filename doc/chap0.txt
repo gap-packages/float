@@ -3,10 +3,10 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.7.1
+                                 Version 0.7.2
   
   
-                                   03/03/2016
+                                   21/04/2016
   
   
                                Laurent Bartholdi
@@ -38,7 +38,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2011-2014 by Laurent Bartholdi[133X
+  [33X[0;0Y© 2011-2016 by Laurent Bartholdi[133X
   
   
   -------------------------------------------------------

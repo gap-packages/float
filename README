@@ -44,8 +44,8 @@ New floating-point handlers may be then set by typing
 SetFloats(MPFR,1000);
 
 to have 1000-bits floating-point numbers. For details on how to use the Float
-package, please consult the documentation. It is in the `doc' subdirectory
-(view `manual.pdf' with a PDF viewer, or `index.html' with a browser).
+package, please consult the documentation. It is in the `doc' subdirectory,
+see `manual.pdf'.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

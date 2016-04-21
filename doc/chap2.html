@@ -37,7 +37,7 @@
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("float");</span>
-Loading FLOAT 0.3 ...
+Loading FLOAT 0.7.0 ...
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetFloats(MPFR); # floating-point</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := 4*Atan(1.0);</span>
@@ -78,6 +78,12 @@ true
 E(8)-E(8)^3
 gap&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetFloats(MPC); # complex numbers</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := 5.0-1.0i;</span>
+.5e1-.1e1i
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(1+1.0i)*last^4*(239+1.0i);</span>
+.228488e6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exp(6.2835i);</span>
+.1e1+.314693e-3i
 </pre></div>
 
 

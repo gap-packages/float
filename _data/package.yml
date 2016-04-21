@@ -1,6 +1,6 @@
 name: float
-version: 0.7.1
-date: 03/03/2016
+version: 0.7.2
+date: 21/04/2016
 description: Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP
 
 authors:
@@ -19,12 +19,12 @@ needed-pkgs:
       url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
 
 www: http://gap-packages.github.io/float/
-readme: https://gap-packages.github.io/float/README.float
+readme: https://gap-packages.github.io/float/README
 packageinfo: https://gap-packages.github.io/float/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/float/releases/download/v0.7.1/float-0.7.1.tar.gz
+      url: https://github.com/gap-packages/float/releases/download/v0.7.2/float-0.7.2.tar.gz
 
 abstract: The <span class="pkgname">float</span> package allows                     GAP to manipulate floating-point numbers with arbitrary                     precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL
 

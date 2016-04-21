@@ -34,7 +34,7 @@
   accessed online at <URL>http://gap-packages.github.io/float/</URL>.
   <P/>
   The latest release of the package may be downloaded as
-  <URL>https://github.com/gap-packages/float/releases/download/v&Version;/float-&.Version;.tar.gz</URL> (tar, gzipped).
+  <URL>https://github.com/gap-packages/float/releases/download/v&Version;/float-&Version;.tar.gz</URL> (tar, gzipped).
   The latest repository version (possibly unstable) may be downloaded as
   <URL>https://github.com/gap-packages/float/tarball/master</URL> (tar, gzipped),
   <URL>https://github.com/gap-packages/float.git</URL> (git repository),

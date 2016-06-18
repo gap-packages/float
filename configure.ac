@@ -53,14 +53,14 @@ AC_CHECK_MPC
 AC_CHECK_CXSC
 AC_CHECK_FPLLL
 
-if test $MAKE_LIBTARGETS != ""; then # disable external compilation
-    AC_WARN([The Makefile will have to first compile the external libraries $MAKE_LIBTARGETS; this is a hack, so cross your fingers.])
+if ! test -z $MAKE_LIBTARGETS; then # disable external compilation
+    AC_ERROR([Compilation of the external libraries $MAKE_LIBTARGETS was requested, but is now disabled. Please install them manually and rerun configure.])
 fi
 
 # how to get files from the web
 WGET=""
 AC_PATH_PROG(WGET,wget)
-if test $WGET != ""; then
+if ! test -z $WGET; then
     WGET="$WGET --tries=1 --timeout=10 --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
 else
     AC_PATH_PROG(CURL,curl)

@@ -47,10 +47,10 @@ float_la_LIBADD += $(MPFR_LIBS) $(GMP_LIBS) $(LIBM)
 endif ## WITH_MPFR_IS_YES
 
 if WITH_CXSC_IS_YES
-float_la_SOURCES +=	cxsc.C cxsc_poly.C
-float_la_CFLAGS += $(CXSC_CFLAGS)
+float_la_SOURCES += cxsc.C cxsc_poly.C
+float_la_CPPFLAGS += $(CXSC_CFLAGS)
 float_la_LDFLAGS += $(CXSC_LDFLAGS)
 float_la_LIBADD += $(CXSC_LIBS)
-endif
+endif ## WITH_CXSC_IS_YES
 
 #E src/Makefile.am . . . . . . . . . . . . . . . . . . . . . . . . . ends here

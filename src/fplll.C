@@ -2,9 +2,7 @@
  *
  * fplll.C                                                  Laurent Bartholdi
  *
- *   @(#)$id: fr_dll.c,v 1.18 2010/10/26 05:19:40 gap exp $
- *
- * Copyright (c) 2012, Laurent Bartholdi
+ * Copyright (c) 2012-2016, Laurent Bartholdi
  *
  ****************************************************************************
  *
@@ -30,6 +28,14 @@ extern "C" {
 }
 #include <fplll.h>
 
+// compatibility between fplll 4 and 5
+#ifndef FPLLL_VERSION
+#define get_si getData
+#define get_d getData
+#define shortest_vector shortestVector
+#define lll_reduction lllReduction
+#endif
+
 typedef Obj (*ObjFunc)(); // I never could get the () and * right
 
 template <class Z> void SET_INTOBJ(Z_NR<Z> &v, Obj z);
@@ -39,7 +45,17 @@ template<> void SET_INTOBJ(Z_NR<mpz_t> &v, Obj z) {
   if (IS_INTOBJ(z))
     v = INT_INTOBJ(z);
   else
+#ifdef FPLLL_VERSION
+  {
+    mpz_t zz;
+    mpz_init(zz);
+    mpz_set(zz, mpz_MPZ(MPZ_LONGINT(z)));
+    v = zz;
+    mpz_clear(zz);
+  }
+#else
     mpz_set(v.getData(), mpz_MPZ(MPZ_LONGINT(z)));
+#endif    
 }
 
 template<> void SET_INTOBJ(Z_NR<long> &v, Obj z) {
@@ -57,13 +73,22 @@ template<> void SET_INTOBJ(Z_NR<double> &v, Obj z) {
 }
 
 template<> Obj GET_INTOBJ(Z_NR<mpz_t> &v) {
+#ifdef FPLLL_VERSION
+  mpz_t z;
+  mpz_init2 (z, 8*sizeof(long)+1);
+  v.get_mpz(z);
+  Obj o = INT_mpz(z);
+  mpz_clear(z);
+  return o;
+#else
   return INT_mpz(v.getData());
+#endif
 }
 
 template<> Obj GET_INTOBJ(Z_NR<long> &v) {
   mpz_t z;
   mpz_init2 (z, 8*sizeof(long)+1);
-  mpz_set_si(z,v.getData());
+  mpz_set_si(z,v.get_si());
   Obj o = INT_mpz(z);
   mpz_clear(z);
   return o;
@@ -72,7 +97,7 @@ template<> Obj GET_INTOBJ(Z_NR<long> &v) {
 template<> Obj GET_INTOBJ(Z_NR<double> &v) {
   mpz_t z;
   mpz_init2 (z, 8*sizeof(double)+1);
-  mpz_set_d(z,v.getData());
+  mpz_set_d(z,v.get_d());
   Obj o = INT_mpz(z);
   mpz_clear(z);
   return o;
@@ -85,24 +110,11 @@ template <> void SET_Z(Integer &s, const Z_NR<mpz_t> &t)
   s = t;
 }
 
-// in principle, the following 2 methods are not needed. However, mac's llvm-g++ requires them.
-#ifdef __APPLE__
-void SET_Z(Integer &s, const Z_NR<double> &t)
-{
-  s = t.getData();
-}
-
-void SET_Z(Integer &s, const Z_NR<long> &t)
-{
-  s = t.getData();
-}
-#endif
-
 template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
 {
   if (!IS_PLIST(gapmat)) return INTOBJ_INT(-1);
   Int numrows = LEN_PLIST(gapmat), numcols = -1;
-  
+
   for (int i = 1; i <= numrows; i++) {
     Obj row = ELM_PLIST(gapmat,i);
     if (numcols == -1)
@@ -159,7 +171,7 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
       if (IS_INTOBJ(v)) flags = INT_INTOBJ(v);
       else if (v != Fail) return INTOBJ_INT(-26);
     }
-    int result = lllReduction(mat, delta, eta, method, floatType, precision, flags);
+    int result = lll_reduction(mat, delta, eta, method, floatType, precision, flags);
 
     if (result != RED_SUCCESS)
       return INTOBJ_INT(10*result+1);
@@ -190,7 +202,7 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
       for (int j = 0; j < numcols; j++)
 	SET_Z(svpmat[i][j],mat[i][j]);
 
-    int result = shortestVector(svpmat, sol, method, flags);
+    int result = shortest_vector(svpmat, sol, method, flags);
 
     if (result != RED_SUCCESS)
       return INTOBJ_INT(10*result+2);
@@ -244,7 +256,7 @@ static Obj FPLLL (Obj self, Obj gapmat, Obj intType, Obj lllargs, Obj svpargs)
   }
 }
 
-static StructGVarFunc GVarFuncs [] = {  
+static StructGVarFunc GVarFuncs [] = {
   { "@FPLLL", 4, "mat, intType, lllargs, svpargs", (ObjFunc) FPLLL, "fplll.C:FPLLL" },
   { 0 }
 };

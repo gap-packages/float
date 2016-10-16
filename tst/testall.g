@@ -16,3 +16,5 @@ SetFloats(CXSC);
 Test(Filename(dirs,"arithmetic.tst"),rec(compareFunction:="uptowhitespace"));
 field := CXSC_PSEUDOFIELD;
 Test(Filename(dirs,"polynomials.tst"),rec(compareFunction:="uptowhitespace"));
+
+Test(Filename(dirs,"fplll.tst"),rec(compareFunction:="uptowhitespace"));

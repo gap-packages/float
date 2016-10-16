@@ -44,13 +44,18 @@ template <class Z> Obj GET_INTOBJ(Z_NR<Z> &v);
 template<> void SET_INTOBJ(Z_NR<mpz_t> &v, Obj z) {
   if (IS_INTOBJ(z))
     v = INT_INTOBJ(z);
-  else {
+  else
 #ifdef FPLLL_VERSION
-    v = mpz_MPZ(MPZ_LONGINT(z));
+  {
+    mpz_t zz;
+    mpz_init(zz);
+    mpz_set(zz, mpz_MPZ(MPZ_LONGINT(z)));
+    v = zz;
+    mpz_clear(zz);
+  }
 #else
     mpz_set(v.getData(), mpz_MPZ(MPZ_LONGINT(z)));
 #endif    
-  }
 }
 
 template<> void SET_INTOBJ(Z_NR<long> &v, Obj z) {

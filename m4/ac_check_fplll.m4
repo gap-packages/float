@@ -75,7 +75,7 @@ CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
 AC_CHECK_HEADER(fplll.h,,[temp_status=false],[#include <mpfr.h>])
 LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS"
 LIBS="$LIBS -lfplll -lgmp"
-AC_MSG_CHECKING([for lll_reduction in -lfplll])
+AC_MSG_CHECKING([for lllReduction / lll_reduction in -lfplll])
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[
 ZZ_mat<mpz_t> M(3,3);
 #ifdef FPLLL_VERSION

@@ -70,32 +70,33 @@ FPLLL_LIBS="-lfplll"
 if test "$FPLLL" != extern; then
 
 AC_LANG_PUSH([C++])
-temp_status=true
 CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
-AC_CHECK_HEADER(fplll.h,,[temp_status=false],[#include <mpfr.h>])
+AC_CHECK_HEADER(fplll.h,[found_fplll=true],[found_fplll=false],[#include <mpfr.h>])
 LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS"
 LIBS="$LIBS -lfplll -lgmp"
-AC_MSG_CHECKING([for lllReduction / lll_reduction in -lfplll])
-AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[
-ZZ_mat<mpz_t> M(3,3);
-#ifdef FPLLL_VERSION
-lll_reduction(M, 0.99, 0.51, LM_WRAPPER);
-#else
-lllReduction(M, 0.99, 0.51, LM_WRAPPER);
-#endif
-])],[AC_MSG_RESULT([yes])],[temp_status=false; AC_MSG_RESULT([no])])
+if test "$found_fplll" = true; then
+    AC_MSG_CHECKING([for lllReduction in -fplll (version 4.x)])
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[ZZ_mat<mpz_t> M(3,3);lllReduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes]);found_fplll=4],[AC_MSG_RESULT([no]);found_fplll=false])
+    if test "$found_fplll" = false; then
+	AX_CXX_COMPILE_STDCXX([11],[noext],[mandatory])
+	AC_MSG_CHECKING([for lllReduction in -fplll (version 5.x)])
+	AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[ZZ_mat<mpz_t> M(3,3);lll_reduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes]);found_fplll=5],[AC_MSG_RESULT([no]);found_fplll=false])
+    fi
+fi
 AC_LANG_POP([C++])
 
-if test "$temp_status" = false; then
+if test "$found_fplll" = false; then
     if test "$FPLLL" = yes; then
         AC_MSG_ERROR([library fplll not found. Using --with-fplll, specify its location, "extern" to compile it locally, or "no" to disable it.])
     else
         FPLLL=extern
+	found_fplll=4
     fi
 else
     FPLLL=yes
 fi
-
+FPLLL_VERSION="$found_fplll"
+AC_DEFINE(FPLLL_VERSION)
 fi
 
 if test "$FPLLL" = extern; then

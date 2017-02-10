@@ -392,7 +392,7 @@ static Obj OBJBYEXTREP_MPFR(Obj self, Obj list)
   if (IS_INTOBJ(m)) {
     f = NEW_MPFR(8*sizeof(long));
 
-    if (INT_INTOBJ(m) == 0) /* special cases */
+    if (m == INTOBJ_INT(0)) /* special cases */
       switch (INT_INTOBJ(e)) {
       case 0: /* 0 */
 	mpfr_set_si(MPFR_OBJ(f), 0, GMP_RNDN); return f;

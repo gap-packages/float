@@ -238,7 +238,7 @@ static Obj OBJBYEXTREP_MPC(Obj self, Obj list)
     else if (TNUM_OBJ(m) == T_INTPOS || TNUM_OBJ(m) == T_INTNEG)
       newprec = 8*sizeof(mp_limb_t)*SIZE_INT(m);
     else
-      ErrorReturnObj("OBJBYEXTREP_MPC: invalid argument %d", i+1,0,"");
+      ErrorQuit("OBJBYEXTREP_MPC: invalid argument %d", i+1,0);
     if (newprec > prec)
       prec = newprec;
   }
@@ -281,9 +281,8 @@ static Obj OBJBYEXTREP_MPC(Obj self, Obj list)
 	case 5: /* -nan */
 	  mpfr_set_nan (reim); break;
 	default:
-	  while(1)
-	    ErrorReturnObj("OBJBYEXTREP_MPC: invalid argument [%d,%d]",
-			   iarg, INT_INTOBJ(ELM_PLIST(list,i+2)),"");
+	  ErrorQuit("OBJBYEXTREP_MPC: invalid argument [%d,%d]",
+			   iarg, INT_INTOBJ(ELM_PLIST(list,i+2)));
 	}
 	i++; /* skip "exponent" */
 	continue;

@@ -223,9 +223,8 @@ static Obj OBJBYEXTREP_MPFI(Obj self, Obj list)
 	case 5: /* -nan */
 	  mpfr_set_nan (leftright); break;
 	default:
-	  while(1)
-	    ErrorReturnObj("OBJBYEXTREP_MPFI: invalid argument [%d,%d]",
-			   iarg, INT_INTOBJ(ELM_PLIST(list,i+2)),"");
+	  ErrorQuit("OBJBYEXTREP_MPFI: invalid argument [%d,%d]",
+			   iarg, INT_INTOBJ(ELM_PLIST(list,i+2)));
 	}
 	i++; /* skip "exponent" */
 	continue;

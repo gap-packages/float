@@ -392,7 +392,7 @@ static Obj OBJBYEXTREP_MPFR(Obj self, Obj list)
   if (IS_INTOBJ(m)) {
     f = NEW_MPFR(8*sizeof(long));
 
-    if (INT_INTOBJ(m) == 0) /* special cases */
+    if (m == INTOBJ_INT(0)) /* special cases */
       switch (INT_INTOBJ(e)) {
       case 0: /* 0 */
 	mpfr_set_si(MPFR_OBJ(f), 0, GMP_RNDN); return f;
@@ -408,9 +408,8 @@ static Obj OBJBYEXTREP_MPFR(Obj self, Obj list)
       case 5: /* -nan */
 	mpfr_set_nan (MPFR_OBJ(f)); return f;
       default:
-	while(1)
-	  ErrorReturnObj("OBJBYEXTREP_MPFR: invalid argument [%d,%d]",
-			 INT_INTOBJ(m), INT_INTOBJ(e),"");
+	ErrorQuit("OBJBYEXTREP_MPFR: invalid argument [%d,%d]",
+			 INT_INTOBJ(m), INT_INTOBJ(e));
       }
 
     mpfr_set_si(MPFR_OBJ(f), INT_INTOBJ(m), GMP_RNDN);

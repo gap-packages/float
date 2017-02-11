@@ -1141,7 +1141,7 @@ static cxsc::real get_real (Obj l, int pos)
 
   int exp = INT_INTOBJ(expobj);
 
-  if (EqInt(mant,INTOBJ_INT(0)))
+  if (mant == INTOBJ_INT(0))
     switch (exp) {
     case 0: return 0.0;
     case 1: return 1.0 / (-1.0 / 0.0);

@@ -96,7 +96,7 @@ else
     FPLLL=yes
 fi
 FPLLL_VERSION="$found_fplll"
-AC_DEFINE(FPLLL_VERSION)
+AC_DEFINE([FPLLL_VERSION], [], [fplll major version])
 fi
 
 if test "$FPLLL" = extern; then

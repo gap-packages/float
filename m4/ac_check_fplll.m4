@@ -77,11 +77,13 @@ LIBS="$LIBS -lfplll -lgmp"
 if test "$found_fplll" = true; then
     AC_MSG_CHECKING([for lllReduction in -fplll (version 4.x)])
     AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[ZZ_mat<mpz_t> M(3,3);lllReduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes]);found_fplll=4],[AC_MSG_RESULT([no]);found_fplll=false])
-    if test "$found_fplll" = false; then
-	AX_CXX_COMPILE_STDCXX([11],[noext],[mandatory])
-	AC_MSG_CHECKING([for lllReduction in -fplll (version 5.x)])
-	AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[ZZ_mat<mpz_t> M(3,3);lll_reduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes]);found_fplll=5],[AC_MSG_RESULT([no]);found_fplll=false])
-    fi
+fi
+if test "$found_fplll" = false; then
+    $as_unset ac_cv_header_fplll_h
+    AX_CXX_COMPILE_STDCXX([11],[noext],[mandatory])
+    AC_CHECK_HEADER(fplll.h,[found_fplll=true],[found_fplll=false],[#include <mpfr.h>])
+    AC_MSG_CHECKING([for lllReduction in -fplll (version 5.x)])
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <fplll.h>],[ZZ_mat<mpz_t> M(3,3);lll_reduction(M, 0.99, 0.51, LM_WRAPPER);])],[AC_MSG_RESULT([yes]);found_fplll=5],[AC_MSG_RESULT([no]);found_fplll=false])
 fi
 AC_LANG_POP([C++])
 

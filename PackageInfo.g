@@ -5,11 +5,11 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.7.5",
-Date := "18/02/2017",
+Version := "0.7.6",
+Date := "09/05/2017",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.7.5">
-## <!ENTITY Date "18/02/2017">
+## <!ENTITY Version "0.7.6">
+## <!ENTITY Date "09/05/2017">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -47,7 +47,7 @@ ArchiveFormats := ".tar.gz",
 AbstractHTML := "The <span class=\"pkgname\">float</span> package allows \
                     GAP to manipulate floating-point numbers with arbitrary \
                     precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
-PackageWWWHome := "http://gap-packages.github.io/float/",
+PackageWWWHome := "https://gap-packages.github.io/float/",
 
 PackageDoc := rec(
   BookName  := "float",

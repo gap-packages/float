@@ -49,7 +49,6 @@ bool Disjoint(cxsc::cinterval &a, cxsc::cinterval &b) {
 Obj TYPE_CXSC_RP, TYPE_CXSC_CP, TYPE_CXSC_RI, TYPE_CXSC_CI;
 Obj IS_CXSC_RP, IS_CXSC_CP, IS_CXSC_RI, IS_CXSC_CI;
 Obj FAMILY_CXSC;
-Obj FuncLog2Int;
 
 /****************************************************************
  * creators
@@ -1153,7 +1152,7 @@ static cxsc::real get_real (Obj l, int pos)
   cxsc::real m = Double(INT_INTOBJ(RemInt(mant,INTOBJ_INT(1 << 27))));
   cxsc::times2pown(m,-27);
   m += Double(INT_INTOBJ(QuoInt(mant,INTOBJ_INT(1 << 27))));
-  cxsc::times2pown(m,exp+27-INT_INTOBJ(CALL_1ARGS(FuncLog2Int,mant)));
+  cxsc::times2pown(m,exp+27-INT_INTOBJ(FuncLog2Int(NULL,mant)));
   return m;
 }
 
@@ -1422,8 +1421,6 @@ int InitCXSCKernel (void)
   ImportGVarFromLibrary ("IsCXSCBox", &IS_CXSC_CI);
 
   ImportGVarFromLibrary ("CXSCFloatsFamily", &FAMILY_CXSC);
-
-  ImportFuncFromLibrary ("Log2Int", &FuncLog2Int);
 
   set_unexpected (cxsc_unexpected);
   set_terminate (cxsc_terminate);

@@ -35,6 +35,8 @@ extern Obj FLOAT_INFINITY_STRING,
   FLOAT_REAL_STRING,
   FLOAT_I_STRING;
 
+Obj NEW_DATOBJ (size_t size, Obj type);
+
 /****************************************************************
  * mpfr
  ****************************************************************/

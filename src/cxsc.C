@@ -56,27 +56,19 @@ Obj GAPLog2Int; // sometimes it's exported as FuncLog2Int, sometimes not
  ****************************************************************/
 static inline Obj NEW_RP (void)
 {
-  Obj o = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(cxsc::real));
-  SET_TYPE_DATOBJ(o, TYPE_CXSC_RP);
-  return o;
+  return NEW_DATOBJ(sizeof(cxsc::real), TYPE_CXSC_RP);
 }
 static inline Obj NEW_CP (void)
 {
-  Obj o = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(cxsc::complex));
-  SET_TYPE_DATOBJ(o, TYPE_CXSC_CP);
-  return o;
+  return NEW_DATOBJ(sizeof(cxsc::complex), TYPE_CXSC_CP);
 }
 static inline Obj NEW_RI (void)
 {
-  Obj o = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(cxsc::interval));
-  SET_TYPE_DATOBJ(o, TYPE_CXSC_RI);
-  return o;
+  return NEW_DATOBJ(sizeof(cxsc::interval), TYPE_CXSC_RI);
 }
 static inline Obj NEW_CI (void)
 {
-  Obj o = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(cxsc::cinterval));
-  SET_TYPE_DATOBJ(o, TYPE_CXSC_CI);
-  return o;
+  return NEW_DATOBJ(sizeof(cxsc::cinterval), TYPE_CXSC_CI);
 }
 
 static inline Obj OBJ_RP (cxsc::real i)

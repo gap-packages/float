@@ -43,9 +43,7 @@ mpfr_ptr GET_MPFR(Obj obj) {
 
 Obj NEW_MPFR (mp_prec_t prec)
 {
-  Obj f;
-  f = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(__mpfr_struct)+mpfr_custom_get_size(prec));
-  SET_TYPE_DATOBJ(f,TYPE_MPFR);
+  Obj f = NEW_DATOBJ(sizeof(__mpfr_struct)+mpfr_custom_get_size(prec), TYPE_MPFR);
   mpfr_ptr p = MPFR_OBJ(f);
   mpfr_custom_init_set(p, MPFR_NAN_KIND, 0, prec, MANTISSA_MPFR(p));
   return f;

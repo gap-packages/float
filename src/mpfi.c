@@ -43,9 +43,7 @@ Obj TYPE_MPFI;
 
 static inline Obj NEW_MPFI( mp_prec_t prec )
 {
-  Obj f;
-  f = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(__mpfi_struct)+2*mpfr_custom_get_size(prec));
-  SET_TYPE_DATOBJ(f,TYPE_MPFI);
+  Obj f = NEW_DATOBJ(sizeof(__mpfi_struct)+2*mpfr_custom_get_size(prec), TYPE_MPFI);
   mpfi_ptr p = MPFI_OBJ(f);
   mpfr_custom_init_set(&p->left, MPFR_NAN_KIND, 0, prec, LMANTISSA_MPFI(p));
   mpfr_custom_init_set(&p->right, MPFR_NAN_KIND, 0, prec, RMANTISSA_MPFI(p));

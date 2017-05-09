@@ -55,9 +55,7 @@ Obj TYPE_MPC;
 
 static inline Obj NEW_MPC( mp_prec_t prec )
 {
-  Obj f;
-  f = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(__mpc_struct)+2*mpfr_custom_get_size(prec));
-  SET_TYPE_DATOBJ(f,TYPE_MPC);
+  Obj f = NEW_DATOBJ(sizeof(__mpc_struct)+2*mpfr_custom_get_size(prec), TYPE_MPC);
   mpc_ptr p = MPC_OBJ(f);
   mpfr_custom_init_set(p->re, MPFR_NAN_KIND, 0, prec, REMANTISSA_MPC(p));
   mpfr_custom_init_set(p->im, MPFR_NAN_KIND, 0, prec, IMMANTISSA_MPC(p));

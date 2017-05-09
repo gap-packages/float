@@ -50,9 +50,7 @@ Obj TYPE_MPD;
 
 static inline Obj NEW_MPD( mp_prec_t prec )
 {
-  Obj f;
-  f = NewBag(T_DATOBJ,sizeof(Obj)+sizeof(__mpd_struct)+2*mpfr_custom_get_size(prec));
-  SET_TYPE_DATOBJ(f,TYPE_MPD);
+  Obj f = NEW_DATOBJ(sizeof(__mpd_struct)+2*mpfr_custom_get_size(prec), TYPE_MPD);
   mpd_ptr p = MPD_OBJ(f);
   mpfr_custom_init_set(p->re, MPFR_NAN_KIND, 0, prec, REMANTISSA_MPD(p));
   mpfr_custom_init_set(p->im, MPFR_NAN_KIND, 0, prec, IMMANTISSA_MPD(p));

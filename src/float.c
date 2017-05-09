@@ -32,6 +32,13 @@ Obj FLOAT_INFINITY_STRING, /* pretty strings */
   FLOAT_REAL_STRING,
   FLOAT_I_STRING;
 
+Obj NEW_DATOBJ(size_t size, Obj type)
+{
+  Obj o = NewBag(T_DATOBJ,sizeof(Obj)+size);
+  TYPE_DATOBJ(o) = type;
+  return o;
+}
+
 /****************************************************************
  * convert long GAP integer to gmp signed integers and back:
  * mpz (malloc'ed) or MPZ (on GAP heap)

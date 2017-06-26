@@ -130,8 +130,8 @@ BindGlobal("PSLQ", function(arg)
     # Initial setup
     #
     
-    A := MutableIdentityMat(n,Integers);
-    B := MutableIdentityMat(n,Integers);
+    A := IdentityMat(n,Integers);
+    B := IdentityMat(n,Integers);
     s := [];
     s2 := zero;    
     for i in [n,n-1..1] do
@@ -292,8 +292,8 @@ BindGlobal("PSLQ_MP", function(arg)
     # Start the real work
     #
 
-    A := MutableIdentityMat(n,Integers);
-    B := MutableIdentityMat(n,Integers);
+    A := IdentityMat(n,Integers);
+    B := IdentityMat(n,Integers);
     s := [];
     s2 := zero;    
     for i in [n,n-1..1] do

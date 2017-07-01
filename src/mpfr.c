@@ -33,7 +33,7 @@ Obj TYPE_MPFR, IsMPFRFloat, GAP_INFINITY;
 mpfr_ptr GET_MPFR(Obj obj) {
   while (!IS_DATOBJ(obj) || DoFilter(IsMPFRFloat, obj) != True) {
     obj = ErrorReturnObj("GET_MPFR: object must be an MPFR, not a %s",
-		       (Int)(InfoBags[TNUM_OBJ(obj)].name),0,
+		       (Int)TNAM_OBJ(obj),0,
 		       "You can return an MPFR float to continue");
   }
   mpfr_ptr p = MPFR_OBJ(obj);
@@ -302,7 +302,7 @@ static Obj MPFR_MACFLOAT(Obj self, Obj f)
 {
   while (!IS_MACFLOAT(f)) {
     f = ErrorReturnObj("MPFR_MACFLOAT: object must be a float, not a %s",
-		       (Int)(InfoBags[TNUM_OBJ(f)].name),0,
+		       (Int)TNAM_OBJ(f),0,
 		       "You can return a float to continue");
   }
   Obj g = NEW_MPFR(64);
@@ -481,7 +481,7 @@ static Obj MPFR_STRING(Obj self, Obj s, Obj prec)
   while (!IsStringConv(s))
     {
       s = ErrorReturnObj("MPFR_STRING: object to be converted must be a string, not a %s",
-			 (Int)(InfoBags[TNUM_OBJ(s)].name),0,
+			 (Int)TNAM_OBJ(s),0,
 			 "You can return a string to continue");
     }
   TEST_IS_INTOBJ("MPFR_STRING",prec);

@@ -29,6 +29,3 @@ true
 gap> AbsoluteValue(Sin(y)) < 1.e-10;
 true
 gap> STOP_TEST( "arithmetic.tst", 3*10^8 );
-arithmetic
-
-#E arithmetic.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . .ends here

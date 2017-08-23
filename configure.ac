@@ -42,20 +42,12 @@ AC_SUBST(GMP_LDFLAGS)
 AC_SYS_IS_CYGWIN
 AC_SYS_IS_DARWIN
 
-# External libraries configuration
-EXTERN="\$(CURDIR)/bin/$TARGET/extern"
-MAKE_LIBTARGETS=""
-
 LT_LIB_M
 AC_CHECK_MPFR
 AC_CHECK_MPFI
 AC_CHECK_MPC
 AC_CHECK_CXSC
 AC_CHECK_FPLLL
-
-if ! test -z $MAKE_LIBTARGETS; then # disable external compilation
-    AC_ERROR([Compilation of the external libraries $MAKE_LIBTARGETS was requested, but is now disabled. Please install them manually and rerun configure.])
-fi
 
 # how to get files from the web
 WGET=""

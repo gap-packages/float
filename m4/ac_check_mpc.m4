@@ -1,7 +1,7 @@
 # check for mpc library
-# sets MPC_CFLAGS, MPC_LDFLAGS, MPC_MAKELIB and MPC_LIBS,
+# sets MPC_CFLAGS, MPC_LDFLAGS and MPC_LIBS,
 # and MPC_WITH, MPC_DEPEND,
-# and MPC=yes/no/extern
+# and MPC=yes/no
 
 AC_DEFUN([AC_CHECK_MPC],[
 temp_LIBS="$LIBS"
@@ -11,27 +11,14 @@ MPC=unknown
 MPC_WITH=""
 MPC_DEPEND=""
 
-MPC_MAKELIB=`printf 'mpc: $(MPCLIB).tar.gz %s  \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
-	if ! test -r $(EXTERN)/include/mpc.h; then \\
-	    rm -rf $(MPCLIB) && \\
-	    tar -x -f $(MPCLIB).tar.gz -z -C extern && \\
-	    cd $(MPCLIB) && \\
-	    ./configure %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
-
 AC_ARG_WITH(mpc,
  [  --with-mpc=<location>
     Location at which the MPC library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern" asks Float
-    to compile a version of mpc in the subdirectory extern/.],
- [if test "$withval" = extern; then
-    MPC=extern
-  elif test "$withval" = no; then
+    library.],
+ [if test "$withval" = no; then
     MPC=no
   elif test "$withval" = yes; then
     MPC=yes
@@ -67,8 +54,6 @@ fi
 
 MPC_LIBS="-lmpc"
 
-if test "$MPC" != extern; then
-
 AC_LANG_PUSH([C])
 temp_status=true
 CPPFLAGS="$CPPFLAGS $MPC_CFLAGS $MPFR_CFLAGS"
@@ -79,25 +64,12 @@ AC_LANG_POP([C])
 
 if test "$temp_status" = false; then
     if test "$MPC" = yes; then
-        AC_MSG_ERROR([library mpc not found. Using --with-mpc, specify its location, "extern" to compile it locally, or "no" to disable it.])
+        AC_MSG_ERROR([library mpc not found. Using --with-mpc, specify its location, or "no" to disable it.])
     else
-        MPC=extern
+        MPC=no
     fi
 else
     MPC=yes
-fi
-
-fi
-
-if test "$MPC" = extern; then
-
-MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpc"
-MPC_CFLAGS='-I$(EXTERN)/include'
-MPC_LDFLAGS='-L$(EXTERN)/lib'
-
-MPC_WITH='--with-mpc=$(EXTERN)'
-MPC_DEPEND='mpc'
-
 fi
 
 fi
@@ -112,7 +84,5 @@ fi
 AC_SUBST(MPC_CFLAGS)
 AC_SUBST(MPC_LDFLAGS)
 AC_SUBST(MPC_LIBS)
-AC_SUBST(MPC_MAKELIB)
-AC_SUBST(MAKE_LIBTARGETS)
 AM_CONDITIONAL([WITH_MPC_IS_YES],[test x"$MPC" != xno])
 ])

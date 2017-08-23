@@ -121,7 +121,7 @@ checkblocks:
 	comm -3 @@-blocks @@-in
 	@rm @@-blocks @@-in
 
-all: @MAKE_LIBTARGETS@ all-recursive
+all: all-recursive
 	mkdir -p bin/@GAPARCH@
 	cp src/.libs/float.so bin/@GAPARCH@/
 

@@ -5,11 +5,11 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.7.6",
-Date := "09/05/2017",
+Version := "0.8.0",
+Date := "03/11/2017",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.7.6">
-## <!ENTITY Date "09/05/2017">
+## <!ENTITY Version "0.8.0">
+## <!ENTITY Date "03/11/2017">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -67,7 +67,7 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-    local f;
+    local f, s;
     f := Filename(DirectoriesPackagePrograms("float"),"float.so");
     if f=fail then
         LogPackageLoadingMessage(PACKAGE_WARNING,
@@ -79,7 +79,7 @@ AvailabilityTest := function()
     return f<>fail;
 end,
                     
-BannerString := Concatenation("Loading ", ~.PackageName, " ", String(~.Version), " ...\n"),
+BannerString := Concatenation(~.PackageName, " ", String(~.Version), " ...\n"),
 
 Autoload := false,
 TestFile := "tst/testall.g",

@@ -35,7 +35,7 @@ Obj FLOAT_INFINITY_STRING, /* pretty strings */
 Obj NEW_DATOBJ(size_t size, Obj type)
 {
   Obj o = NewBag(T_DATOBJ,sizeof(Obj)+size);
-  TYPE_DATOBJ(o) = type;
+  SET_TYPE_DATOBJ(o, type);
   return o;
 }
 

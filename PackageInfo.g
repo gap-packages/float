@@ -67,7 +67,7 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-    local f;
+    local f, s;
     f := Filename(DirectoriesPackagePrograms("float"),"float.so");
     if f=fail then
         LogPackageLoadingMessage(PACKAGE_WARNING,
@@ -79,7 +79,7 @@ AvailabilityTest := function()
     return f<>fail;
 end,
                     
-BannerString := Concatenation("Loading ", ~.PackageName, " ", String(~.Version), " ...\n"),
+BannerString := Concatenation(~.PackageName, " ", String(~.Version), " ...\n"),
 
 Autoload := false,
 TestFile := "tst/testall.g",

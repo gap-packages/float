@@ -1,7 +1,7 @@
 # check for mpfi library
-# sets MPFI_CFLAGS, MPFI_LDFLAGS, MPFI_MAKELIB and MPFI_LIBS,
+# sets MPFI_CFLAGS, MPFI_LDFLAGS and MPFI_LIBS,
 # and MPFI_WITH, MPFI_DEPEND,
-# and MPFI=yes/no/extern
+# and MPFI=yes/no
 
 AC_DEFUN([AC_CHECK_MPFI],[
 temp_LIBS="$LIBS"
@@ -11,27 +11,14 @@ MPFI=unknown
 MPFI_WITH=""
 MPFI_DEPEND=""
 
-MPFI_MAKELIB=`printf 'mpfi: $(MPFILIB).tar.bz2 %s \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
-	if ! test -r $(EXTERN)/include/mpfi.h; then \\
-	    rm -rf $(MPFILIB) && \\
-	    tar -x -f $(MPFILIB).tar.bz2 -j -C extern && \\
-	    cd $(MPFILIB) && \\
-	    ./configure %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n\n\n' "$MPFR_DEPEND" "$GMP_WITH" "$MPFR_WITH"`
-
 AC_ARG_WITH(mpfi,
  [  --with-mpfi=<location>
     Location at which the MPFI library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern" asks Float
-    to compile a version of mpfi in the subdirectory extern/.],
- [if test "$withval" = extern; then
-    MPFI=extern
-  elif test "$withval" = no; then
+    library.],
+ [if test "$withval" = no; then
     MPFI=no
   elif test "$withval" = yes; then
     MPFI=yes
@@ -67,8 +54,6 @@ fi
 
 MPFI_LIBS="-lmpfi"
 
-if test "$MPFI" != extern; then
-
 AC_LANG_PUSH([C])
 temp_status=true
 CPPFLAGS="$CPPFLAGS $MPFI_CFLAGS $MPFR_CFLAGS"
@@ -79,25 +64,12 @@ AC_LANG_POP([C])
 
 if test "$temp_status" = false; then
     if test "$MPFI" = yes; then
-        AC_MSG_ERROR([library mpfi not found. Using --with-mpfi, specify its location, "extern" to compile it locally, or "no" to disable it.])
+        AC_MSG_ERROR([library mpfi not found. Using --with-mpfi, specify its location, or "no" to disable it.])
     else
-        MPFI=extern
+        MPFI=no
     fi
 else
     MPFI=yes
-fi
-
-fi
-
-if test "$MPFI" = extern; then
-
-MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpfi"
-MPFI_CFLAGS='-I$(EXTERN)/include'
-MPFI_LDFLAGS='-L$(EXTERN)/lib'
-
-MPFI_WITH='--with-mpfi=$(EXTERN)'
-MPFI_DEPEND='mpfi'
-
 fi
 
 fi
@@ -112,7 +84,5 @@ fi
 AC_SUBST(MPFI_CFLAGS)
 AC_SUBST(MPFI_LDFLAGS)
 AC_SUBST(MPFI_LIBS)
-AC_SUBST(MPFI_MAKELIB)
-AC_SUBST(MAKE_LIBTARGETS)
 AM_CONDITIONAL([WITH_MPFI_IS_YES],[test x"$MPFI" != xno])
 ])

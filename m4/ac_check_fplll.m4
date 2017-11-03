@@ -1,7 +1,7 @@
 # check for fplll library
-# sets FPLLL_CFLAGS, FPLLL_LDFLAGS, FPLLL_MAKELIB and FPLLL_LIBS,
+# sets FPLLL_CFLAGS, FPLLL_LDFLAGS and FPLLL_LIBS,
 # and FPLLL_WITH, FPLLL_DEPEND,
-# and FPLLL=yes/no/extern
+# and FPLLL=yes/no
 
 AC_DEFUN([AC_CHECK_FPLLL],[
 temp_LIBS="$LIBS"
@@ -11,27 +11,14 @@ FPLLL=unknown
 FPLLL_WITH=""
 FPLLL_DEPEND=""
 
-FPLLL_MAKELIB=`printf 'fplll: $(FPLLLLIB).tar.gz %s \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib \\
-	if ! test -r $(EXTERN)/include/fplll.h; then \\
-	    rm -rf $(FPLLLLIB) && \\
-	    tar -x -f $(FPLLLLIB).tar.gz -z -C extern && \\
-	    cd $(FPLLLLIB) && \\
-	    ./configure CPPFLAGS="%s %s $(CPPFLAGS)" LDFLAGS="%s %s $(LDFLAGS)" %s %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$MPFR_DEPEND" "$GMP_CFLAGS" "$MPFR_CFLAGS" "$GMP_LDFLAGS" "$MPFR_LDFLAGS" "$GMP_WITH" "$MPFR_WITH"`
-
 AC_ARG_WITH(fplll,
  [  --with-fplll=<location>
     Location at which the FPLLL library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern" asks Float
-    to compile a version of fplll in the subdirectory extern/.],
- [if test "$withval" = extern; then
-    FPLLL=extern
-  elif test "$withval" = no; then
+    library.],
+ [if test "$withval" = no; then
     FPLLL=no
   elif test "$withval" = yes; then
     FPLLL=yes
@@ -67,8 +54,6 @@ fi
 
 FPLLL_LIBS="-lfplll"
 
-if test "$FPLLL" != extern; then
-
 AC_LANG_PUSH([C++])
 CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
 AC_CHECK_HEADER(fplll.h,[found_fplll=true],[found_fplll=false],[#include <mpfr.h>])
@@ -89,28 +74,16 @@ AC_LANG_POP([C++])
 
 if test "$found_fplll" = false; then
     if test "$FPLLL" = yes; then
-        AC_MSG_ERROR([library fplll not found. Using --with-fplll, specify its location, "extern" to compile it locally, or "no" to disable it.])
+        AC_MSG_ERROR([library fplll not found. Using --with-fplll, specify its location, or "no" to disable it.])
     else
-        FPLLL=extern
-	found_fplll=4
+        FPLLL=no
+        found_fplll=4
     fi
 else
     FPLLL=yes
 fi
 FPLLL_VERSION="$found_fplll"
 AC_DEFINE([FPLLL_VERSION], [], [fplll major version])
-fi
-
-if test "$FPLLL" = extern; then
-
-MAKE_LIBTARGETS="$MAKE_LIBTARGETS fplll"
-FPLLL_CFLAGS='-I$(EXTERN)/include'
-FPLLL_LDFLAGS='-L$(EXTERN)/lib'
-
-FPLLL_WITH='--with-fplll=$(EXTERN)'
-FPLLL_DEPEND='fplll'
-
-fi
 
 fi
 
@@ -124,7 +97,5 @@ fi
 AC_SUBST(FPLLL_CFLAGS)
 AC_SUBST(FPLLL_LDFLAGS)
 AC_SUBST(FPLLL_LIBS)
-AC_SUBST(FPLLL_MAKELIB)
-AC_SUBST(MAKE_LIBTARGETS)
 AM_CONDITIONAL([WITH_FPLLL_IS_YES],[test x"$FPLLL" != xno])
 ])

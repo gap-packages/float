@@ -42,36 +42,18 @@ AC_SUBST(GMP_LDFLAGS)
 AC_SYS_IS_CYGWIN
 AC_SYS_IS_DARWIN
 
-# External libraries configuration
-EXTERN="\$(CURDIR)/bin/$TARGET/extern"
-MAKE_LIBTARGETS=""
-
 LT_LIB_M
 AC_CHECK_MPFR
-AC_CHECK_MPFI
-AC_CHECK_MPC
-AC_CHECK_CXSC
-AC_CHECK_FPLLL
-
-if ! test -z $MAKE_LIBTARGETS; then # disable external compilation
-    AC_ERROR([Compilation of the external libraries $MAKE_LIBTARGETS was requested, but is now disabled. Please install them manually and rerun configure.])
-fi
-
-# how to get files from the web
-WGET=""
-AC_PATH_PROG(WGET,wget)
-if ! test -z $WGET; then
-    WGET="$WGET --tries=1 --timeout=10 --no-verbose"; WGET_NOCERTIFICATE="--no-check-certificate";
+if test "$MPFR" = yes; then
+    AC_CHECK_MPFI
+    AC_CHECK_MPC
+    AC_CHECK_FPLLL
 else
-    AC_PATH_PROG(CURL,curl)
-    if test "$CURL" != ""; then
-        WGET="$CURL --retry 1 --connect-timeout 10 -s -O"; WGET_NOCERTIFICATE="";
-    else
-        AC_WARN([Couldn't find any program to download archives from the web. Either you don't need them, or you'll have to download them manually, or install wget or curl.])
-    fi
+    AM_CONDITIONAL([WITH_MPFI_IS_YES],[false])
+    AM_CONDITIONAL([WITH_MPC_IS_YES],[false])
+    AM_CONDITIONAL([WITH_FPLLL_IS_YES],[false])
 fi
-AC_SUBST(WGET)
-AC_SUBST(WGET_NOCERTIFICATE)
+AC_CHECK_CXSC
 
 ################################################################
 # generate files

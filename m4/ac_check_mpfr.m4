@@ -1,7 +1,7 @@
 # check for mpfr library
-# sets MPFR_CFLAGS, MPFR_LDFLAGS, MPFR_MAKELIB and MPFR_LIBS,
+# sets MPFR_CFLAGS, MPFR_LDFLAGS and MPFR_LIBS,
 # and MPFR_WITH, MPFR_DEPEND,
-# and MPFR=yes/no/extern
+# and MPFR=yes/no
 
 AC_DEFUN([AC_CHECK_MPFR],[
 temp_LIBS="$LIBS"
@@ -11,27 +11,14 @@ MPFR=unknown
 MPFR_WITH=""
 MPFR_DEPEND=""
 
-MPFR_MAKELIB=`printf 'mpfr: $(MPFRLIB).tar.bz2  \\
-	mkdir -p $(EXTERN)/include $(EXTERN)/lib  \\
-	if ! test -r $(EXTERN)/include/mpfr.h; then \\
-	    rm -rf $(MPFRLIB) && \\
-	    tar -x -f $(MPFRLIB).tar.bz2 -j -C extern && \\
-	    cd $(MPFRLIB) && \\
-	    ./configure %s --prefix=$(EXTERN) && \\
-	    $(MAKE) install; \\
-	fi\n' "$GMP_WITH"`
-
 AC_ARG_WITH(mpfr,
  [  --with-mpfr=<location>
     Location at which the MPFR library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library. The special value "extern" asks Float
-    to compile a version of mpfr in the subdirectory extern/.],
- [if test "$withval" = extern; then
-    MPFR=extern
-  elif test "$withval" = no; then
+    library.],
+ [if test "$withval" = no; then
     MPFR=no
   elif test "$withval" = yes; then
     MPFR=yes
@@ -63,8 +50,6 @@ if test "$MPFR" != no; then
 
 MPFR_LIBS="-lmpfr"
 
-if test "$MPFR" != extern; then
-
 AC_LANG_PUSH([C])
 temp_status=true
 CPPFLAGS="$CPPFLAGS $MPFR_CFLAGS"
@@ -75,25 +60,12 @@ AC_LANG_POP([C])
 
 if test "$temp_status" = false; then
     if test "$MPFR" = yes; then
-        AC_MSG_ERROR([library mpfr not found. Using --with-mpfr, specify its location, "extern" to compile it locally, or "no" to disable it.])
+        AC_MSG_ERROR([library mpfr not found. Using --with-mpfr, specify its location, or "no" to disable it.])
     else
-        MPFR=extern
+        MPFR=no
     fi
 else
     MPFR=yes
-fi
-
-fi
-
-if test "$MPFR" = extern; then
-
-MAKE_LIBTARGETS="$MAKE_LIBTARGETS mpfr"
-MPFR_CFLAGS='-I$(EXTERN)/include'
-MPFR_LDFLAGS='-L$(EXTERN)/lib'
-
-MPFR_WITH='--with-mpfr=$(EXTERN)'
-MPFR_DEPEND='mpfr'
-
 fi
 
 fi
@@ -108,7 +80,5 @@ fi
 AC_SUBST(MPFR_CFLAGS)
 AC_SUBST(MPFR_LDFLAGS)
 AC_SUBST(MPFR_LIBS)
-AC_SUBST(MPFR_MAKELIB)
-AC_SUBST(MAKE_LIBTARGETS)
 AM_CONDITIONAL([WITH_MPFR_IS_YES],[test x"$MPFR" != xno])
 ])

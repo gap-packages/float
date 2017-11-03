@@ -103,11 +103,16 @@ template<> Obj GET_INTOBJ(Z_NR<double> &v) {
   return o;
 }
 
-template <class Z> void SET_Z(Integer &s, const Z_NR<Z> &t);
+inline void set(Z_NR<mpz_t> &a, const Z_NR<long>& b) {
+  a = b.get_si();
+}
 
-template <> void SET_Z(Integer &s, const Z_NR<mpz_t> &t)
-{
-  s = t;
+inline void set(Z_NR<mpz_t> &a, const Z_NR<mpz_t>& b) {
+  a = b;
+}
+
+inline void set(Z_NR<mpz_t> &a, const Z_NR<double> &b) {
+  a = b.get_d();
 }
 
 template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
@@ -195,12 +200,12 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
       else if (v != Fail) return INTOBJ_INT(-32);
     }
 
-    vector<Integer> sol(numrows);
-    IntMatrix svpmat(numrows,numcols);
+    vector<Z_NR<mpz_t>> sol(numrows);
+    ZZ_mat<mpz_t> svpmat(numrows,numcols);
 
     for (int i = 0; i < numrows; i++)
       for (int j = 0; j < numcols; j++)
-	SET_Z(svpmat[i][j],mat[i][j]);
+	set(svpmat[i][j], mat[i][j]);
 
     int result = shortest_vector(svpmat, sol, method, flags);
 
@@ -219,7 +224,7 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
       gapvec = NEW_PLIST(T_PLIST,numcols);
       SET_LEN_PLIST(gapvec,numcols);
       for (int i = 1; i <= numcols; i++) {
-	Integer s;
+	Z_NR<mpz_t> s;
 	s = 0;
 	for (int j = 0; j < numrows; j++)
 	  s.addmul(sol[j],svpmat[j][i-1]);

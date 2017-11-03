@@ -21,13 +21,13 @@ mpz_ptr mpz_MPZ (Obj obj);
 #define TEST_IS_INTOBJ(mp_name,obj)					\
   while (!IS_INTOBJ(obj))						\
     obj = ErrorReturnObj(#mp_name ": expected a small integer, not a %s", \
-			 (Int)(InfoBags[TNUM_OBJ(obj)].name),0,		\
+			 (Int)TNAM_OBJ(obj),0,		\
 			 "You can return an integer to continue");
 
 #define TEST_IS_STRING(gap_name,obj)				\
   if (!IsStringConv(obj))					\
     ErrorQuit(#gap_name ": expected a string, not a %s",	\
-	      (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	      (Int)TNAM_OBJ(obj),0)
 
 extern Obj FLOAT_INFINITY_STRING,
   FLOAT_NINFINITY_STRING,
@@ -117,7 +117,7 @@ int InitMPDLibrary (void);
 #ifdef USE_CXSC
 #define ERROR_CXSC(gap_name,obj)				      \
   ErrorQuit(#gap_name ": argument must be a CXSC float, not a %s",    \
-	    (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	    (Int)TNAM_OBJ(obj),0)
 
 #ifdef __cplusplus
 static inline bool HAS_FILTER(Obj obj, Obj filter)
@@ -130,25 +130,25 @@ static inline bool HAS_FILTER(Obj obj, Obj filter)
 #define TEST_IS_RP(gap_name,obj)				\
   if (!IS_RP(obj))						\
     ErrorQuit(#gap_name ": expected a real, not a %s",		\
-	       (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	       (Int)TNAM_OBJ(obj),0)
 
 #define IS_CP(obj) HAS_FILTER(obj,IS_CXSC_CP)
 #define TEST_IS_CP(gap_name,obj)				\
   if (!IS_CP(obj))						\
     ErrorQuit(#gap_name ": expected a complex, not a %s",	\
-	       (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	       (Int)TNAM_OBJ(obj),0)
 
 #define IS_RI(obj) HAS_FILTER(obj,IS_CXSC_RI)
 #define TEST_IS_RI(gap_name,obj)			       	\
   if (!IS_RI(obj))						\
     ErrorQuit(#gap_name ": expected an interval, not a %s",	\
-	       (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	       (Int)TNAM_OBJ(obj),0)
 
 #define IS_CI(obj) HAS_FILTER(obj,IS_CXSC_CI)
 #define TEST_IS_CI(gap_name,obj)			       	\
   if (!IS_CI(obj))					       	\
     ErrorQuit(#gap_name ": expected a complex interval, not a %s",\
-	       (Int)(InfoBags[TNUM_OBJ(obj)].name),0)
+	       (Int)TNAM_OBJ(obj),0)
 
 /****************************************************************
  * cxsc data are stored as follows:

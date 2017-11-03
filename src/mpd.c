@@ -258,7 +258,7 @@ static Obj MPD_STRING(Obj self, Obj s, Obj prec)
   while (!IsStringConv(s))
     {
       s = ErrorReturnObj("MPD_STRING: object to be converted must be a string, not a %s",
-			 (Int)(InfoBags[TNUM_OBJ(s)].name),0,
+			 (Int)TNAM_OBJ(s),0,
 			 "You can return a string to continue" );
     }
   TEST_IS_INTOBJ("MPD_STRING",prec);

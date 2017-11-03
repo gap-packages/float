@@ -224,7 +224,7 @@ static Obj OBJBYEXTREP_MPC(Obj self, Obj list)
 
   while (LEN_PLIST(list) != 4) {
     list = ErrorReturnObj("OBJBYEXTREP_MPC: object must be a list of length 4, not a %s",
-		       (Int)(InfoBags[TNUM_OBJ(list)].name),0,
+		       (Int)TNAM_OBJ(list),0,
 		       "You can return a list to continue" );
   }
 
@@ -462,7 +462,7 @@ static Obj MPC_STRING(Obj self, Obj s, Obj prec)
   while (!IsStringConv(s))
     {
       s = ErrorReturnObj("MPC_STRING: object to be converted must be a string, not a %s",
-			 (Int)(InfoBags[TNUM_OBJ(s)].name),0,
+			 (Int)TNAM_OBJ(s),0,
 			 "You can return a string to continue" );
     }
   TEST_IS_INTOBJ("MPC_STRING",prec);

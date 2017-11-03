@@ -2,7 +2,7 @@
  *
  * fplll.C                                                  Laurent Bartholdi
  *
- * Copyright (c) 2012-2016, Laurent Bartholdi
+ * Copyright (c) 2012-2017, Laurent Bartholdi
  *
  ****************************************************************************
  *
@@ -28,14 +28,6 @@ extern "C" {
 }
 #include <fplll.h>
 
-// compatibility between fplll 4 and 5
-#ifndef FPLLL_VERSION
-#define get_si getData
-#define get_d getData
-#define shortest_vector shortestVector
-#define lll_reduction lllReduction
-#endif
-
 typedef Obj (*ObjFunc)(); // I never could get the () and * right
 
 template <class Z> void SET_INTOBJ(Z_NR<Z> &v, Obj z);
@@ -44,18 +36,13 @@ template <class Z> Obj GET_INTOBJ(Z_NR<Z> &v);
 template<> void SET_INTOBJ(Z_NR<mpz_t> &v, Obj z) {
   if (IS_INTOBJ(z))
     v = INT_INTOBJ(z);
-  else
-#ifdef FPLLL_VERSION
-  {
+  else {
     mpz_t zz;
     mpz_init(zz);
     mpz_set(zz, mpz_MPZ(MPZ_LONGINT(z)));
     v = zz;
     mpz_clear(zz);
   }
-#else
-    mpz_set(v.getData(), mpz_MPZ(MPZ_LONGINT(z)));
-#endif    
 }
 
 template<> void SET_INTOBJ(Z_NR<long> &v, Obj z) {
@@ -73,16 +60,12 @@ template<> void SET_INTOBJ(Z_NR<double> &v, Obj z) {
 }
 
 template<> Obj GET_INTOBJ(Z_NR<mpz_t> &v) {
-#ifdef FPLLL_VERSION
   mpz_t z;
   mpz_init2 (z, 8*sizeof(long)+1);
   v.get_mpz(z);
   Obj o = INT_mpz(z);
   mpz_clear(z);
   return o;
-#else
-  return INT_mpz(v.getData());
-#endif
 }
 
 template<> Obj GET_INTOBJ(Z_NR<long> &v) {

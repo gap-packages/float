@@ -2,7 +2,7 @@
 ##
 #W read.g                                                   Laurent Bartholdi
 ##
-#Y Copyright (C) 2008, Laurent Bartholdi
+#Y Copyright (C) 2008-2017, Laurent Bartholdi
 ##
 #############################################################################
 ##
@@ -38,7 +38,7 @@ if IsBound(CXSC_INT) then
     Add(modules,"cxsc");
     ReadPackage("float", "lib/cxsc.gi");
 fi;
-Print("Loading modules [",JoinStringsWithSeparator(modules,", "),"] for ");
+####Print("Loading modules [",JoinStringsWithSeparator(modules,", "),"] for ");
 
 if IsBound(IO_Pickle) then
     ReadPackage("float","lib/pickle.g");

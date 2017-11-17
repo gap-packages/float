@@ -56,8 +56,6 @@ fi;
 # Report test results
 if success then
     Print("#I  No errors detected while testing package float\n");
-    QUIT_GAP(0);
 else
     Print("#I  Errors detected while testing package float\n");
-    QUIT_GAP(1);
 fi;

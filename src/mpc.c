@@ -307,14 +307,6 @@ static Obj ONE_MPC(Obj self, Obj f)
   return g;
 }
 
-static Obj CXI_MPC(Obj self, Obj f)
-{
-  mp_prec_t prec = mpc_get_prec(GET_MPC(f));
-  Obj g = NEW_MPC(prec);
-  mpc_set_ui_ui (MPC_OBJ(g), 0, 1, MPC_RNDNN);
-  return g;
-}
-
 static Obj MPC_MAKENAN(Obj self, Obj prec)
 {
   TEST_IS_INTOBJ("MPC_MAKENAN",prec);
@@ -733,7 +725,6 @@ static StructGVarFunc GVarFuncs [] = {
 
   Inc1_MPC(ZERO_MPC),
   Inc1_MPC(ONE_MPC),
-  Inc1_MPC(CXI_MPC),
   Inc1_MPC(ISZERO_MPC),
   Inc1_MPC(ISNUMBER_MPC),
   Inc1_MPC(ISNAN_MPC),

@@ -879,8 +879,8 @@ static StructGVarFunc GVarFuncs [] = {
   Inc1_MPFI(FREXP_MPFI),
   Inc1_MPFI(OBJBYEXTREP_MPFI),
   Inc2_MPFI(MPFI_2MPFR),
-  Inc2_MPFI_arg(INCREASE_MPFI,"interval, MPFR real"),
-  Inc2_MPFI_arg(BLOWUP_MPFI,"interval, MPFR real"),
+  Inc2_MPFI_arg(INCREASE_MPFI,"interval, mpfr_real"),
+  Inc2_MPFI_arg(BLOWUP_MPFI,"interval, mpfr_real"),
 
   {0}
 };

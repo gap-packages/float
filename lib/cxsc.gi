@@ -225,8 +225,6 @@ InstallMethod(RelativeDiameter, "cxsc:ci", [IsCXSCBox], DIAM_REL_CXSC_CI);
 
 InstallMethod(IsDisjoint, "cxsc:ri,ri", [IsCXSCInterval,IsCXSCInterval],
         DISJOINT_CXSC_RI_RI);
-InstallMethod(Overlaps, "cxsc:ri,ri", [IsCXSCInterval,IsCXSCInterval],
-        function(a,b) return not DISJOINT_CXSC_RI_RI(a,b); end);
 InstallMethod(IN, "cxsc:rp,ri", [IsCXSCReal,IsCXSCInterval], SUM_FLAGS,
         IN_CXSC_RP_RI);
 InstallMethod(IN, "cxsc:ri,ri", [IsCXSCInterval,IsCXSCInterval], SUM_FLAGS,
@@ -247,8 +245,6 @@ InstallMethod(IsSubset, "cxsc:ci,ci", [IsCXSCBox,IsCXSCBox], SUM_FLAGS,
         IN_CXSC_CI_CI);
 InstallMethod(IsDisjoint, "cxsc:ci,ci", [IsCXSCBox,IsCXSCBox],
         DISJOINT_CXSC_CI_CI);
-InstallMethod(Overlaps, "cxsc:ci,ci", [IsCXSCBox,IsCXSCBox],
-        function(a,b) return not DISJOINT_CXSC_CI_CI(a,b); end);
 InstallOtherMethod(Union2, "cxsc:ri,ri", [IsCXSCInterval,IsCXSCInterval],
         OR_CXSC_RI_RI);
 InstallOtherMethod(Union2, "cxsc:ri,ci", [IsCXSCInterval,IsCXSCBox],

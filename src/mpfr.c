@@ -257,6 +257,11 @@ static Obj SIGN_MPFR(Obj self, Obj f)
   return INTOBJ_INT(mpfr_sgn(GET_MPFR(f)));
 }
 
+static Obj SIGNBIT_MPFR(Obj self, Obj f)
+{
+  return mpfr_signbit(GET_MPFR(f)) ? True : False;
+}
+
 static Obj ISNAN_MPFR(Obj self, Obj f)
 {
   return mpfr_nan_p(GET_MPFR(f)) ? True : False;
@@ -612,6 +617,7 @@ static StructGVarFunc GVarFuncs [] = {
   Inc1_MPFR(MPFR_MACFLOAT),
   Inc1_MPFR(MACFLOAT_MPFR),
   Inc1_MPFR(SIGN_MPFR),
+  Inc1_MPFR(SIGNBIT_MPFR),
   Inc1_MPFR(ISNAN_MPFR),
   Inc1_MPFR(ISXINF_MPFR),
   Inc1_MPFR(ISPINF_MPFR),

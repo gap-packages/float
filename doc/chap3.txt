@@ -41,8 +41,8 @@
   
   [1X3.3-1 PSLQ[101X
   
-  [29X[2XPSLQ[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X] ) [32X function
-  [29X[2XPSLQ_MP[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X[, [3Xbeta[103X]] ) [32X function
+  [33X[1;0Y[29X[2XPSLQ[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPSLQ_MP[102X( [3Xx[103X, [3Xepsilon[103X[, [3Xgamma[103X[, [3Xbeta[103X]] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YAn integer vector [22Xv[122X with [22X|x⋅ v|<ϵ[122X.[133X
   
   [33X[0;0YThe  PSLQ  algorithm  by  Bailey and Broadhurst (see [BB01]) searches for an

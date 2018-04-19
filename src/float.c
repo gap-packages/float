@@ -191,21 +191,13 @@ static Int InitLibrary (StructInitInfo *module)
 
 static StructInitInfo module = {
 #ifdef FLOATSTATIC
-  MODULE_STATIC,                        /* type                           */
+    .type = MODULE_STATIC,
 #else
-  MODULE_DYNAMIC,                       /* type                           */
+    .type = MODULE_DYNAMIC,
 #endif
-    "float",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    .name = "float",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 #ifdef FLOAT_STATIC

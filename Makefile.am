@@ -22,8 +22,6 @@ VERSION:=$(shell grep '^Version :=' PackageInfo.g | cut -f2 -d'"')
 
 LOCALBIN=bin/@GAPARCH@
 
-EXTERN=$(CURDIR)/bin/@GAPARCH@/extern
-
 Changelog:
 	gitlog-to-changelog > $@
 

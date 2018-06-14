@@ -3,10 +3,10 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.9.0
+                                 Version 0.9.1
   
   
-                                   14/12/2017
+                                   14/06/2018
   
   
                                Laurent Bartholdi

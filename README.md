@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/gap-packages/float.svg?branch=master)](https://travis-ci.org/gap-packages/float)
 [![Code Coverage](https://codecov.io/github/gap-packages/float/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/float)
 
-                             The Float package
+# The Float package
 
 This is the README file for the GAP package "Float"
 
@@ -9,26 +9,25 @@ This package implements floating-point numbers, with arbitrary precision,
 based on the C libraries MPFR, MPFI, MPC and CXSC.
 
 The package is distributed in source form, and does not require anything
-else than a running GAP 4.7 or later. For updates, check
-
-     https://github.com/gap-packages/float/
+else than a running GAP 4.7 or later. For updates, check the package
+website at https://github.com/gap-packages/float/.
   
 To use the package, your must first compile it; this is done by invoking
-`./configure' and then `make' in the main directory (where this file is).
-`./configure' may be invoked with arguments `--with-gaproot', `--with-gaparch'
-and `CONFIGNAME' to specify the location and variant of GAP installed.
-By default, the configuration script searches ../.. and /usr/local/src/gap.
+`./configure` and then `make` in the main directory (where this file is).
+`./configure` may be invoked with arguments `--with-gaproot`, `--with-gaparch`
+and `CONFIGNAME` to specify the location and variant of GAP installed.
+By default, the configuration script searches `../..` and `/usr/local/src/gap`.
 
 This package requires external libraries, at least one of mpfr, mpfi, mpc or
 cxsc. If they are already on your system, you may enable them with the
-switches `--with-mpfr=xxx', `--with-mpfi=xxx', `--with-mpc=xxx' and
-`--with-cxsc=xxx', specifying at which prefix they are installed (if xxx is
+switches `--with-mpfr=xxx`, `--with-mpfi=xxx`, `--with-mpc=xxx` and
+`--with-cxsc=xxx`, specifying at which prefix they are installed (if xxx is
 absent, the default prefixes will be searched). If you do not wish to
-install them, you may disable their inclusion using `--without-cxsc' etc.
+install them, you may disable their inclusion using `--without-cxsc` etc.
 If the package cannot find them, they will be downloaded and compiled in
-the subdirectory `extern'. You may also force this behaviour (e.g. if your
-system has outdated versions of the libraries) by passing `extern' to the
-switches `--with-mpfr' etc.
+the subdirectory `extern`. You may also force this behaviour (e.g. if your
+system has outdated versions of the libraries) by passing `extern` to the
+switches `--with-mpfr` etc.
 
 They will be downloaded from the following locations:
 - http://www.mpfr.org/mpfr-current/mpfr-3.1.1.tar.bz2
@@ -39,16 +38,16 @@ They will be downloaded from the following locations:
 
 Once the package has been compiled, it may be used within GAP by typing
 
-LoadPackage("Float");
+    LoadPackage("Float");
 
 The "Float" package banner should appear on the screen.
 New floating-point handlers may be then set by typing
 
-SetFloats(MPFR,1000);
+    SetFloats(MPFR,1000);
 
 to have 1000-bits floating-point numbers. For details on how to use the Float
-package, please consult the documentation. It is in the `doc' subdirectory,
-see `manual.pdf'.
+package, please consult the documentation. It is in the `doc` subdirectory,
+see `manual.pdf`.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -208,7 +208,12 @@ static const xreal xroot(const xreal &x, int n)
 {
 #ifdef MPFR_REALS
   xreal tmp;
-  mpfr_root(tmp.z,x.z,n,xreal::default_rnd);
+#if MPFR_VERSION_MAJOR >= 4
+  mpfr_rootn_ui
+#else
+    mpfr_root
+#endif
+    (tmp.z,x.z,n,xreal::default_rnd);
   return tmp;
 #else
   return pow(x,1.0/n);

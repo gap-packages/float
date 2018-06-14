@@ -541,7 +541,12 @@ static Obj ROOT_MPFR(Obj self, Obj fl, Obj fr)
   TEST_IS_INTOBJ("ROOT_MPFR",fr);
 
   g = NEW_MPFR(mpfr_get_prec(GET_MPFR(fl)));
-  mpfr_root (MPFR_OBJ(g), GET_MPFR(fl), INT_INTOBJ(fr), GMP_RNDN);
+#if MPFR_VERSION_MAJOR >= 4
+  mpfr_rootn_ui
+#else
+    mpfr_root
+#endif
+    (MPFR_OBJ(g), GET_MPFR(fl), INT_INTOBJ(fr), GMP_RNDN);
   return g;
 }
 

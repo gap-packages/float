@@ -6,9 +6,6 @@
 ##
 #############################################################################
 
-GMP_CFLAGS=@GMP_CFLAGS@
-GMP_LDFLAGS=@GMP_LDFLAGS@
-
 libdir = $(GAPROOT)/pkg/$(PACKAGE)/bin/$(GAPARCH)
 
 lib_LTLIBRARIES = float.la

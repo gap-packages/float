@@ -680,8 +680,18 @@ static Obj ROOT_MPFI(Obj self, Obj fl, Obj fr) /* strangely not in mpfi */
 
   Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(fl)));
   
-  mpfr_root (&MPFI_OBJ(g)->left, &GET_MPFI(fl)->left, INT_INTOBJ(fr), GMP_RNDD);
-  mpfr_root (&MPFI_OBJ(g)->right, &MPFI_OBJ(fl)->right, INT_INTOBJ(fr), GMP_RNDU);
+#if MPFR_VERSION_MAJOR >= 4
+  mpfr_rootn_ui
+#else
+    mpfr_root
+#endif
+    (&MPFI_OBJ(g)->left, &GET_MPFI(fl)->left, INT_INTOBJ(fr), GMP_RNDD);
+#if MPFR_VERSION_MAJOR >= 4
+  mpfr_rootn_ui
+#else
+    mpfr_root
+#endif
+    (&MPFI_OBJ(g)->right, &MPFI_OBJ(fl)->right, INT_INTOBJ(fr), GMP_RNDU);
   return g;
 }
 

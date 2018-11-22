@@ -26,6 +26,17 @@
 #include "src/compiled.h"
 #include "floattypes.h"
 
+
+// HACK HACK HACK: workaround an issue where atexit() calls are inserted by
+// the compiler into C++ code compiled with coverage tracking (via the
+// --coverage compiler and linker option); this then causes a linker error
+// when trying to load float.so on Linux with glibc, where atexit() is not
+// exported by libc.so.
+int atexit(void (*func)(void))
+{
+  return 0;
+}
+
 Obj FLOAT_INFINITY_STRING, /* pretty strings */
   FLOAT_NINFINITY_STRING,
   FLOAT_EMPTYSET_STRING,

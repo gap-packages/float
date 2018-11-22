@@ -19,7 +19,6 @@ matrix:
       compiler: clang
     - env: CFLAGS="-O2"
       compiler: gcc
-    - env: ABI=32
 
 branches:
   only:

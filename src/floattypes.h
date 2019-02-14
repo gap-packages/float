@@ -7,10 +7,6 @@
 **  This file declares the functions for the floating point package
 */
 
-#ifndef USE_GMP
-#error Float requires a GAP version with built-in GMP support
-#endif
-
 Obj MPZ_LONGINT (Obj obj);
 Obj INT_mpz(mpz_ptr z);
 mpz_ptr mpz_MPZ (Obj obj);

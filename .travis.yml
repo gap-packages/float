@@ -12,6 +12,9 @@ addons:
     - libreadline-dev:i386
     - gcc-multilib
     - g++-multilib
+    - libmpfr-dev
+    - libmpfi-dev
+    - libmpc-dev
 
 matrix:
   include:

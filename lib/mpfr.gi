@@ -200,7 +200,7 @@ InstallMethod(RootsFloatOp, "MPFR float list, MPFR float",
         function(coeff,tag)
     local roots, i, j, r, lone;
     
-    if not ForAll(coeff,x->IsMPFRFloat(x)) then
+    if not ForAll(coeff,IsMPFRFloat) then
         TryNextMethod();
     fi;
     roots := ROOTPOLY_MPC(List(coeff,x->NewFloat(IsMPCFloat,x)),MPFRBITS@(fail));

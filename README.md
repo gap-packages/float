@@ -19,22 +19,19 @@ and `CONFIGNAME` to specify the location and variant of GAP installed.
 By default, the configuration script searches `../..` and `/usr/local/src/gap`.
 
 This package requires external libraries, at least one of mpfr, mpfi, mpc or
-cxsc. If they are already on your system, you may enable them with the
-switches `--with-mpfr=xxx`, `--with-mpfi=xxx`, `--with-mpc=xxx` and
-`--with-cxsc=xxx`, specifying at which prefix they are installed (if xxx is
-absent, the default prefixes will be searched). If you do not wish to
-install them, you may disable their inclusion using `--without-cxsc` etc.
-If the package cannot find them, they will be downloaded and compiled in
-the subdirectory `extern`. You may also force this behaviour (e.g. if your
-system has outdated versions of the libraries) by passing `extern` to the
-switches `--with-mpfr` etc.
+icxsc. If they were installed at standard locations, they will automatically be
+found; otherwise, their location can be specified with `./configure' switches
+`--with-mpfr=<location>', `--with-mpfi=<location>', `--with-mpc=<location>' and
+`--with-cxsc=<location>', specifying at which prefix they are installed.
+Alternatively, the include and library directories can be specified with
+`--with-mpfr-include=<location>' and `--with-mpfr-lib=<location>', etc.
 
-They will be downloaded from the following locations:
-- http://www.mpfr.org/mpfr-current/mpfr-3.1.1.tar.bz2
-- https://gforge.inria.fr/frs/download.php/30129/mpfi-1.5.1.tar.bz2
-- http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz
-- http://www2.math.uni-wuppertal.de/~xsc/xsc/cxsc/cxsc-2-5-3.tar.gz
-- http://xpujol.net/fplll/libfplll-4.0.1.tar.gz
+Most systems either come with these libraries, or supply a simple method of
+installing them. For instance, on Ubuntu the command
+`apt-get install libmpfr-dev libmpfi-dev libmpc-dev libfplll-dev'
+and on a mac with Homebrew the commands
+`brew tap brewsci/science; brew install mpfr mpfi libmpc brewsci/science/fplll'
+should install the required libraries.
 
 Once the package has been compiled, it may be used within GAP by typing
 

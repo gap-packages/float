@@ -122,9 +122,11 @@ gap> IncreaseInterval(last,0.001); # now only 8 significant bits
 .1e1(8)
 gap> IncreaseInterval(last,-0.002); # now becomes empty
 ∅
-gap> MinimalPolynomial(Rationals,Sqrt(2.0));
+gap> r2 := Sqrt(2.0);
+.141421e1(99)
+gap> MinimalPolynomial(Rationals,r2);
 -2*x_1^2+1
-gap> Cyc(last);
+gap> Cyc(r2);
 E(8)-E(8)^3
 gap>
 gap> SetFloats(MPC); # complex numbers

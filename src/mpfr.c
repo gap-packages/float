@@ -31,10 +31,9 @@ Obj TYPE_MPFR, IsMPFRFloat, GAP_INFINITY;
 #define MANTISSA_MPFR(p) ((mp_limb_t *) ((p)+1))
 
 mpfr_ptr GET_MPFR(Obj obj) {
-  while (!IS_DATOBJ(obj) || DoFilter(IsMPFRFloat, obj) != True) {
-    obj = ErrorReturnObj("GET_MPFR: object must be an MPFR, not a %s",
-		       (Int)TNAM_OBJ(obj),0,
-		       "You can return an MPFR float to continue");
+  if (!IS_DATOBJ(obj) || DoFilter(IsMPFRFloat, obj) != True) {
+    ErrorMayQuit("GET_MPFR: object must be an MPFR, not a %s",
+		       (Int)TNAM_OBJ(obj),0);
   }
   mpfr_ptr p = MPFR_OBJ(obj);
   mpfr_custom_move (p, MANTISSA_MPFR(p));
@@ -305,10 +304,9 @@ static Obj MPFR_MPFRPREC(Obj self, Obj f, Obj prec)
 
 static Obj MPFR_MACFLOAT(Obj self, Obj f)
 {
-  while (!IS_MACFLOAT(f)) {
-    f = ErrorReturnObj("MPFR_MACFLOAT: object must be a float, not a %s",
-		       (Int)TNAM_OBJ(f),0,
-		       "You can return a float to continue");
+  if (!IS_MACFLOAT(f)) {
+    ErrorMayQuit("MPFR_MACFLOAT: object must be a float, not a %s",
+		       (Int)TNAM_OBJ(f),0);
   }
   Obj g = NEW_MPFR(64);
   mpfr_set_d (MPFR_OBJ(g), VAL_MACFLOAT(f), GMP_RNDN);
@@ -483,12 +481,7 @@ static Obj STRING_MPFR(Obj self, Obj f, Obj digits)
 
 static Obj MPFR_STRING(Obj self, Obj s, Obj prec)
 {
-  while (!IsStringConv(s))
-    {
-      s = ErrorReturnObj("MPFR_STRING: object to be converted must be a string, not a %s",
-			 (Int)TNAM_OBJ(s),0,
-			 "You can return a string to continue");
-    }
+  TEST_IS_STRING(MPFR_STRING, s);
   TEST_IS_INTOBJ("MPFR_STRING",prec);
   int n = INT_INTOBJ(prec);
   if (n == 0)

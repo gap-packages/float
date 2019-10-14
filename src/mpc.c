@@ -222,10 +222,9 @@ static Obj OBJBYEXTREP_MPC(Obj self, Obj list)
   int i;
   mp_prec_t prec = 0;
 
-  while (LEN_PLIST(list) != 4) {
-    list = ErrorReturnObj("OBJBYEXTREP_MPC: object must be a list of length 4, not a %s",
-		       (Int)TNAM_OBJ(list),0,
-		       "You can return a list to continue" );
+  if (LEN_LIST(list) != 4) {
+    ErrorMayQuit("OBJBYEXTREP_MPC: object must be a list of length 4, not a %s",
+		       (Int)TNAM_OBJ(list),0);
   }
 
   for (i = 0; i < 4; i += 2) {
@@ -451,12 +450,7 @@ static Obj VIEWSTRING_MPC(Obj self, Obj f, Obj digits)
 
 static Obj MPC_STRING(Obj self, Obj s, Obj prec)
 {
-  while (!IsStringConv(s))
-    {
-      s = ErrorReturnObj("MPC_STRING: object to be converted must be a string, not a %s",
-			 (Int)TNAM_OBJ(s),0,
-			 "You can return a string to continue" );
-    }
+  TEST_IS_STRING(MPC_STRING, s);
   TEST_IS_INTOBJ("MPC_STRING",prec);
   int n = INT_INTOBJ(prec);
   if (n == 0)

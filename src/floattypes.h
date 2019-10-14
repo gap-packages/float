@@ -15,14 +15,13 @@ mpz_ptr mpz_MPZ (Obj obj);
 #define IS_MACFLOAT(obj) (TNUM_OBJ(obj) == T_MACFLOAT)
 
 #define TEST_IS_INTOBJ(mp_name,obj)					\
-  while (!IS_INTOBJ(obj))						\
-    obj = ErrorReturnObj(#mp_name ": expected a small integer, not a %s", \
-			 (Int)TNAM_OBJ(obj),0,		\
-			 "You can return an integer to continue");
+  if (!IS_INTOBJ(obj))						\
+    ErrorMayQuit(#mp_name ": expected a small integer, not a %s", \
+			 (Int)TNAM_OBJ(obj),0);
 
 #define TEST_IS_STRING(gap_name,obj)				\
   if (!IsStringConv(obj))					\
-    ErrorQuit(#gap_name ": expected a string, not a %s",	\
+    ErrorMayQuit(#gap_name ": expected a string, not a %s",	\
 	      (Int)TNAM_OBJ(obj),0)
 
 extern Obj FLOAT_INFINITY_STRING,

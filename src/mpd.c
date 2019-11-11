@@ -255,12 +255,7 @@ static Obj VIEWSTRING_MPD(Obj self, Obj f, Obj digits)
 
 static Obj MPD_STRING(Obj self, Obj s, Obj prec)
 {
-  while (!IsStringConv(s))
-    {
-      s = ErrorReturnObj("MPD_STRING: object to be converted must be a string, not a %s",
-			 (Int)TNAM_OBJ(s),0,
-			 "You can return a string to continue" );
-    }
+  TEST_IS_STRING(MPD_STRING, s);
   TEST_IS_INTOBJ("MPD_STRING",prec);
   int n = INT_INTOBJ(prec);
   if (n == 0)

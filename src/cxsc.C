@@ -185,10 +185,9 @@ static Obj CXSC_INT (Obj self, Obj f)
 
 static Obj CXSC_IEEE754 (Obj self, Obj f)
 {
-  while (!IS_MACFLOAT(f)) {
-    f = ErrorReturnObj("CXSC_IEEE754: object must be a float, not a %s",
-                       (Int)TNAM_OBJ(f),0,
-                       "You can return a float to continue");
+  if (!IS_MACFLOAT(f)) {
+    ErrorMayQuit("CXSC_IEEE754: object must be a float, not a %s",
+                       (Int)TNAM_OBJ(f),0);
   }
   return OBJ_RP(VAL_MACFLOAT(f));
 }

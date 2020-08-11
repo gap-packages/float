@@ -13,6 +13,7 @@ matrix:
   include:
     - env: GAPBRANCH=stable-4.9
     - env: GAPBRANCH=stable-4.10
+    - env: GAPBRANCH=stable-4.11
     - env: GAPBRANCH=master ABI=64
     - env: GAPBRANCH=master ABI=32
       addons:

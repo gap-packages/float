@@ -18,6 +18,7 @@
 #undef PACKAGE_URL
 #undef PACKAGE_VERSION
 
+#include <ctype.h>
 #include <string.h>
 #include <stdio.h>
 #include <gmp.h>

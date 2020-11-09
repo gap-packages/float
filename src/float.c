@@ -93,6 +93,10 @@ mpz_ptr mpz_MPZ (Obj obj) {
 
 Obj INT_mpz(mpz_ptr z)
 {
+#if GAP_KERNEL_MAJOR_VERSION >= 7
+    // added in GAP 4.11
+    return MakeObjInt((const UInt *)z->_mp_d, z->_mp_size);
+#else
   if (mpz_sgn(z) == 0) {
     return INTOBJ_INT(0);
   }
@@ -108,6 +112,7 @@ Obj INT_mpz(mpz_ptr z)
   res = GMP_REDUCE(res);
 
   return res;
+#endif
 }
 
 #if 0

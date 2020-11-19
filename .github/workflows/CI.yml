@@ -21,11 +21,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: gap-actions/setup-gap-for-packages@v1
+      - uses: gap-actions/setup-gap-for-packages@latest
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
-      - uses: gap-actions/compile-documentation-for-packages@v1
-      - uses: gap-actions/run-test-for-packages@v1
+      - uses: gap-actions/compile-documentation-for-packages@latest
+      - uses: gap-actions/run-test-for-packages@latest
 
   # A job to compile the manual with latex and upload it as an artifact.
   manual:
@@ -34,10 +34,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: gap-actions/setup-gap-for-packages@v1
-      - uses: gap-actions/compile-documentation-for-packages@v1
+      - uses: gap-actions/setup-gap-for-packages@latest
+      - uses: gap-actions/compile-documentation-for-packages@latest
         with:
-          use-latex: 'true'
+          use-latex: true
       - name: "Upload documentation"
         uses: actions/upload-artifact@v1
         with:

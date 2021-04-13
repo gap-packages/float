@@ -49,7 +49,7 @@ AC_ARG_WITH(mpc-lib,
 if test "$MPC" != no; then
 
 if test "$MPFR" = no; then
-    AC_ERROR([Cannot have MPC without having MPFR too.])
+    AC_MSG_ERROR([Cannot have MPC without having MPFR too.])
 fi
 
 MPC_LIBS="-lmpc"

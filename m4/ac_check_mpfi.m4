@@ -49,7 +49,7 @@ AC_ARG_WITH(mpfi-lib,
 if test "$MPFI" != no; then
 
 if test "$MPFR" = no; then
-    AC_ERROR([Cannot have MPFI without having MPFR too.])
+    AC_MSG_ERROR([Cannot have MPFI without having MPFR too.])
 fi
 
 MPFI_LIBS="-lmpfi"

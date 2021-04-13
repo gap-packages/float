@@ -49,7 +49,7 @@ AC_ARG_WITH(fplll-lib,
 if test "$FPLLL" != no; then
 
 if test "$MPFR" = no; then
-    AC_ERROR([Cannot have FPLLL without having MPFR too.])
+    AC_MSG_ERROR([Cannot have FPLLL without having MPFR too.])
 fi
 
 FPLLL_LIBS="-lfplll"

@@ -6,13 +6,13 @@
 ##
 #############################################################################
 
-AC_PREREQ(2.65)
+AC_PREREQ([2.69])
 LT_PREREQ([2.4.2])
 AC_INIT([float],[0.5.18],[laurent.bartholdi@gmail.com])
 AC_CONFIG_SRCDIR([src/float.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADER([src/floatconfig.h:config.h.in])
+AC_CONFIG_HEADERS([src/floatconfig.h:config.h.in])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([foreign])
 LT_INIT([disable-static dlopen win32-dll])
@@ -25,7 +25,6 @@ AC_PROG_CXX
 AX_CC_MAXOPT
 
 # Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS([float.h stdlib.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -33,10 +32,7 @@ AC_C_CONST
 AC_C_INLINE
 
 # Locates GAP
-AC_FIND_GAP
-
-AC_SYS_IS_CYGWIN
-AC_SYS_IS_DARWIN
+FIND_GAP
 
 LT_LIB_M
 AC_CHECK_MPFR

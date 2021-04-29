@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: gap-actions/setup-gap-for-packages@v2
+      - uses: gap-actions/setup-gap@v2
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
@@ -40,10 +40,12 @@ jobs:
           else
             sudo apt-get install libmpfr-dev libmpfi-dev libmpc-dev
           fi
-      - uses: gap-actions/build-package@v1
+      - uses: gap-actions/build-pkg@v1
         with:
           ABI: ${{ matrix.ABI }}
-      - uses: gap-actions/run-test-for-packages@v1
+      - uses: gap-actions/run-pkg-tests@v2
+      - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v1
 
   # The documentation job
   manual:
@@ -54,8 +56,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: gap-actions/setup-gap-for-packages@v1
-      - uses: gap-actions/compile-documentation-for-packages@v1
+      - uses: gap-actions/setup-gap@v2
+      - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
       - name: 'Upload documentation'

@@ -57,7 +57,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Floating-point numbers",
-  Autoload  := true
 ),
 
 Dependencies := rec(
@@ -81,8 +80,6 @@ AvailabilityTest := function()
 end,
                     
 BannerString := Concatenation(~.PackageName, " ", String(~.Version), " ...\n"),
-
-Autoload := false,
 TestFile := "tst/testall.g",
 Keywords := ["floating-point"]
 ));

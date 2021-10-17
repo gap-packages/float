@@ -78,7 +78,39 @@ AvailabilityTest := function()
     return f<>fail;
 end,
                     
-BannerString := Concatenation(~.PackageName, " ", String(~.Version), " ...\n"),
+BannerFunction := function(info)
+    local str, modules;
+
+    str:= DefaultPackageBannerString(info);
+    modules := [];
+
+    if IsBound(MPFR_INT) then
+        Add(modules,"mpfr");
+    fi;
+    if IsBound(MPFI_INT) then
+        Add(modules,"mpfi");
+    fi;
+    if IsBound(MPC_INT) then
+        Add(modules,"mpc");
+    fi;
+    if IsBound(@FPLLL) then
+        Add(modules,"fplll");
+    fi;
+    if IsBound(CXSC_INT) then
+        Add(modules,"cxsc");
+    fi;
+    if Length(modules) = 0 then
+        modules := "none";
+    else
+        modules := JoinStringsWithSeparator(modules, ", ");
+    fi;
+
+    return ReplacedString(str, "Homepage",
+                Concatenation( "Loaded modules: ", modules, "\n",
+                "Homepage") );
+end,
+
+
 TestFile := "tst/testall.g",
 Keywords := ["floating-point"]
 ));

@@ -314,6 +314,46 @@ static Obj EXP10_MPFI(Obj self, Obj f) /* strangely not in mpfi */
   return g;
 }
 
+static Obj FLOOR_MPFI(Obj self, Obj f) /* strangely not in mpfi */
+{
+  Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(f)));
+  mpfr_floor (&MPFI_OBJ(g)->left, &GET_MPFI(f)->left);
+  mpfr_floor (&MPFI_OBJ(g)->right, &GET_MPFI(f)->right);
+  return g;
+}
+
+static Obj ROUND_MPFI(Obj self, Obj f) /* strangely not in mpfi */
+{
+  Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(f)));
+  mpfr_round (&MPFI_OBJ(g)->left, &GET_MPFI(f)->left);
+  mpfr_round (&MPFI_OBJ(g)->right, &GET_MPFI(f)->right);
+  return g;
+}
+
+static Obj TRUNC_MPFI(Obj self, Obj f) /* strangely not in mpfi */
+{
+  Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(f)));
+  mpfr_trunc (&MPFI_OBJ(g)->left, &GET_MPFI(f)->left);
+  mpfr_trunc (&MPFI_OBJ(g)->right, &GET_MPFI(f)->right);
+  return g;
+}
+
+static Obj FRAC_MPFI(Obj self, Obj f) /* strangely not in mpfi */
+{
+  Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(f)));
+  mpfr_frac (&MPFI_OBJ(g)->left, &GET_MPFI(f)->left, GMP_RNDD);
+  mpfr_frac (&MPFI_OBJ(g)->right, &GET_MPFI(f)->right, GMP_RNDU);
+  return g;
+}
+
+static Obj CEIL_MPFI(Obj self, Obj f) /* strangely not in mpfi */
+{
+  Obj g = NEW_MPFI(mpfi_get_prec(GET_MPFI(f)));
+  mpfr_ceil (&MPFI_OBJ(g)->left, &GET_MPFI(f)->left);
+  mpfr_ceil (&MPFI_OBJ(g)->right, &GET_MPFI(f)->right);
+  return g;
+}
+
 static Obj MPFI_INT(Obj self, Obj i)
 {
   Obj g;
@@ -813,6 +853,11 @@ static StructGVarFunc GVarFuncs [] = {
   Inc1_MPFI(EXP10_MPFI),
   Inc1_MPFI(LOG1P_MPFI),
   Inc1_MPFI(EXPM1_MPFI),
+  Inc1_MPFI(FLOOR_MPFI),
+  Inc1_MPFI(CEIL_MPFI),
+  Inc1_MPFI(ROUND_MPFI),
+  Inc1_MPFI(TRUNC_MPFI),
+  Inc1_MPFI(FRAC_MPFI),
 
   Inc1_MPFI(SQRT_MPFI),
   Inc1_MPFI(CBRT_MPFI),

@@ -19,7 +19,7 @@
   </Author>
   <Date>&Date;</Date>
   <Address>
-  Mathematisches Institut<Br/>Bunsenstraße 3-5<Br/>D-37073 Göttingen<Br/>Germany
+  FR Mathematik<Br/>D-66041 Saarbrücken<Br/>Germany
   </Address>
   <Abstract>
     This document describes the package <Package>Float</Package>, which
@@ -45,9 +45,9 @@
     For comments or questions on <Package>Float</Package> please contact
     the author.
   </Abstract>
-  <Copyright>&copyright; 2011-2016 by Laurent Bartholdi
+  <Copyright>&copyright; 2011-2021 by Laurent Bartholdi
   </Copyright>
-  <Acknowledgements>Part of this work is supported by the "Swiss
+  <Acknowledgements>Part of this work was supported by the "Swiss
   National Fund for Scientific Research (SNF)", the "German National Science Foundation (DFG)",
   and the Courant Research Centre "Higher Order Structures" of the University of Göttingen.
   </Acknowledgements>
@@ -148,13 +148,19 @@ gap> Exp(6.2835i);
 
 Polynomials with floating-point coefficients may be manipulated in
 &GAP;; though they behave, in subtle ways, quite differently than
-polynomials over rings.
+polynomials over rings. A "pseudo-field" of floating-point numbers
+is available to create them using the standard &GAP; syntax.
 <P/>
 
-The "pseudo-field" of floating-point numbers is an object in &GAP;,
-called <C>FLOAT_PSEUDOFIELD</C>. (It is not really a field,
-e.g. because addition of floating-point numbers in not
-associative). It may be used to create indeterminates, for example as
+<ManSection>
+  <Var Name="FLOAT_PSEUDOFIELD"/>
+  <Description>
+    The "pseudo-field" of floating-point numbers, containing all
+    floating-point numbers in the current implementation.
+    <P/>
+    Note that it is not really a field, e.g. because addition of
+    floating-point numbers is not associative. It is mainly used to
+    create indeterminates, as in the following example:
 <Example><![CDATA[
 gap> x := Indeterminate(FLOAT_PSEUDOFIELD,"x");
 x
@@ -163,6 +169,8 @@ gap> 2*x^2+3;
 gap> Value(last,10);
 203.0
 ]]></Example>
+  </Description>
+</ManSection>
 
 </Section>
 

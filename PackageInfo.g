@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.9.1",
-Date := "14/06/2018", # dd/mm/yyyy format
+Version := "0.9.9",
+Date := "17/10/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.9.1">
-## <!ENTITY Date "14/06/2018">
+## <!ENTITY Version "0.9.9">
+## <!ENTITY Date "17/10/2021">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -21,12 +21,11 @@ Persons := [
     Email         := "laurent.bartholdi@gmail.com",
     WWWHome       := "http://www.uni-math.gwdg.de/laurent",
     PostalAddress := Concatenation( [
-                       "Mathematisches Institut\n",
-                       "Bunsenstraße 3—5\n",
-                       "D-37073 Göttingen\n",
+                       "FR Mathematik\n",
+                       "D-68041 Saarbrücken\n",
                        "Germany" ] ),
-    Place         := "Göttingen",
-    Institution   := "Georg-August Universität zu Göttingen"
+    Place         := "Saarbrücken",
+    Institution   := "Universität des Saarlandes"
   )
 ],
 

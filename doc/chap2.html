@@ -73,9 +73,11 @@ true
 .1e1(8)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IncreaseInterval(last,-0.002); # now becomes empty</span>
 ∅
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalPolynomial(Rationals,Sqrt(2.0));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r2 := Sqrt(2.0);</span>
+.141421e1(99)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalPolynomial(Rationals,r2);</span>
 -2*x_1^2+1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cyc(last);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cyc(r2);</span>
 E(8)-E(8)^3
 gap&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetFloats(MPC); # complex numbers</span>

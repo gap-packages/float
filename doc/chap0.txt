@@ -3,10 +3,10 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.9.1
+                                 Version 0.9.9
   
   
-                                   14/06/2018
+                                   17/10/2021
   
   
                                Laurent Bartholdi
@@ -22,9 +22,8 @@
       Homepage: [7Xhttp://www.uni-math.gwdg.de/laurent/[107X
   
   
-  Address: [33X[0;9YMathematisches Institut[133X
-           [33X[0;9YBunsenstraße 3-5[133X
-           [33X[0;9YD-37073 Göttingen[133X
+  Address: [33X[0;9YFR Mathematik[133X
+           [33X[0;9YD-66041 Saarbrücken[133X
            [33X[0;9YGermany[133X
   
   
@@ -38,12 +37,12 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2011-2016 by Laurent Bartholdi[133X
+  [33X[0;0Y© 2011-2021 by Laurent Bartholdi[133X
   
   
   -------------------------------------------------------
   [1XAcknowledgements[101X
-  [33X[0;0YPart  of  this  work is supported by the "Swiss National Fund for Scientific
+  [33X[0;0YPart  of  this work was supported by the "Swiss National Fund for Scientific
   Research  (SNF)",  the  "German  National Science Foundation (DFG)", and the
   Courant  Research  Centre  "Higher  Order  Structures"  of the University of
   Göttingen.[133X
@@ -59,6 +58,7 @@
     2.1 [33X[0;0YA sample run[133X
   3 [33X[0;0YPolynomials[133X
     3.1 [33X[0;0YThe Floats pseudo-field[133X
+      3.1-1 FLOAT_PSEUDOFIELD
     3.2 [33X[0;0YRoots of polynomials[133X
     3.3 [33X[0;0YFinding integer relations[133X
       3.3-1 PSLQ

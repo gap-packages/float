@@ -24,7 +24,9 @@
 <div class="ChapSects"><a href="chap3.html#X826D8334845549EC">3 <span class="Heading">Polynomials</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7BDA2E7C85ECC18C">3.1 <span class="Heading">The Floats pseudo-field</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7AB8BC957952B662">3.1-1 FLOAT_PSEUDOFIELD</a></span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X788CDC24834012D7">3.2 <span class="Heading">Roots of polynomials</span></a>
 </span>
 </div>
@@ -44,9 +46,16 @@
 
 <h4>3.1 <span class="Heading">The Floats pseudo-field</span></h4>
 
-<p>Polynomials with floating-point coefficients may be manipulated in <strong class="pkg">GAP</strong>; though they behave, in subtle ways, quite differently than polynomials over rings.</p>
+<p>Polynomials with floating-point coefficients may be manipulated in <strong class="pkg">GAP</strong>; though they behave, in subtle ways, quite differently than polynomials over rings. A "pseudo-field" of floating-point numbers is available to create them using the standard <strong class="pkg">GAP</strong> syntax.</p>
 
-<p>The "pseudo-field" of floating-point numbers is an object in <strong class="pkg">GAP</strong>, called <code class="code">FLOAT_PSEUDOFIELD</code>. (It is not really a field, e.g. because addition of floating-point numbers in not associative). It may be used to create indeterminates, for example as</p>
+<p><a id="X7AB8BC957952B662" name="X7AB8BC957952B662"></a></p>
+
+<h5>3.1-1 FLOAT_PSEUDOFIELD</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FLOAT_PSEUDOFIELD</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>The "pseudo-field" of floating-point numbers, containing all floating-point numbers in the current implementation.</p>
+
+<p>Note that it is not really a field, e.g. because addition of floating-point numbers is not associative. It is mainly used to create indeterminates, as in the following example:</p>
 
 
 <div class="example"><pre>

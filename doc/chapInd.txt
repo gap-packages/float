@@ -2,6 +2,7 @@
   
   [1XIndex[101X
   
+  [2XFLOAT_PSEUDOFIELD[102X 3.1-1 
   [2XFPLLLReducedBasis[102X 4.5-1 
   [2XFPLLLShortestVector[102X 4.5-2 
   [2XIsCXSCBox[102X 4.4-1 

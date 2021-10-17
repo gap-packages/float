@@ -6,12 +6,19 @@
   
   [33X[0;0YPolynomials  with  floating-point  coefficients  may  be manipulated in [5XGAP[105X;
   though  they behave, in subtle ways, quite differently than polynomials over
-  rings.[133X
+  rings.  A  "pseudo-field"  of  floating-point numbers is available to create
+  them using the standard [5XGAP[105X syntax.[133X
   
-  [33X[0;0YThe  "pseudo-field"  of  floating-point  numbers is an object in [5XGAP[105X, called
-  [10XFLOAT_PSEUDOFIELD[110X.  (It  is  not  really  a  field, e.g. because addition of
-  floating-point  numbers  in  not  associative).  It  may  be  used to create
-  indeterminates, for example as[133X
+  [1X3.1-1 FLOAT_PSEUDOFIELD[101X
+  
+  [33X[1;0Y[29X[2XFLOAT_PSEUDOFIELD[102X[32X global variable[133X
+  
+  [33X[0;0YThe  "pseudo-field" of floating-point numbers, containing all floating-point
+  numbers in the current implementation.[133X
+  
+  [33X[0;0YNote  that it is not really a field, e.g. because addition of floating-point
+  numbers  is  not associative. It is mainly used to create indeterminates, as
+  in the following example:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Indeterminate(FLOAT_PSEUDOFIELD,"x");[127X[104X

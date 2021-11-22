@@ -34,6 +34,9 @@ AC_C_INLINE
 # Locates GAP
 FIND_GAP
 
+CC="$GAP_CC"
+CXX="$GAP_CXX"
+
 LT_LIB_M
 AC_CHECK_MPFR
 if test "$MPFR" = yes; then

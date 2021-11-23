@@ -10,7 +10,7 @@
   <Title>Floating-point numbers</Title>
   <Version>Version &Version;</Version>
   <TitleComment>
-    MPFR- and CXSC-based library for GAP
+    Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP
   </TitleComment>
   <Author>Laurent Bartholdi
           <Email><Alt Only="HTML">laurent.bartholdi@gmail.com</Alt>
@@ -27,11 +27,11 @@
   <Alt Only="HTML">
   <P/>
   The computer algebra system &GAP; is available at
-  <URL>http://gap-system.org</URL>.
+  <URL>https://gap-system.org</URL>.
   <P/>
   This documentation for <Package>Float</Package> is available at
-  <URL>http://www.gap-system.org/Manuals/pkg/float-&Version;/doc/manual.pdf</URL> in PDF format, and may be
-  accessed online at <URL>http://gap-packages.github.io/float/</URL>.
+  <URL>https://www.gap-system.org/Manuals/pkg/float-&Version;/doc/manual.pdf</URL> in PDF format, and may be
+  accessed online at <URL>https://gap-packages.github.io/float/</URL>.
   <P/>
   The latest release of the package may be downloaded as
   <URL>https://github.com/gap-packages/float/releases/download/v&Version;/float-&Version;.tar.gz</URL> (tar, gzipped).
@@ -72,7 +72,7 @@ General Public License for more details.
 
 <P/> You should have received a copy of the GNU General Public
 License along with this program, in the file COPYING.  If not, see
-<URL>http://www.gnu.org/licenses/</URL>.
+<URL>https://www.gnu.org/licenses/</URL>.
 
 </Chapter>
 

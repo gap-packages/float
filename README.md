@@ -6,32 +6,45 @@
 This is the README file for the GAP package "Float"
 
 This package implements floating-point numbers, with arbitrary precision,
-based on the C libraries MPFR, MPFI, MPC and CXSC.
+based on the C libraries MPFR, MPFI, MPC, FPLLL and CXSC.
 
 The package is distributed in source form, and does not require anything
 else than a running GAP 4.7 or later. For updates, check the package
-website at https://github.com/gap-packages/float/.
+website at <https://github.com/gap-packages/float/>.
   
+## Installation
+
 To use the package, your must first compile it; this is done by invoking
 `./configure` and then `make` in the main directory (where this file is).
-`./configure` may be invoked with arguments `--with-gaproot`, `--with-gaparch`
-and `CONFIGNAME` to specify the location and variant of GAP installed.
-By default, the configuration script searches `../..` and `/usr/local/src/gap`.
+`./configure` may be invoked with argument `--with-gaproot=<location>` to
+specify the location where GAP is installed. The default is `../..`.
 
-This package requires external libraries, at least one of mpfr, mpfi, mpc or
-icxsc. If they were installed at standard locations, they will automatically be
-found; otherwise, their location can be specified with `./configure' switches
-`--with-mpfr=<location>', `--with-mpfi=<location>', `--with-mpc=<location>' and
-`--with-cxsc=<location>', specifying at which prefix they are installed.
-Alternatively, the include and library directories can be specified with
-`--with-mpfr-include=<location>' and `--with-mpfr-lib=<location>', etc.
+This package requires external libraries, at least one of mpfr, mpfi, mpc, fplll or
+cxsc. If they were installed at standard locations, they will automatically be
+found; otherwise, their location can be specified with these `./configure` switches:
+- `--with-mpfr=<location>`
+- `--with-mpfi=<location>`
+- `--with-mpc=<location>`
+- `--with-fplll=<location>`
+- `--with-cxsc=<location>`
 
-Most systems either come with these libraries, or supply a simple method of
+The include and library directories of the named library are then assumed to
+be `<location>/include` resp. `<location>/lib` Alternatively, the include and
+library directories can be specified with `--with-mpfr-include=<location>` and
+`--with-mpfr-lib=<location>`, etc.
+
+Most systems either come with these libraries, or supply a simple method for
 installing them. For instance, on Ubuntu the command
-`apt-get install libmpfr-dev libmpfi-dev libmpc-dev libfplll-dev'
-and on a mac with Homebrew the commands
-`brew tap brewsci/science; brew install mpfr mpfi libmpc brewsci/science/fplll'
-should install the required libraries.
+
+    apt-get install libmpfr-dev libmpfi-dev libmpc-dev libfplll-dev
+
+and on a mac with Homebrew the command
+
+    brew install mpfr mpfi libmpc fplll
+
+should install the specified four libraries.
+
+## Usage
 
 Once the package has been compiled, it may be used within GAP by typing
 
@@ -46,6 +59,8 @@ to have 1000-bits floating-point numbers. For details on how to use the Float
 package, please consult the documentation. It is in the `doc` subdirectory,
 see `manual.pdf`.
 
+## License
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or any
@@ -58,6 +73,4 @@ General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program, in the file COPYING.  If not, see
-<http://www.gnu.org/licenses/>.
-
-  Laurent Bartholdi, Göttingen, 6 January 2014
+<https://www.gnu.org/licenses/>.

@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "0.9.9",
-Date := "17/10/2021", # dd/mm/yyyy format
+Version := "1.0.0",
+Date := "23/11/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "0.9.9">
-## <!ENTITY Date "17/10/2021">
+## <!ENTITY Version "1.0.0">
+## <!ENTITY Date "23/11/2021">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -59,7 +59,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9.0",
+  GAP := ">=4.11.0",
   NeededOtherPackages := [["GAPDoc",">=1.0"]],
   SuggestedOtherPackages := [],
   ExternalConditions := ["GAP compiled with GMP support"]                      
@@ -78,10 +78,11 @@ AvailabilityTest := function()
     return f<>fail;
 end,
                     
+BannerString := Concatenation(~.PackageName, " ", String(~.Version), " with modules [?] ...\n"),
 BannerFunction := function(info)
     local str, modules;
 
-    str:= DefaultPackageBannerString(info);
+    str:= info.BannerString;
     modules := [];
 
     if IsBound(MPFR_INT) then
@@ -99,17 +100,10 @@ BannerFunction := function(info)
     if IsBound(CXSC_INT) then
         Add(modules,"cxsc");
     fi;
-    if Length(modules) = 0 then
-        modules := "none";
-    else
-        modules := JoinStringsWithSeparator(modules, ", ");
-    fi;
+    modules := JoinStringsWithSeparator(modules, ", ");
 
-    return ReplacedString(str, "Homepage",
-                Concatenation( "Loaded modules: ", modules, "\n",
-                "Homepage") );
+    return ReplacedString(str, "?", modules);
 end,
-
 
 TestFile := "tst/testall.g",
 Keywords := ["floating-point"]

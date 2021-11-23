@@ -19,7 +19,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "laurent.bartholdi@gmail.com",
-    WWWHome       := "http://www.uni-math.gwdg.de/laurent",
+    WWWHome       := "https://www.math.uni-sb.de/ag/bartholdi/",
     PostalAddress := Concatenation( [
                        "FR Mathematik\n",
                        "D-68041 Saarbrücken\n",

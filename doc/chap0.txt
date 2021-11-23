@@ -3,23 +3,23 @@
                              [1XFloating-point numbers[101X
   
   
-                                 Version 0.9.9
+                                 Version 1.0.0
   
   
-                                   17/10/2021
+                                   23/11/2021
   
   
                                Laurent Bartholdi
   
   
   
-            [33X[0;10YMPFR- and CXSC-based library for GAP[133X
+            [33X[0;10YIntegration of mpfr, mpfi, mpc, fplll and cxsc in GAP[133X
   
   
   
   Laurent Bartholdi
       Email:    [7Xmailto:laurent.bartholdi@gmail.com[107X
-      Homepage: [7Xhttp://www.uni-math.gwdg.de/laurent/[107X
+      Homepage: [7Xhttps://www.math.uni-sb.de/ag/bartholdi/[107X
   
   
   Address: [33X[0;9YFR Mathematik[133X

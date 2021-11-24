@@ -57,7 +57,7 @@ FPLLL_LIBS="-lfplll"
 AC_LANG_PUSH([C++])
 CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
 AC_CHECK_HEADER(fplll.h,[found_fplll=true],[found_fplll=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS"
+LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_LDFLAGS"
 LIBS="$LIBS -lfplll -lgmp"
 if test "$found_fplll" = true; then
     AC_MSG_CHECKING([for lllReduction in -fplll (version 4.x)])

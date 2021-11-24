@@ -58,7 +58,7 @@ AC_LANG_PUSH([C])
 temp_status=true
 CPPFLAGS="$CPPFLAGS $MPFI_CFLAGS $MPFR_CFLAGS"
 AC_CHECK_HEADER(mpfi.h,,[temp_status=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $MPFI_LDFLAGS $MPFR_CFLAGS"
+LDFLAGS="$LDFLAGS $MPFI_LDFLAGS $MPFR_LDFLAGS"
 AC_CHECK_LIB(mpfi,mpfi_sqrt,,[temp_status=false])
 AC_LANG_POP([C])
 

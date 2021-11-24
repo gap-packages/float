@@ -93,26 +93,7 @@ mpz_ptr mpz_MPZ (Obj obj) {
 
 Obj INT_mpz(mpz_ptr z)
 {
-#if GAP_KERNEL_MAJOR_VERSION >= 7
-    // added in GAP 4.11
     return MakeObjInt((const UInt *)z->_mp_d, z->_mp_size);
-#else
-  if (mpz_sgn(z) == 0) {
-    return INTOBJ_INT(0);
-  }
-
-  Obj res;
-  if (mpz_sgn(z) > 0)
-    res = NewBag(T_INTPOS, mpz_size(z)*sizeof(mp_limb_t));
-  else
-    res = NewBag(T_INTNEG, mpz_size(z)*sizeof(mp_limb_t));
-  memcpy (ADDR_INT(res), z[0]._mp_d, mpz_size(z)*sizeof(mp_limb_t));
-
-  res = GMP_NORMALIZE(res);
-  res = GMP_REDUCE(res);
-
-  return res;
-#endif
 }
 
 #if 0

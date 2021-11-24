@@ -1,5 +1,5 @@
 # check for mpfr library
-# sets MPFR_CFLAGS, MPFR_LDFLAGS and MPFR_LIBS,
+# sets MPFR_CPPFLAGS, MPFR_LDFLAGS and MPFR_LIBS,
 # and MPFR_WITH, MPFR_DEPEND,
 # and MPFR=yes/no
 
@@ -25,7 +25,7 @@ AC_ARG_WITH(mpfr,
   else
     MPFR_WITH="$MPFR_WITH --with-mpfr=$withval"
     MPFR=yes
-    MPFR_CFLAGS="-I$withval/include"; MPFR_LDFLAGS="-L$withval/lib"
+    MPFR_CPPFLAGS="-I$withval/include"; MPFR_LDFLAGS="-L$withval/lib"
   fi]
 )
 
@@ -34,7 +34,7 @@ AC_ARG_WITH(mpfr-include,
     Location at which the mpfr include files were installed.],
  [MPFR=yes
   MPFR_WITH="$MPFR_WITH --with-mpfr-include=$withval"
-  MPFR_CFLAGS="-I$withval"]
+  MPFR_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(mpfr-lib,
@@ -52,7 +52,7 @@ MPFR_LIBS="-lmpfr"
 
 AC_LANG_PUSH([C])
 temp_status=true
-CPPFLAGS="$CPPFLAGS $MPFR_CFLAGS"
+CPPFLAGS="$CPPFLAGS $MPFR_CPPFLAGS"
 AC_CHECK_HEADER(mpfr.h,,[temp_status=false])
 LDFLAGS="$LDFLAGS $MPFR_LDFLAGS"
 AC_CHECK_LIB(mpfr,mpfr_sqrt,,[temp_status=false])
@@ -77,7 +77,7 @@ LIBS="$temp_LIBS"
 if test "$MPFR" != no; then
     AC_DEFINE([USE_MPFR],1,[use MPFR library])
 fi
-AC_SUBST(MPFR_CFLAGS)
+AC_SUBST(MPFR_CPPFLAGS)
 AC_SUBST(MPFR_LDFLAGS)
 AC_SUBST(MPFR_LIBS)
 AM_CONDITIONAL([WITH_MPFR_IS_YES],[test x"$MPFR" != xno])

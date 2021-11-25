@@ -489,7 +489,7 @@ static Obj MPFR_STRING(Obj self, Obj s, Obj prec)
     n = GET_LEN_STRING(s)*1000/301;
 
   Obj g = NEW_MPFR(n);
-  mpfr_set_str(MPFR_OBJ(g), (char *)CHARS_STRING(s), 10, GMP_RNDN);
+  mpfr_set_str(MPFR_OBJ(g), CONST_CSTR_STRING(s), 10, GMP_RNDN);
   return g;
 }
 

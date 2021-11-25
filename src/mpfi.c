@@ -596,7 +596,7 @@ static Obj MPFI_STRING(Obj self, Obj s, Obj prec)
     n = GET_LEN_STRING(s)*1000 / 301;
 
   Obj g = NEW_MPFI(INT_INTOBJ(prec));
-  mpfi_set_str(MPFI_OBJ(g), (char *)CHARS_STRING(s), 10);
+  mpfi_set_str(MPFI_OBJ(g), CONST_CSTR_STRING(s), 10);
   return g;
 }
 

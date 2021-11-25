@@ -21,9 +21,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <gmp.h>
 
-#include "src/compiled.h"
 #include "floattypes.h"
 
 

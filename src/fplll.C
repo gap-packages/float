@@ -20,12 +20,8 @@
 #undef PACKAGE_URL
 #undef PACKAGE_VERSION
 
-#include <gmp.h>
-
-extern "C" {
-#include "src/compiled.h"
 #include "floattypes.h"
-}
+
 #include <fplll.h>
 
 typedef Obj (*ObjFunc)(); // I never could get the () and * right

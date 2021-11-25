@@ -16,22 +16,15 @@
 #undef PACKAGE_URL
 #undef PACKAGE_VERSION
 
-#include <gmp.h>
+#include "floattypes.h"
 
-extern "C" {
-#include "src/compiled.h"
-}
-#undef ZERO // clashes with ZERO in cxsc
 #include "except.hpp"
 #include "real.hpp"
 #include "complex.hpp"
 #include "interval.hpp"
 #include "cinterval.hpp"
-extern "C"
-{
-#include "floattypes.h"
-}
-#undef ZERO // make sure we use neither
+
+#include "cxsc_poly.h"
 
 #include "cpoly.hpp"
 #include "cipoly.hpp"

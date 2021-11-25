@@ -19,9 +19,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <gmp.h>
 
-#include "src/compiled.h"
 #include "floattypes.h"
 
 #define LMANTISSA_MPFI(p) ((mp_limb_t *) (p+1))

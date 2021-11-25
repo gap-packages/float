@@ -169,9 +169,6 @@ static Int InitKernel (StructInitInfo *module)
 #ifdef USE_FPLLL
   InitFPLLLKernel();
 #endif
-#ifdef USE_MPD
-  InitMPDKernel();
-#endif
 #ifdef USE_CXSC
   InitCXSCKernel();
 #endif
@@ -191,9 +188,6 @@ static Int InitLibrary (StructInitInfo *module)
 #endif
 #ifdef USE_FPLLL
   InitFPLLLLibrary();
-#endif
-#ifdef USE_MPD
-  InitMPDLibrary();
 #endif
 #ifdef USE_CXSC
   InitCXSCLibrary();

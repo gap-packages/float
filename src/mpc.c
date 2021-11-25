@@ -464,7 +464,7 @@ static Obj MPC_STRING(Obj self, Obj s, Obj prec)
   int sign = 1;
   mpc_set_ui(MPC_OBJ(g), 0, MPC_RNDNN);
   mpfr_ptr f = MPC_OBJ(g)->re;
-  char *p = (char *) CHARS_STRING(s), *newp;
+  char *p = CSTR_STRING(s), *newp;
 
 
   for (;;) {

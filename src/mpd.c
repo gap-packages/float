@@ -264,7 +264,7 @@ static Obj MPD_STRING(Obj self, Obj s, Obj prec)
     n = GET_LEN_STRING(s)*1000 / 301;
 
   Obj g = NEW_MPD(INT_INTOBJ(prec));
-  char *p = (char *) CHARS_STRING(s), *newp;
+  char *p = CSTR_STRING(s), *newp;
   int sign = 1;
   mpd_set_ui(MPD_OBJ(g), 0, MPD_RNDNN);
   mpfr_ptr f = MPD_OBJ(g)->re;

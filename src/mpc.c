@@ -457,11 +457,12 @@ static Obj MPC_STRING(Obj self, Obj s, Obj prec)
     n = GET_LEN_STRING(s)*1000 / 301;
 
   Obj g = NEW_MPC(INT_INTOBJ(prec));
-  char *p = (char *) CHARS_STRING(s), *newp;
   int sign = 1;
   mpc_set_ui(MPC_OBJ(g), 0, MPC_RNDNN);
   mpfr_ptr f = MPC_OBJ(g)->re;
   Obj newg = NEW_MPFR(INT_INTOBJ(prec));
+  char *p = CSTR_STRING(s);
+  char *newp;
 
   for (;;) {
     switch (*p) {

@@ -82,8 +82,6 @@ if test "$found_fplll" = false; then
 else
     FPLLL=yes
 fi
-FPLLL_VERSION="$found_fplll"
-AC_DEFINE([FPLLL_VERSION], [], [fplll major version])
 
 fi
 

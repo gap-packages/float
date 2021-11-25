@@ -349,12 +349,12 @@ static Obj LDEXP_MPFR(Obj self, Obj f, Obj exp)
 
 static Obj EXTREPOFOBJ_MPFR(Obj self, Obj f)
 {
+  Obj l = NEW_PLIST(T_PLIST,2);
+  SET_LEN_PLIST(l,2);
+
   mp_prec_t prec = mpfr_get_prec(GET_MPFR(f));
   Obj g = NEW_MPFR(prec);
   mpfr_set (MPFR_OBJ(g), GET_MPFR(f), GMP_RNDN);
-
-  Obj l = NEW_PLIST(T_PLIST,2);
-  SET_LEN_PLIST(l,2);
 
   if (mpfr_zero_p(GET_MPFR(f))) {
     SET_ELM_PLIST(l,1, INTOBJ_INT(0));

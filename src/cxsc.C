@@ -498,8 +498,8 @@ static Obj CP_CXSC_STRING (Obj self, Obj str)
 {
   TEST_IS_STRING(CP_CXSC_STRING,str);
 
-  char *s = CSTR_STRING(str);
   Obj f = NEW_CP();
+  char *s = CSTR_STRING(str);
   if (s[0] == '(') {
     std::string(s) >> CP_OBJ(f);
     return f;

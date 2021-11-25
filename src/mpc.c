@@ -458,12 +458,16 @@ static Obj MPC_STRING(Obj self, Obj s, Obj prec)
   if (n == 0)
     n = GET_LEN_STRING(s)*1000 / 301;
 
+  Obj newg = NEW_MPFR(INT_INTOBJ(prec));
   Obj g = NEW_MPC(INT_INTOBJ(prec));
-  char *p = (char *) CHARS_STRING(s), *newp;
+  // Force newg internal pointers to be updated
+  GET_MPFR(newg);
+
   int sign = 1;
   mpc_set_ui(MPC_OBJ(g), 0, MPC_RNDNN);
   mpfr_ptr f = MPC_OBJ(g)->re;
-  Obj newg = NEW_MPFR(INT_INTOBJ(prec));
+  char *p = (char *) CHARS_STRING(s), *newp;
+
 
   for (;;) {
     switch (*p) {

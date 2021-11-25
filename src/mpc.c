@@ -428,6 +428,8 @@ static Obj VIEWSTRING_MPC(Obj self, Obj f, Obj digits)
   } else {
     slen += PRINT_MPFR(c+slen, 0, n, GET_MPC(f)->re, GMP_RNDN);
     Obj im = NEW_MPFR(prec);
+    // Reassign in case GC occurred
+    c = CSTR_STRING(str);
     mpfr_add(MPFR_OBJ(im), GET_MPC(f)->re, GET_MPC(f)->im, GMP_RNDN);
     mpfr_sub(MPFR_OBJ(im), MPFR_OBJ(im), GET_MPC(f)->re, GMP_RNDN); /* round off small im */
     if (!mpfr_zero_p(MPFR_OBJ(im))) {
@@ -441,7 +443,7 @@ static Obj VIEWSTRING_MPC(Obj self, Obj f, Obj digits)
       slen += GET_LEN_STRING(FLOAT_I_STRING);
     }
   }
-  c[slen] = 0;
+  CSTR_STRING(str)[slen] = 0;
   SET_LEN_STRING(str, slen);
   SHRINK_STRING(str);
 
@@ -456,12 +458,16 @@ static Obj MPC_STRING(Obj self, Obj s, Obj prec)
   if (n == 0)
     n = GET_LEN_STRING(s)*1000 / 301;
 
+  Obj newg = NEW_MPFR(INT_INTOBJ(prec));
   Obj g = NEW_MPC(INT_INTOBJ(prec));
-  char *p = (char *) CHARS_STRING(s), *newp;
+  // Force newg internal pointers to be updated
+  GET_MPFR(newg);
+
   int sign = 1;
   mpc_set_ui(MPC_OBJ(g), 0, MPC_RNDNN);
   mpfr_ptr f = MPC_OBJ(g)->re;
-  Obj newg = NEW_MPFR(INT_INTOBJ(prec));
+  char *p = (char *) CHARS_STRING(s), *newp;
+
 
   for (;;) {
     switch (*p) {

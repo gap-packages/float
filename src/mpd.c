@@ -235,6 +235,8 @@ static Obj VIEWSTRING_MPD(Obj self, Obj f, Obj digits)
   char *c = CSTR_STRING(str);
   slen += PRINT_MPFR(c+slen, 0, n, GET_MPD(f)->re, GMP_RNDN);
   Obj im = NEW_MPFR(prec);
+  // Reassign in case a GC occurred
+  c = CSTR_STRING(str);
   mpfr_add(MPFR_OBJ(im), GET_MPD(f)->re, GET_MPD(f)->im, GMP_RNDN);
   mpfr_sub(MPFR_OBJ(im), MPFR_OBJ(im), MPD_OBJ(f)->re, GMP_RNDN); /* round off small im */
   if (!mpfr_zero_p(MPFR_OBJ(im))) {

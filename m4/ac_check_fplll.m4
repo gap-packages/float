@@ -1,5 +1,5 @@
 # check for fplll library
-# sets FPLLL_CFLAGS, FPLLL_LDFLAGS and FPLLL_LIBS,
+# sets FPLLL_CPPFLAGS, FPLLL_LDFLAGS and FPLLL_LIBS,
 # and FPLLL_WITH, FPLLL_DEPEND,
 # and FPLLL=yes/no
 
@@ -25,7 +25,7 @@ AC_ARG_WITH(fplll,
   else
     FPLLL_WITH="$FPLLL_WITH --with-fplll=$withval"
     FPLLL=yes
-    FPLLL_CFLAGS="-I$withval/include"; FPLLL_LDFLAGS="-L$withval/lib"
+    FPLLL_CPPFLAGS="-I$withval/include"; FPLLL_LDFLAGS="-L$withval/lib"
   fi]
 )
 
@@ -34,7 +34,7 @@ AC_ARG_WITH(fplll-include,
     Location at which the fplll include files were installed.],
  [FPLLL=yes
   FPLLL_WITH="$FPLLL_WITH --with-fplll-include=$withval"
-  FPLLL_CFLAGS="-I$withval"]
+  FPLLL_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(fplll-lib,
@@ -55,9 +55,9 @@ fi
 FPLLL_LIBS="-lfplll"
 
 AC_LANG_PUSH([C++])
-CPPFLAGS="$CPPFLAGS $FPLLL_CFLAGS $MPFR_CFLAGS"
+CPPFLAGS="$CPPFLAGS $FPLLL_CPPFLAGS $MPFR_CPPFLAGS"
 AC_CHECK_HEADER(fplll.h,[found_fplll=true],[found_fplll=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_CFLAGS"
+LDFLAGS="$LDFLAGS $FPLLL_LDFLAGS $MPFR_LDFLAGS"
 LIBS="$LIBS -lfplll -lgmp"
 if test "$found_fplll" = true; then
     AC_MSG_CHECKING([for lllReduction in -fplll (version 4.x)])
@@ -92,7 +92,7 @@ LIBS="$temp_LIBS"
 if test "$FPLLL" != no; then
     AC_DEFINE([USE_FPLLL],1,[use FPLLL library])
 fi
-AC_SUBST(FPLLL_CFLAGS)
+AC_SUBST(FPLLL_CPPFLAGS)
 AC_SUBST(FPLLL_LDFLAGS)
 AC_SUBST(FPLLL_LIBS)
 AM_CONDITIONAL([WITH_FPLLL_IS_YES],[test x"$FPLLL" != xno])

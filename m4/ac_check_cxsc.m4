@@ -1,5 +1,5 @@
 # check for cxsc library
-# sets CXSC_CFLAGS, CXSC_LDFLAGS and CXSC_LIBS,
+# sets CXSC_CPPFLAGS, CXSC_LDFLAGS and CXSC_LIBS,
 # and CXSC_WITH, CXSC_DEPEND,
 # and CXSC=yes/no
 
@@ -25,7 +25,7 @@ AC_ARG_WITH(cxsc,
   else
     CXSC_WITH="$CXSC_WITH --with-cxsc=$withval"
     CXSC=yes
-    CXSC_CFLAGS="-I$withval/include"; CXSC_LDFLAGS="-L$withval/lib"
+    CXSC_CPPFLAGS="-I$withval/include"; CXSC_LDFLAGS="-L$withval/lib"
   fi]
 )
 
@@ -34,7 +34,7 @@ AC_ARG_WITH(cxsc-include,
     Location at which the cxsc include files were installed.],
  [CXSC=yes
   CXSC_WITH="$CXSC_WITH --with-cxsc-include=$withval"
-  CXSC_CFLAGS="-I$withval"]
+  CXSC_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(cxsc-lib,
@@ -52,7 +52,7 @@ CXSC_LIBS="-lcxsc"
 
 AC_LANG_PUSH([C++])
 temp_status=true
-CPPFLAGS="$CPPFLAGS $CXSC_CFLAGS"
+CPPFLAGS="$CPPFLAGS $CXSC_CPPFLAGS"
 AC_CHECK_HEADER(real.hpp,,[temp_status=false])
 LDFLAGS="$LDFLAGS $CXSC_LDFLAGS"
 AC_CHECK_LIB(cxsc,z_zadd,,[temp_status=false])
@@ -77,7 +77,7 @@ LIBS="$temp_LIBS"
 if test "$CXSC" != no; then
     AC_DEFINE([USE_CXSC],1,[use CXSC library])
 fi
-AC_SUBST(CXSC_CFLAGS)
+AC_SUBST(CXSC_CPPFLAGS)
 AC_SUBST(CXSC_LDFLAGS)
 AC_SUBST(CXSC_LIBS)
 AM_CONDITIONAL([WITH_CXSC_IS_YES],[test x"$CXSC" != xno])

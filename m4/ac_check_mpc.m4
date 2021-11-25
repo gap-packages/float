@@ -1,5 +1,5 @@
 # check for mpc library
-# sets MPC_CFLAGS, MPC_LDFLAGS and MPC_LIBS,
+# sets MPC_CPPFLAGS, MPC_LDFLAGS and MPC_LIBS,
 # and MPC_WITH, MPC_DEPEND,
 # and MPC=yes/no
 
@@ -25,7 +25,7 @@ AC_ARG_WITH(mpc,
   else
     MPC_WITH="$MPC_WITH --with-mpc=$withval"
     MPC=yes
-    MPC_CFLAGS="-I$withval/include"; MPC_LDFLAGS="-L$withval/lib"
+    MPC_CPPFLAGS="-I$withval/include"; MPC_LDFLAGS="-L$withval/lib"
   fi]
 )
 
@@ -34,7 +34,7 @@ AC_ARG_WITH(mpc-include,
     Location at which the mpc include files were installed.],
  [MPC=yes
   MPC_WITH="$MPC_WITH --with-mpc-include=$withval"
-  MPC_CFLAGS="-I$withval"]
+  MPC_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(mpc-lib,
@@ -56,9 +56,9 @@ MPC_LIBS="-lmpc"
 
 AC_LANG_PUSH([C])
 temp_status=true
-CPPFLAGS="$CPPFLAGS $MPC_CFLAGS $MPFR_CFLAGS"
+CPPFLAGS="$CPPFLAGS $MPC_CPPFLAGS $MPFR_CPPFLAGS"
 AC_CHECK_HEADER(mpc.h,,[temp_status=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $MPC_LDFLAGS $MPFR_CFLAGS"
+LDFLAGS="$LDFLAGS $MPC_LDFLAGS $MPFR_LDFLAGS"
 AC_CHECK_LIB(mpc,mpc_sqrt,,[temp_status=false])
 AC_LANG_POP([C])
 
@@ -81,7 +81,7 @@ LIBS="$temp_LIBS"
 if test "$MPC" != no; then
     AC_DEFINE([USE_MPC],1,[use MPC library])
 fi
-AC_SUBST(MPC_CFLAGS)
+AC_SUBST(MPC_CPPFLAGS)
 AC_SUBST(MPC_LDFLAGS)
 AC_SUBST(MPC_LIBS)
 AM_CONDITIONAL([WITH_MPC_IS_YES],[test x"$MPC" != xno])

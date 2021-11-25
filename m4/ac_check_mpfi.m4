@@ -1,5 +1,5 @@
 # check for mpfi library
-# sets MPFI_CFLAGS, MPFI_LDFLAGS and MPFI_LIBS,
+# sets MPFI_CPPFLAGS, MPFI_LDFLAGS and MPFI_LIBS,
 # and MPFI_WITH, MPFI_DEPEND,
 # and MPFI=yes/no
 
@@ -25,7 +25,7 @@ AC_ARG_WITH(mpfi,
   else
     MPFI_WITH="$MPFI_WITH --with-mpfi=$withval"
     MPFI=yes
-    MPFI_CFLAGS="-I$withval/include"; MPFI_LDFLAGS="-L$withval/lib"
+    MPFI_CPPFLAGS="-I$withval/include"; MPFI_LDFLAGS="-L$withval/lib"
   fi]
 )
 
@@ -34,7 +34,7 @@ AC_ARG_WITH(mpfi-include,
     Location at which the mpfi include files were installed.],
  [MPFI=yes
   MPFI_WITH="$MPFI_WITH --with-mpfi-include=$withval"
-  MPFI_CFLAGS="-I$withval"]
+  MPFI_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH(mpfi-lib,
@@ -56,9 +56,9 @@ MPFI_LIBS="-lmpfi"
 
 AC_LANG_PUSH([C])
 temp_status=true
-CPPFLAGS="$CPPFLAGS $MPFI_CFLAGS $MPFR_CFLAGS"
+CPPFLAGS="$CPPFLAGS $MPFI_CPPFLAGS $MPFR_CPPFLAGS"
 AC_CHECK_HEADER(mpfi.h,,[temp_status=false],[#include <mpfr.h>])
-LDFLAGS="$LDFLAGS $MPFI_LDFLAGS $MPFR_CFLAGS"
+LDFLAGS="$LDFLAGS $MPFI_LDFLAGS $MPFR_LDFLAGS"
 AC_CHECK_LIB(mpfi,mpfi_sqrt,,[temp_status=false])
 AC_LANG_POP([C])
 
@@ -81,7 +81,7 @@ LIBS="$temp_LIBS"
 if test "$MPFI" != no; then
     AC_DEFINE([USE_MPFI],1,[use MPFI library])
 fi
-AC_SUBST(MPFI_CFLAGS)
+AC_SUBST(MPFI_CPPFLAGS)
 AC_SUBST(MPFI_LDFLAGS)
 AC_SUBST(MPFI_LIBS)
 AM_CONDITIONAL([WITH_MPFI_IS_YES],[test x"$MPFI" != xno])

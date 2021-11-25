@@ -21,10 +21,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
-#include <gmp.h>
 
-#include <mpfr.h>
-#include "src/compiled.h"
 #include "floattypes.h"
 
 Obj TYPE_MPFR, IsMPFRFloat, GAP_INFINITY;

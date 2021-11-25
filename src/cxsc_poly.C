@@ -15,6 +15,8 @@
 #include <real.hpp>
 #include <complex.hpp>
 
+#include "cxsc_poly.h"
+
 #define cpoly cpoly_CXSC
 
 #define xMAX_EXP DBL_MAX_EXP

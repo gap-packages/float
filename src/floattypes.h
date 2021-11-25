@@ -1,11 +1,22 @@
 /****************************************************************************
 **
-*W  gapfloat.h                    GAP source                Laurent Bartholdi
+*W  floattypes.h                  GAP source                Laurent Bartholdi
 **
 *Y  Copyright (C) 2008-2012 Laurent Bartholdi
 **
 **  This file declares the functions for the floating point package
 */
+
+#ifndef FLOATTYPES_H
+#define FLOATTYPES_H
+
+#include "gap_all.h"
+
+#include <gmp.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 Obj MPZ_LONGINT (Obj obj);
 Obj INT_mpz(mpz_ptr z);
@@ -156,14 +167,13 @@ static inline bool HAS_FILTER(Obj obj, Obj filter)
 #define CP_OBJ(obj) (*(cxsc::complex *) (ADDR_OBJ(obj)+1))
 #define CI_OBJ(obj) (*(cxsc::cinterval *) (ADDR_OBJ(obj)+1))
 
-#ifdef _CXSC_COMPLEX_HPP_INCLUDED
-int cpoly_CXSC(int degree, cxsc::complex coeffs[], cxsc::complex roots[], int prec);
-#endif
 int InitCXSCKernel (void);
 int InitCXSCLibrary (void);
 #endif
 
-/****************************************************************************
-**
-*E  gapfloat.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#endif // FLOATTYPES_H

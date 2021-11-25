@@ -22,6 +22,22 @@
 
 #include "floattypes.h"
 
+#include <mpfi.h>
+
+/****************************************************************
+ * mpfi's are stored as follows:
+ * +-----------+-----------------------------------------+---------------------+
+ * | TYPE_MPFI |             __mpfi_struct               |    __mp_limb_t[]    |
+ * |           | __mpfr_struct left         right        | limbl ... limbr ... |
+ * |           | prec exp sign mant   prec exp sign mant |                     |
+ * +-----------+-----------------------------------------+---------------------+
+ *                               \____________________\____^         ^
+ *                                                     \____________/
+ * it is assumed that the left and right mpfr's are allocated with the
+ * same precision
+ ****************************************************************/
+#define MPFI_OBJ(obj) ((mpfi_ptr) (ADDR_OBJ(obj)+1))
+
 #define LMANTISSA_MPFI(p) ((mp_limb_t *) (p+1))
 #define RMANTISSA_MPFI(p) (LMANTISSA_MPFI(p)+(mpfi_get_prec(p)+GMP_NUMB_BITS-1)/GMP_NUMB_BITS)
 

@@ -22,7 +22,7 @@
 #define xINFIN DBL_MAX
   
 typedef double xreal;
-typedef cxsc::complex xcomplex;
+#define xcomplex cxsc::complex
 
 static const xreal xabs(const xcomplex &newz)
 {

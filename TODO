@@ -1,0 +1,9 @@
+* Implement machine complex numbers, using in particular src/c_poly.C for root finding
+
+* Implement balls of complex numbers, based on mpc, with a real radius
+
+* Implement root finding for polynomials with interval coefficients
+this seems actually inexistent in all available libraries.
+
+* Implement mixed-precision root finding
+start by fast routine, using few bits from the coefficients to get approximate roots, use high precision at the end.

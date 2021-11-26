@@ -4,8 +4,12 @@
 **
 *Y  Copyright (C) 2008 Laurent Bartholdi
 **
-**  This file contains the functions for the float package.
-**  complex floats are implemented using the MPD package.
+**  This file is, for now, unused. It is planned to be an implementation of
+**  complex balls, stored as a complex number (the center) and a real
+**  (the radius).
+**
+**  For now, only the skeleton of some functions is written (essentially
+**  translated from mpc.c), and this code should not be tested.
 */
 
 #define BANNER_FLOAT_H
@@ -20,19 +24,21 @@
 
 /****************************************************************
  * mpd's are stored as follows:
- * +----------+-----------------------------------------+---------------------+
- * | TYPE_MPD |               __mpd_struct              |    __mp_limb_t[]    |
- * |          | __mpfr_struct real          imag        | limbr ... limbi ... |
- * |          | prec exp sign mant   prec exp sign mant |                     |
+ * +----------+--------+---------------------+---------------------+
+ * | TYPE_MPD | double | __mpc_struct        |                     |
+ * |          |        | real          imag  | limbr ... limbi ... |
  * +----------+-----------------------------------------+---------------------+
  *                               \___________________\____^         ^
  *                                                    \____________/
  * it is assumed that the real and imaginary mpfr's are allocated with the
  * same precision
  ****************************************************************/
-#define MPD_OBJ(obj) ((mpd_ptr) (ADDR_OBJ(obj)+1))
-#define REMANTISSA_MPD(p) ((mp_limb_t *) (p+1))
+#define MPD_OBJ(obj) ((mpd_ptr) (ADDR_OBJ(obj)+2))
+#define RADIUS_MPD(p) (*((float *)((mp_limb_t *) (p+1))))
+#define REMANTISSA_MPD(p) ((mp_limb_t *) (p+2))
 #define IMMANTISSA_MPD(p) (REMANTISSA_MPD(p)+(mpd_get_prec(p)+GMP_NUMB_BITS-1)/GMP_NUMB_BITS)
+
+/* from here, do not even look at the code! */
 
 static inline mpd_ptr GET_MPD(Obj obj) {
   mpd_ptr p = MPD_OBJ(obj);

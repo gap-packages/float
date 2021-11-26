@@ -2,13 +2,17 @@
  *
  * c_poly.C                                                 Laurent Bartholdi
  *
- *   @(#)$id: fr_dll.c,v 1.18 2010/10/26 05:19:40 gap exp $
- *
  * Copyright (c) 2011, Laurent Bartholdi
  *
  ****************************************************************************
  *
  * driver for cpoly.C, using standard C++ complex numbers
+ *
+ * This code is currently unused, but remains there to test the root finding
+ * method outside of GAP.
+ *
+ * It would be revived if someone implemented double-precision complex numbers
+ * in float (currently there are only multi-precision complex numbers).
  *
  ****************************************************************************/
 

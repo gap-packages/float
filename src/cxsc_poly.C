@@ -15,8 +15,6 @@
 
 #include "cxsc_poly.h"
 
-#define cpoly cpoly_CXSC
-
 #define xMAX_EXP DBL_MAX_EXP
 #define xMIN_EXP DBL_MIN_EXP
 #define xINFIN DBL_MAX
@@ -75,4 +73,5 @@ static void xscalbln(xcomplex *z, long int a)
 
 int default_prec;
 
+#define cpoly cpoly_CXSC
 #include "cpoly.C"

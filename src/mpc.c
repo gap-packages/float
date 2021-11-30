@@ -20,8 +20,8 @@
 #include <stdio.h>
 
 #include "floattypes.h"
-
 #include <mpc.h>
+#include <mp_poly.h>
 
 /****************************************************************
  * mpc's are stored as follows:
@@ -650,7 +650,6 @@ static Obj MPC_2MPFR (Obj self, Obj fl, Obj fr)
 
 static Obj ROOTPOLY_MPC (Obj self, Obj coeffs, Obj precision)
 {
-  int cpoly_MPC(int, mpc_t *, mpc_t *, int);
   Obj result;
   Int i, numroots, degree = LEN_PLIST(coeffs)-1;
   mpc_t op[degree+1], zero[degree];

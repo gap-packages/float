@@ -2,8 +2,6 @@
  *
  * mp_poly.C                                                Laurent Bartholdi
  *
- *   @(#)$id: fr_dll.c,v 1.18 2010/10/26 05:19:40 gap exp $
- *
  * Copyright (c) 2011, Laurent Bartholdi
  *
  ****************************************************************************
@@ -17,7 +15,7 @@
 
 #define MPFR_REALS
 
-#define cpoly cpoly_MPC
+#include "mp_poly.h"
 
 static mp_prec_t default_prec = 128; // ugly, non-reentrant
 
@@ -247,4 +245,11 @@ static const xreal xeta(const xcomplex &z)
 #endif
 }
 
+#define cpoly cpoly_MPC__
 #include "cpoly.C"
+
+// now we define the C function using the fact that xcomplex is really just
+// mpc_t as data, with inline operations
+extern "C" int cpoly_MPC(int degree, const mpc_t *coeffs, mpc_t *roots, int prec) {
+  return cpoly_MPC__(degree, (xcomplex *) coeffs, (xcomplex *) roots, prec);
+}

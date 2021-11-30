@@ -1,1 +1,1 @@
-int cpoly_CXSC(int degree, cxsc::complex coeffs[], cxsc::complex roots[], int prec);
+int cpoly_CXSC(int degree, const cxsc::complex coeffs[], cxsc::complex roots[], int prec);

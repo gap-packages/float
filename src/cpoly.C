@@ -336,7 +336,7 @@ static bool fxshft(const int l2, int deg, xcomplex *P, xcomplex *p, xcomplex *H,
 
 // Main function
 //
-extern "C" int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec)
+int cpoly(int degree, const xcomplex *poly, xcomplex *Roots, int prec)
 {
   default_prec = prec; // ugly!
   // __asm__("int3");

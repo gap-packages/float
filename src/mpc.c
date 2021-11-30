@@ -650,7 +650,7 @@ static Obj MPC_2MPFR (Obj self, Obj fl, Obj fr)
 
 static Obj ROOTPOLY_MPC (Obj self, Obj coeffs, Obj precision)
 {
-  int cpoly_MPC(int, mpc_t *, mpc_t *, mp_prec_t);
+  int cpoly_MPC(int, mpc_t *, mpc_t *, int);
   Obj result;
   Int i, numroots, degree = LEN_PLIST(coeffs)-1;
   mpc_t op[degree+1], zero[degree];
@@ -674,7 +674,7 @@ static Obj ROOTPOLY_MPC (Obj self, Obj coeffs, Obj precision)
 
   /* !!! first call routine on low-precision IEEE numbers; if got n roots, refine them using accelerated Newton's method (x - ff'/(f'f' - ff")), or (x-jf/f' with j such that f(new pt) in minimal. if fails, call the high-precision method */
 
-  numroots = cpoly_MPC (degree, op, zero, prec);
+  numroots = cpoly_MPC (degree, op, zero, (int)prec);
 
   for (i = 0; i <= degree; i++)
     mpc_clear(op[degree-i]);

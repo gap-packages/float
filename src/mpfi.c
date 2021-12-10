@@ -512,13 +512,7 @@ static Obj FREXP_MPFI(Obj self, Obj f)
 
 static Obj LDEXP_MPFI(Obj self, Obj f, Obj exp)
 {
-  mp_exp_t e;
-  if (IS_INTOBJ(exp))
-    e = INT_INTOBJ(exp);
-  else {
-    Obj f = MPZ_LONGINT(exp);
-    e = mpz_get_si(mpz_MPZ(f));
-  }
+  mp_exp_t e = Int_ObjInt(exp);
   mp_prec_t prec = mpfi_get_prec(GET_MPFI(f));
   Obj g = NEW_MPFI(prec);
   mpfi_mul_2si (MPFI_OBJ(g), GET_MPFI(f), e);

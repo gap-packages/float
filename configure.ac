@@ -22,7 +22,6 @@ AC_PREFIX_DEFAULT([${PWD}])
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
-AX_CC_MAXOPT
 
 # Checks for header files.
 AC_CHECK_HEADERS([float.h stdlib.h])

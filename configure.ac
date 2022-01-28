@@ -46,6 +46,15 @@ else
 fi
 AC_CHECK_CXSC
 
+dnl ##
+dnl ## Detect Windows resp. Cygwin
+dnl ##
+case $host_os in
+  *cygwin* ) CYGWIN=yes;;
+         * ) CYGWIN=no;;
+esac
+AM_CONDITIONAL([SYS_IS_CYGWIN], [test "$CYGWIN" = "yes"])
+
 ################################################################
 # generate files
 

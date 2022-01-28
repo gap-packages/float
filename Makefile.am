@@ -36,6 +36,11 @@ checkblocks:
 
 all: all-recursive
 	mkdir -p bin/@GAPARCH@
-	cp src/.libs/float.so bin/@GAPARCH@/
+if SYS_IS_CYGWIN
+	cp src/.libs/float.dll bin/@GAPARCH@/float.so
+else
+	cp src/.libs/float.so bin/@GAPARCH@/float.so
+endif
+
 
 #E Makefile.am . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

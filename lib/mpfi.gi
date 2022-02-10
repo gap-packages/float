@@ -99,10 +99,10 @@ CallFuncList(function(arg)
     for i in arg do
         InstallOtherMethod(VALUE_GLOBAL(i[1]), "MPFI float", [IsMPFIFloat], i[2]);
     od;
-end,   [["AINV",AINV_MPFI],
-        ["AINV_MUT",AINV_MPFI],
-        ["INV",INV_MPFI],
-        ["INV_MUT",INV_MPFI],
+end,   [["AdditiveInverseSameMutability",AINV_MPFI],
+        ["AdditiveInverseMutable",AINV_MPFI],
+        ["InverseMutable",INV_MPFI],
+        ["InverseSameMutability",INV_MPFI],
         ["Int",INT_MPFI],
         ["AbsoluteValue",ABS_MPFI],
         ["ZeroMutable",ZERO_MPFI],
@@ -184,7 +184,7 @@ end, ["SUM","DIFF","QUO","PROD","LQUO","EQ","LT"]);
 InstallMethod(LdExp, "MPFI float, int", [IsMPFIFloat, IsInt], LDEXP_MPFI);
 InstallMethod(Atan2, "float", [IsMPFIFloat, IsMPFIFloat], ATAN2_MPFI);  
 
-InstallMethod(POW, "float, rat", [IsMPFIFloat, IsRat], 
+InstallMethod(\^, "float, rat", [IsMPFIFloat, IsRat], 
         function(f,r)
     if DenominatorRat(r)=1 then
         TryNextMethod();

@@ -100,11 +100,11 @@ CallFuncList(function(arg)
     for i in arg do
         InstallOtherMethod(VALUE_GLOBAL(i[1]), "MPFR float", [IsMPFRFloat], i[2]);
     od;
-end,   [["AINV",AINV_MPFR],
-        ["AINV_MUT",AINV_MPFR],
+end,   [["AdditiveInverseSameMutability",AINV_MPFR],
+        ["AdditiveInverseMutable",AINV_MPFR],
         ["InverseMutable",INV_MPFR],
         ["InverseImmutable",INV_MPFR],
-	["InverseSameMutability",INV_MPFR],
+        ["InverseSameMutability",INV_MPFR],
         ["Int",INT_MPFR],
         ["AbsoluteValue",ABS_MPFR],
         ["ZeroMutable",ZERO_MPFR],
@@ -177,7 +177,7 @@ end, ["SUM","DIFF","QUO","PROD","LQUO","MOD","POW","EQ","LT"]);
 
 InstallMethod(EqFloat, "float, float", [IsMPFRFloat, IsMPFRFloat], EQ_MPFR);
 
-InstallMethod(POW, "float, rat", [IsMPFRFloat, IsRat], 
+InstallMethod(\^, "float, rat", [IsMPFRFloat, IsRat], 
         function(f,r)
     if DenominatorRat(r)=1 then
         TryNextMethod();

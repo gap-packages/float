@@ -167,10 +167,10 @@ CallFuncList(function(arg)
         InstallOtherMethod(VALUE_GLOBAL(i[1]), "cxsc:ci", [IsCXSCBox],
                 VALUE_GLOBAL(Concatenation(i[2],"_CI")));
     od;
-end,   [["AINV","AINV_CXSC"],
-        ["AINV_MUT","AINV_CXSC"],
-        ["INV","INV_CXSC"],
-        ["INV_MUT","INV_CXSC"],
+end,   [["AdditiveInverseSameMutability","AINV_CXSC"],
+        ["AdditiveInverseMutable","AINV_CXSC"],
+        ["InverseMutable","INV_CXSC"],
+        ["InverseSameMutability","INV_CXSC"],
         ["AbsoluteValue","ABS_CXSC"],
         ["Sqrt","SQRT_CXSC"],
         ["Cos","COS_CXSC"],
@@ -346,19 +346,19 @@ BindGlobal("CXSC_POW_RAT", function(f,r,POWER,ROOT)
     return f;
 end);
 
-InstallMethod(POW, "cxsc:, rat", [IsCXSCReal, IsRat],
+InstallMethod(\^, "cxsc:, rat", [IsCXSCReal, IsRat],
         function(f,r)
     return CXSC_POW_RAT(f,r,POWER_CXSC_RP,ROOT_CXSC_RP);
 end);
-InstallMethod(POW, "cxsc:, rat", [IsCXSCComplex, IsRat],
+InstallMethod(\^, "cxsc:, rat", [IsCXSCComplex, IsRat],
         function(f,r)
     return CXSC_POW_RAT(f,r,POWER_CXSC_CP,ROOT_CXSC_CP);
 end);
-InstallMethod(POW, "cxsc:, rat", [IsCXSCInterval, IsRat],
+InstallMethod(\^, "cxsc:, rat", [IsCXSCInterval, IsRat],
         function(f,r)
     return CXSC_POW_RAT(f,r,POWER_CXSC_RI,ROOT_CXSC_RI);
 end);
-InstallMethod(POW, "cxsc:, rat", [IsCXSCBox, IsRat],
+InstallMethod(\^, "cxsc:, rat", [IsCXSCBox, IsRat],
         function(f,r)
     return CXSC_POW_RAT(f,r,POWER_CXSC_CI,ROOT_CXSC_CI);
 end);

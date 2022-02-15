@@ -104,10 +104,10 @@ CallFuncList(function(arg)
     for i in arg do
         InstallOtherMethod(VALUE_GLOBAL(i[1]), "MPC float", [IsMPCFloat], i[2]);
     od;
-end,   [["AINV",AINV_MPC],
-        ["AINV_MUT",AINV_MPC],
-        ["INV",INV_MPC],
-        ["INV_MUT",INV_MPC],
+end,   [["AdditiveInverseSameMutability",AINV_MPC],
+        ["AdditiveInverseMutable",AINV_MPC],
+        ["InverseMutable",INV_MPC],
+        ["InverseSameMutability",INV_MPC],
         ["AbsoluteValue",ABS_MPC],
         ["ZeroMutable",ZERO_MPC],
         ["ZeroImmutable",ZERO_MPC],

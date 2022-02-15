@@ -16,6 +16,10 @@ float_la_CFLAGS = $(GAP_CFLAGS)
 float_la_LDFLAGS = $(GAP_LDFLAGS) -avoid-version -module
 float_la_LIBADD =
 
+if SYS_IS_CYGWIN
+float_la_LDFLAGS += -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
+endif
+
 if WITH_MPFR_IS_YES
 float_la_SOURCES += mpfr.c
 float_la_CPPFLAGS += $(MPFR_CPPFLAGS)

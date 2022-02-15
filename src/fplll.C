@@ -65,12 +65,7 @@ template<> Obj GET_INTOBJ(Z_NR<mpz_t> &v) {
 }
 
 template<> Obj GET_INTOBJ(Z_NR<long> &v) {
-  mpz_t z;
-  mpz_init2 (z, 8*sizeof(long)+1);
-  mpz_set_si(z,v.get_si());
-  Obj o = INT_mpz(z);
-  mpz_clear(z);
-  return o;
+  return ObjInt_Int(v.get_si());
 }
 
 template<> Obj GET_INTOBJ(Z_NR<double> &v) {

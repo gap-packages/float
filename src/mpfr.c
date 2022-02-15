@@ -313,9 +313,7 @@ static Obj MPFR_MACFLOAT(Obj self, Obj f)
 
 static Obj MACFLOAT_MPFR(Obj self, Obj f)
 {
-  Obj g = NewBag(T_MACFLOAT,sizeof(Double));
-  VAL_MACFLOAT(g) = mpfr_get_d(GET_MPFR(f), GMP_RNDN);
-  return g;
+  return NEW_MACFLOAT(mpfr_get_d(GET_MPFR(f), GMP_RNDN));
 }
 
 static Obj FREXP_MPFR(Obj self, Obj f)
@@ -334,13 +332,7 @@ static Obj FREXP_MPFR(Obj self, Obj f)
 
 static Obj LDEXP_MPFR(Obj self, Obj f, Obj exp)
 {
-  mp_exp_t e;
-  if (IS_INTOBJ(exp))
-    e = INT_INTOBJ(exp);
-  else {
-    Obj f = MPZ_LONGINT(exp);
-    e = mpz_get_si(mpz_MPZ(f));
-  }
+  mp_exp_t e = Int_ObjInt(exp);
   mp_prec_t prec = mpfr_get_prec(GET_MPFR(f));
   Obj g = NEW_MPFR(prec);
   mpfr_mul_2si (MPFR_OBJ(g), GET_MPFR(f), e, GMP_RNDN);

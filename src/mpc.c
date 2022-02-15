@@ -158,13 +158,7 @@ static Obj FREXP_MPC(Obj self, Obj f)
 
 static Obj LDEXP_MPC(Obj self, Obj f, Obj exp)
 {
-  mp_exp_t e;
-  if (IS_INTOBJ(exp))
-    e = INT_INTOBJ(exp);
-  else {
-    Obj f = MPZ_LONGINT(exp);
-    e = mpz_get_si(mpz_MPZ(f));
-  }
+  mp_exp_t e = Int_ObjInt(exp);
   mp_prec_t prec = mpc_get_prec(GET_MPC(f));
   Obj g = NEW_MPC(prec);
   mpfr_mul_2si (MPC_OBJ(g)->re, GET_MPC(f)->re, e, GMP_RNDN);

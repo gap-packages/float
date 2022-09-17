@@ -857,16 +857,16 @@ static Obj EVALPOLY_CXSC(Obj self, Obj gapcoeffs, Obj gapt)
   Func2_CXSC_X(gap_name##_RI,R,I,RI_OBJ,oper);		\
   Func2_CXSC_X(gap_name##_CI,C,I,CI_OBJ,oper);
 
-cxsc::complex pow(cxsc::real &a, cxsc::complex &b) { return pow(a,b); }
-cxsc::interval pow(cxsc::real &a, cxsc::interval &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::real &a, cxsc::cinterval &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::complex &a, cxsc::interval &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::complex &a, cxsc::cinterval &b) { return pow(a,b); }
-cxsc::interval pow(cxsc::interval &a, cxsc::real &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::interval &a, cxsc::complex &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::interval &a, cxsc::cinterval &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::cinterval &a, cxsc::real &b) { return pow(a,b); }
-cxsc::cinterval pow(cxsc::cinterval &a, cxsc::complex &b) { return pow(a,b); }
+cxsc::complex pow(cxsc::real &a, cxsc::complex &b) { return pow(cxsc::complex(a),b); }
+cxsc::interval pow(cxsc::real &a, cxsc::interval &b) { return pow(cxsc::interval(a),b); }
+cxsc::cinterval pow(cxsc::real &a, cxsc::cinterval &b) { return pow(cxsc::cinterval(a),b); }
+cxsc::cinterval pow(cxsc::complex &a, cxsc::interval &b) { return pow(cxsc::cinterval(a),cxsc::cinterval(b)); }
+cxsc::cinterval pow(cxsc::complex &a, cxsc::cinterval &b) { return pow(cxsc::cinterval(a),b); }
+cxsc::interval pow(cxsc::interval &a, cxsc::real &b) { return pow(a,cxsc::interval(b)); }
+cxsc::cinterval pow(cxsc::interval &a, cxsc::complex &b) { return pow(cxsc::cinterval(a),cxsc::cinterval(b)); }
+cxsc::cinterval pow(cxsc::interval &a, cxsc::cinterval &b) { return pow(cxsc::cinterval(a),b); }
+cxsc::cinterval pow(cxsc::cinterval &a, cxsc::real &b) { return pow(a,cxsc::cinterval(b)); }
+cxsc::cinterval pow(cxsc::cinterval &a, cxsc::complex &b) { return pow(a,cxsc::cinterval(b)); }
 
 Func2_CXSC(SUM_CXSC,operator +);
 Func2_CXSC(DIFF_CXSC,operator -);

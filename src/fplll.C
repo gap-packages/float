@@ -23,6 +23,8 @@
 #include "floattypes.h"
 
 #include <fplll.h>
+using namespace fplll;
+
 
 typedef Obj (*ObjFunc)(); // I never could get the () and * right
 

@@ -4,7 +4,7 @@
 #AutoDoc(rec(gapdoc := rec(files:=["PackageInfo.g"])));
 
 MakeGAPDocDoc("doc","float",
-            ["../lib/float.gd","../lib/pslq.gi","../PackageInfo.g"],"float");
+            ["../lib/float.gd","../lib/pslq.gi","../PackageInfo.g"],"float","MathJax");
 CopyHTMLStyleFiles("doc");
 GAPDocManualLab("Float");
 

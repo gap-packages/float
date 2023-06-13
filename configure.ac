@@ -8,7 +8,7 @@
 
 AC_PREREQ([2.69])
 LT_PREREQ([2.4.2])
-AC_INIT([float],[0.5.18],[laurent.bartholdi@gmail.com])
+AC_INIT([float],[package],[laurent.bartholdi@gmail.com])
 AC_CONFIG_SRCDIR([src/float.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])

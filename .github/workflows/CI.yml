@@ -72,3 +72,4 @@ jobs:
         with:
           name: manual
           path: ./doc/manual.pdf
+          if-no-files-found: error

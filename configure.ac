@@ -60,9 +60,6 @@ AM_CONDITIONAL([SYS_IS_CYGWIN], [test "$CYGWIN" = "yes"])
 ################################################################
 # generate files
 
-mkdir -p bin/$GAPARCH
-mkdir -p extern
-
 ##CONFIG_STATUS=bin/$GAPARCH/config.status
 ##
 ##AC_CONFIG_FILES([$GAP_MAKEFILE:Makefile.in])

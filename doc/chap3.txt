@@ -11,7 +11,7 @@
   
   [1X3.1-1 FLOAT_PSEUDOFIELD[101X
   
-  [33X[1;0Y[29X[2XFLOAT_PSEUDOFIELD[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XFLOAT_PSEUDOFIELD[102X [32X global variable[133X
   
   [33X[0;0YThe  "pseudo-field" of floating-point numbers, containing all floating-point
   numbers in the current implementation.[133X

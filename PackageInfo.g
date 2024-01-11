@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "1.0.3",
-Date := "15/02/2022", # dd/mm/yyyy format
+Version := "1.0.4",
+Date := "11/01/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "1.0.3">
-## <!ENTITY Date "15/02/2023">
+## <!ENTITY Version "1.0.4">
+## <!ENTITY Date "11/01/2024">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -52,7 +52,7 @@ PackageWWWHome := "https://gap-packages.github.io/float/",
 PackageDoc := rec(
   BookName  := "float",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Floating-point numbers",

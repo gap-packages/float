@@ -32,6 +32,8 @@ AC_C_INLINE
 
 # Locates GAP
 FIND_GAP
+GAP="${GAP:-${GAPROOT}/bin/gap.sh}"
+AC_SUBST(GAP)
 
 LT_LIB_M
 AC_CHECK_MPFR

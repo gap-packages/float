@@ -26,7 +26,7 @@ Changelog:
 	gitlog-to-changelog > $@
 
 doc: doc/float.xml gap/*.gd
-	@GAPROOT@/bin/gap.sh -A makedoc.g
+	@GAP@ -A makedoc.g
 
 checkblocks:
 	grep '<#GAPDoc' PackageInfo.g lib/*d | awk -F'"' '{print $$2}' | sort > @@-blocks

@@ -1427,11 +1427,6 @@ static StructGVarFunc GVarFuncs [] = {
   {0}
 };
 
-void cxsc_unexpected (void)
-{
-  ErrorQuit("cxsc::unexpected: Nobody expects the Spanish Inquisition!", 0,0);
-}
-
 void cxsc_terminate (void)
 {
   ErrorQuit("cxsc::terminate: I'll be back!", 0,0);
@@ -1456,7 +1451,6 @@ int InitCXSCKernel (void)
 
   ImportFuncFromLibrary ("Log2Int", &GAPLog2Int);
 
-  set_unexpected (cxsc_unexpected);
   set_terminate (cxsc_terminate);
   return 0;
 }

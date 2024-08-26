@@ -35,12 +35,8 @@ else
 fi;
 
 CallFuncList(function()
-    local f;
-    f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f=fail then
-        Info(InfoPackageLoading,1,"No dynamic library loaded for Float -- couldn't find file");
-    else
-        LoadDynamicModule(f);
+    if LoadKernelExtension("float") = false then
+        Error("No dynamic library loaded for Float -- couldn't find file");
     fi;
 end,[]);
 

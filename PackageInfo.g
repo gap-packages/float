@@ -59,23 +59,22 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.11.0",
+  GAP := ">=4.12.0",
   NeededOtherPackages := [["GAPDoc",">=1.0"]],
   SuggestedOtherPackages := [],
   ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 
 AvailabilityTest := function()
-    local f, s;
-    f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f=fail then
-        LogPackageLoadingMessage(PACKAGE_WARNING,
+  if not IsKernelExtensionAvailable("float") then
+    LogPackageLoadingMessage(PACKAGE_WARNING,
             [Concatenation("The DLL program `",
-                Filename(DirectoriesPackagePrograms("float")[1],"float.so"),
+                Filename(DirectoriesPackagePrograms("float")[1], "float.so"),
                     "' was not compiled, and is needed for the float package."),
              "Run `./configure && make' in its home directory"]);
-    fi;
-    return f<>fail;
+    return fail;
+  fi;
+  return true;
 end,
                     
 BannerString := Concatenation(~.PackageName, " ", String(~.Version), " with modules [?] ...\n"),

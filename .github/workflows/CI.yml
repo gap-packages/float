@@ -29,7 +29,6 @@ jobs:
           - master
           - stable-4.13
           - stable-4.12
-          - stable-4.11
         ABI: ['']
         os: [ubuntu-latest]
         include:

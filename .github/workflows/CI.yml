@@ -34,7 +34,7 @@ jobs:
         include:
           - gap-branch: master
             ABI: 32
-            os: ubuntu-18.04 # libmpfi-dev:i386 is missing in ubuntu-20.04
+            os: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +45,8 @@ jobs:
       - name: 'Install additional dependencies'
         run: |
           if [ "${{matrix.ABI}}" = "32" ]; then
-            sudo apt-get install libmpfr-dev:i386 libmpfi-dev:i386 libmpc-dev:i386
+            # libmpfi-dev:i386 is missing in ubuntu-20.04
+            sudo apt-get install libmpfr-dev:i386 libmpc-dev:i386
           else
             sudo apt-get install libmpfr-dev libmpfi-dev libmpc-dev
           fi

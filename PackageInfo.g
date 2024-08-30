@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "1.0.4",
-Date := "11/01/2024", # dd/mm/yyyy format
+Version := "1.0.5",
+Date := "30/08/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "1.0.4">
-## <!ENTITY Date "11/01/2024">
+## <!ENTITY Version "1.0.5">
+## <!ENTITY Date "30/08/2024">
 ## <#/GAPDoc>
 Persons := [
   rec( 

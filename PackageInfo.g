@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "1.0.4",
-Date := "11/01/2024", # dd/mm/yyyy format
+Version := "1.0.5",
+Date := "30/08/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "1.0.4">
-## <!ENTITY Date "11/01/2024">
+## <!ENTITY Version "1.0.5">
+## <!ENTITY Date "30/08/2024">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -59,23 +59,22 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.11.0",
+  GAP := ">=4.12.0",
   NeededOtherPackages := [["GAPDoc",">=1.0"]],
   SuggestedOtherPackages := [],
   ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 
 AvailabilityTest := function()
-    local f, s;
-    f := Filename(DirectoriesPackagePrograms("float"),"float.so");
-    if f=fail then
-        LogPackageLoadingMessage(PACKAGE_WARNING,
+  if not IsKernelExtensionAvailable("float") then
+    LogPackageLoadingMessage(PACKAGE_WARNING,
             [Concatenation("The DLL program `",
-                Filename(DirectoriesPackagePrograms("float")[1],"float.so"),
+                Filename(DirectoriesPackagePrograms("float")[1], "float.so"),
                     "' was not compiled, and is needed for the float package."),
              "Run `./configure && make' in its home directory"]);
-    fi;
-    return f<>fail;
+    return fail;
+  fi;
+  return true;
 end,
                     
 BannerString := Concatenation(~.PackageName, " ", String(~.Version), " with modules [?] ...\n"),

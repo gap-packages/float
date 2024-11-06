@@ -72,7 +72,7 @@ AvailabilityTest := function()
                 Filename(DirectoriesPackagePrograms("float")[1], "float.so"),
                     "' was not compiled, and is needed for the float package."),
              "Run `./configure && make' in its home directory"]);
-    return fail;
+    return false;
   fi;
   return true;
 end,

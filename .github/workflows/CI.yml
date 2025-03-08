@@ -20,8 +20,6 @@ jobs:
   test:
     name: ${{ matrix.gap-branch }} ${{ matrix.ABI }}
     runs-on: ${{ matrix.os }}
-    # Don't run this twice on PRs for branches pushed to the same repository
-    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
     strategy:
       fail-fast: false
       matrix:
@@ -59,7 +57,7 @@ jobs:
         with:
           only-needed: true
       - uses: gap-actions/process-coverage@v2
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 

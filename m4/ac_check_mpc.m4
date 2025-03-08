@@ -1,6 +1,5 @@
 # check for mpc library
 # sets MPC_CPPFLAGS, MPC_LDFLAGS and MPC_LIBS,
-# and MPC_WITH, MPC_DEPEND,
 # and MPC=yes/no
 
 AC_DEFUN([AC_CHECK_MPC],[
@@ -8,8 +7,6 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 MPC=unknown
-MPC_WITH=""
-MPC_DEPEND=""
 
 AC_ARG_WITH([mpc],
  [  --with-mpc=<location>
@@ -23,7 +20,6 @@ AC_ARG_WITH([mpc],
   elif test "$withval" = yes; then
     MPC=yes
   else
-    MPC_WITH="$MPC_WITH --with-mpc=$withval"
     MPC=yes
     MPC_CPPFLAGS="-I$withval/include"; MPC_LDFLAGS="-L$withval/lib"
   fi]
@@ -33,7 +29,6 @@ AC_ARG_WITH([mpc-include],
  [  --with-mpc-include=<location>
     Location at which the mpc include files were installed.],
  [MPC=yes
-  MPC_WITH="$MPC_WITH --with-mpc-include=$withval"
   MPC_CPPFLAGS="-I$withval"]
 )
 
@@ -42,7 +37,6 @@ AC_ARG_WITH([mpc-lib],
     Location at which the mpc library files were installed.
  ],
  [MPC=yes
-  MPC_WITH="$MPC_WITH --with-mpc-lib=$withval"
   MPC_LDFLAGS="-L$withval"]
 )
 

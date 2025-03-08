@@ -1,6 +1,5 @@
 # check for fplll library
 # sets FPLLL_CPPFLAGS, FPLLL_LDFLAGS and FPLLL_LIBS,
-# and FPLLL_WITH, FPLLL_DEPEND,
 # and FPLLL=yes/no
 
 AC_DEFUN([AC_CHECK_FPLLL],[
@@ -8,8 +7,6 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 FPLLL=unknown
-FPLLL_WITH=""
-FPLLL_DEPEND=""
 
 AC_ARG_WITH([fplll],
  [  --with-fplll=<location>
@@ -23,7 +20,6 @@ AC_ARG_WITH([fplll],
   elif test "$withval" = yes; then
     FPLLL=yes
   else
-    FPLLL_WITH="$FPLLL_WITH --with-fplll=$withval"
     FPLLL=yes
     FPLLL_CPPFLAGS="-I$withval/include"; FPLLL_LDFLAGS="-L$withval/lib"
   fi]
@@ -33,7 +29,6 @@ AC_ARG_WITH([fplll-include],
  [  --with-fplll-include=<location>
     Location at which the fplll include files were installed.],
  [FPLLL=yes
-  FPLLL_WITH="$FPLLL_WITH --with-fplll-include=$withval"
   FPLLL_CPPFLAGS="-I$withval"]
 )
 
@@ -42,7 +37,6 @@ AC_ARG_WITH([fplll-lib],
     Location at which the fplll library files were installed.
  ],
  [FPLLL=yes
-  FPLLL_WITH="$FPLLL_WITH --with-fplll-lib=$withval"
   FPLLL_LDFLAGS="-L$withval"]
 )
 

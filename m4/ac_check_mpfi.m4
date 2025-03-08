@@ -1,6 +1,5 @@
 # check for mpfi library
 # sets MPFI_CPPFLAGS, MPFI_LDFLAGS and MPFI_LIBS,
-# and MPFI_WITH, MPFI_DEPEND,
 # and MPFI=yes/no
 
 AC_DEFUN([AC_CHECK_MPFI],[
@@ -8,8 +7,6 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 MPFI=unknown
-MPFI_WITH=""
-MPFI_DEPEND=""
 
 AC_ARG_WITH([mpfi],
  [  --with-mpfi=<location>
@@ -23,7 +20,6 @@ AC_ARG_WITH([mpfi],
   elif test "$withval" = yes; then
     MPFI=yes
   else
-    MPFI_WITH="$MPFI_WITH --with-mpfi=$withval"
     MPFI=yes
     MPFI_CPPFLAGS="-I$withval/include"; MPFI_LDFLAGS="-L$withval/lib"
   fi]
@@ -33,7 +29,6 @@ AC_ARG_WITH([mpfi-include],
  [  --with-mpfi-include=<location>
     Location at which the mpfi include files were installed.],
  [MPFI=yes
-  MPFI_WITH="$MPFI_WITH --with-mpfi-include=$withval"
   MPFI_CPPFLAGS="-I$withval"]
 )
 
@@ -42,7 +37,6 @@ AC_ARG_WITH([mpfi-lib],
     Location at which the mpfi library files were installed.
  ],
  [MPFI=yes
-  MPFI_WITH="$MPFI_WITH --with-mpfi-lib=$withval"
   MPFI_LDFLAGS="-L$withval"]
 )
 

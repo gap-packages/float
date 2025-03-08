@@ -1,6 +1,5 @@
 # check for cxsc library
 # sets CXSC_CPPFLAGS, CXSC_LDFLAGS and CXSC_LIBS,
-# and CXSC_WITH, CXSC_DEPEND,
 # and CXSC=yes/no
 
 AC_DEFUN([AC_CHECK_CXSC],[
@@ -8,8 +7,6 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 CXSC=unknown
-CXSC_WITH=""
-CXSC_DEPEND=""
 
 AC_ARG_WITH([cxsc],
  [  --with-cxsc=<location>
@@ -23,7 +20,6 @@ AC_ARG_WITH([cxsc],
   elif test "$withval" = yes; then
     CXSC=yes
   else
-    CXSC_WITH="$CXSC_WITH --with-cxsc=$withval"
     CXSC=yes
     CXSC_CPPFLAGS="-I$withval/include"; CXSC_LDFLAGS="-L$withval/lib"
   fi]
@@ -33,7 +29,6 @@ AC_ARG_WITH([cxsc-include],
  [  --with-cxsc-include=<location>
     Location at which the cxsc include files were installed.],
  [CXSC=yes
-  CXSC_WITH="$CXSC_WITH --with-cxsc-include=$withval"
   CXSC_CPPFLAGS="-I$withval"]
 )
 
@@ -42,7 +37,6 @@ AC_ARG_WITH([cxsc-lib],
     Location at which the cxsc library files were installed.
  ],
  [CXSC=yes
-  CXSC_WITH="$CXSC_WITH --with-cxsc-lib=$withval"
   CXSC_LDFLAGS="-L$withval"]
 )
 

@@ -1,6 +1,5 @@
 # check for mpfr library
 # sets MPFR_CPPFLAGS, MPFR_LDFLAGS and MPFR_LIBS,
-# and MPFR_WITH, MPFR_DEPEND,
 # and MPFR=yes/no
 
 AC_DEFUN([AC_CHECK_MPFR],[
@@ -8,8 +7,6 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 MPFR=unknown
-MPFR_WITH=""
-MPFR_DEPEND=""
 
 AC_ARG_WITH([mpfr],
  [  --with-mpfr=<location>
@@ -23,7 +20,6 @@ AC_ARG_WITH([mpfr],
   elif test "$withval" = yes; then
     MPFR=yes
   else
-    MPFR_WITH="$MPFR_WITH --with-mpfr=$withval"
     MPFR=yes
     MPFR_CPPFLAGS="-I$withval/include"; MPFR_LDFLAGS="-L$withval/lib"
   fi]
@@ -33,7 +29,6 @@ AC_ARG_WITH([mpfr-include],
  [  --with-mpfr-include=<location>
     Location at which the mpfr include files were installed.],
  [MPFR=yes
-  MPFR_WITH="$MPFR_WITH --with-mpfr-include=$withval"
   MPFR_CPPFLAGS="-I$withval"]
 )
 
@@ -42,7 +37,6 @@ AC_ARG_WITH([mpfr-lib],
     Location at which the mpfr library files were installed.
  ],
  [MPFR=yes
-  MPFR_WITH="$MPFR_WITH --with-mpfr-lib=$withval"
   MPFR_LDFLAGS="-L$withval"]
 )
 

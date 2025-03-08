@@ -21,8 +21,16 @@ AC_ARG_WITH([mpc],
     MPC=yes
   else
     MPC=yes
-    MPC_CPPFLAGS="-I$withval/include"; MPC_LDFLAGS="-L$withval/lib"
-  fi]
+    MPC_CPPFLAGS="-I$withval/include"
+    MPC_LDFLAGS="-L$withval/lib"
+  fi],
+  [AS_IF([command -v brew --prefix libmpc >/dev/null 2>&1],[
+    AC_MSG_NOTICE([BREW libmpc detected])
+    withval=$(brew --prefix)
+    MPC=yes
+    MPC_CPPFLAGS="-I$withval/include"
+    MPC_LDFLAGS="-L$withval/lib"
+  ])]
 )
 
 AC_ARG_WITH([mpc-include],

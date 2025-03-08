@@ -21,8 +21,16 @@ AC_ARG_WITH([mpfi],
     MPFI=yes
   else
     MPFI=yes
-    MPFI_CPPFLAGS="-I$withval/include"; MPFI_LDFLAGS="-L$withval/lib"
-  fi]
+    MPFI_CPPFLAGS="-I$withval/include"
+    MPFI_LDFLAGS="-L$withval/lib"
+  fi],
+  [AS_IF([command -v brew --prefix mpfi >/dev/null 2>&1],[
+    AC_MSG_NOTICE([BREW mpfi detected])
+    withval=$(brew --prefix)
+    MPFI=yes
+    MPFI_CPPFLAGS="-I$withval/include"
+    MPFI_LDFLAGS="-L$withval/lib"
+  ])]
 )
 
 AC_ARG_WITH([mpfi-include],

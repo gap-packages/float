@@ -21,7 +21,8 @@ AC_ARG_WITH([cxsc],
     CXSC=yes
   else
     CXSC=yes
-    CXSC_CPPFLAGS="-I$withval/include"; CXSC_LDFLAGS="-L$withval/lib"
+    CXSC_CPPFLAGS="-I$withval/include"
+    CXSC_LDFLAGS="-L$withval/lib"
   fi]
 )
 

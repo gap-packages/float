@@ -11,7 +11,7 @@ FPLLL=unknown
 FPLLL_WITH=""
 FPLLL_DEPEND=""
 
-AC_ARG_WITH(fplll,
+AC_ARG_WITH([fplll],
  [  --with-fplll=<location>
     Location at which the FPLLL library was installed.
     If the argument is omitted, the library is assumed to be reachable
@@ -29,7 +29,7 @@ AC_ARG_WITH(fplll,
   fi]
 )
 
-AC_ARG_WITH(fplll-include,
+AC_ARG_WITH([fplll-include],
  [  --with-fplll-include=<location>
     Location at which the fplll include files were installed.],
  [FPLLL=yes
@@ -37,7 +37,7 @@ AC_ARG_WITH(fplll-include,
   FPLLL_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(fplll-lib,
+AC_ARG_WITH([fplll-lib],
  [  --with-fplll-lib=<location>
     Location at which the fplll library files were installed.
  ],

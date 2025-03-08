@@ -11,7 +11,7 @@ CXSC=unknown
 CXSC_WITH=""
 CXSC_DEPEND=""
 
-AC_ARG_WITH(cxsc,
+AC_ARG_WITH([cxsc],
  [  --with-cxsc=<location>
     Location at which the CXSC library was installed.
     If the argument is omitted, the library is assumed to be reachable
@@ -29,7 +29,7 @@ AC_ARG_WITH(cxsc,
   fi]
 )
 
-AC_ARG_WITH(cxsc-include,
+AC_ARG_WITH([cxsc-include],
  [  --with-cxsc-include=<location>
     Location at which the cxsc include files were installed.],
  [CXSC=yes
@@ -37,7 +37,7 @@ AC_ARG_WITH(cxsc-include,
   CXSC_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(cxsc-lib,
+AC_ARG_WITH([cxsc-lib],
  [  --with-cxsc-lib=<location>
     Location at which the cxsc library files were installed.
  ],

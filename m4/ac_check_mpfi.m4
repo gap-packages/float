@@ -11,7 +11,7 @@ MPFI=unknown
 MPFI_WITH=""
 MPFI_DEPEND=""
 
-AC_ARG_WITH(mpfi,
+AC_ARG_WITH([mpfi],
  [  --with-mpfi=<location>
     Location at which the MPFI library was installed.
     If the argument is omitted, the library is assumed to be reachable
@@ -29,7 +29,7 @@ AC_ARG_WITH(mpfi,
   fi]
 )
 
-AC_ARG_WITH(mpfi-include,
+AC_ARG_WITH([mpfi-include],
  [  --with-mpfi-include=<location>
     Location at which the mpfi include files were installed.],
  [MPFI=yes
@@ -37,7 +37,7 @@ AC_ARG_WITH(mpfi-include,
   MPFI_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(mpfi-lib,
+AC_ARG_WITH([mpfi-lib],
  [  --with-mpfi-lib=<location>
     Location at which the mpfi library files were installed.
  ],

@@ -11,7 +11,7 @@ MPFR=unknown
 MPFR_WITH=""
 MPFR_DEPEND=""
 
-AC_ARG_WITH(mpfr,
+AC_ARG_WITH([mpfr],
  [  --with-mpfr=<location>
     Location at which the MPFR library was installed.
     If the argument is omitted, the library is assumed to be reachable
@@ -29,7 +29,7 @@ AC_ARG_WITH(mpfr,
   fi]
 )
 
-AC_ARG_WITH(mpfr-include,
+AC_ARG_WITH([mpfr-include],
  [  --with-mpfr-include=<location>
     Location at which the mpfr include files were installed.],
  [MPFR=yes
@@ -37,7 +37,7 @@ AC_ARG_WITH(mpfr-include,
   MPFR_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(mpfr-lib,
+AC_ARG_WITH([mpfr-lib],
  [  --with-mpfr-lib=<location>
     Location at which the mpfr library files were installed.
  ],

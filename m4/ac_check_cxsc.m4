@@ -9,12 +9,12 @@ temp_LDFLAGS="$LDFLAGS"
 CXSC=unknown
 
 AC_ARG_WITH([cxsc],
- [  --with-cxsc=<location>
-    Location at which the CXSC library was installed.
+ [AS_HELP_STRING([--with-cxsc=<location>],
+   [Location at which the CXSC library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library..],
+    library.])],
  [if test "$withval" = no; then
     CXSC=no
   elif test "$withval" = yes; then
@@ -26,16 +26,15 @@ AC_ARG_WITH([cxsc],
 )
 
 AC_ARG_WITH([cxsc-include],
- [  --with-cxsc-include=<location>
-    Location at which the cxsc include files were installed.],
+ [AS_HELP_STRING([--with-cxsc-include=<location>],
+   [Location at which the cxsc include files were installed.])],
  [CXSC=yes
   CXSC_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH([cxsc-lib],
- [  --with-cxsc-lib=<location>
-    Location at which the cxsc library files were installed.
- ],
+ [AS_HELP_STRING([--with-cxsc-lib=<location>],
+   [Location at which the cxsc library files were installed.])],
  [CXSC=yes
   CXSC_LDFLAGS="-L$withval"]
 )

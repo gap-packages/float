@@ -9,12 +9,12 @@ temp_LDFLAGS="$LDFLAGS"
 MPFI=unknown
 
 AC_ARG_WITH([mpfi],
- [  --with-mpfi=<location>
-    Location at which the MPFI library was installed.
+ [AS_HELP_STRING([--with-mpfi=<location>],
+   [Location at which the MPFI library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library.],
+    library..])],
  [if test "$withval" = no; then
     MPFI=no
   elif test "$withval" = yes; then
@@ -26,16 +26,15 @@ AC_ARG_WITH([mpfi],
 )
 
 AC_ARG_WITH([mpfi-include],
- [  --with-mpfi-include=<location>
-    Location at which the mpfi include files were installed.],
+ [AS_HELP_STRING([--with-mpfi-include=<location>],
+   [Location at which the mpfi include files were installed.])],
  [MPFI=yes
   MPFI_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH([mpfi-lib],
- [  --with-mpfi-lib=<location>
-    Location at which the mpfi library files were installed.
- ],
+ [AS_HELP_STRING([--with-mpfi-lib=<location>],
+   [Location at which the mpfi library files were installed.])],
  [MPFI=yes
   MPFI_LDFLAGS="-L$withval"]
 )

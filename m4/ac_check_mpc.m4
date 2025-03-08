@@ -9,12 +9,12 @@ temp_LDFLAGS="$LDFLAGS"
 MPC=unknown
 
 AC_ARG_WITH([mpc],
- [  --with-mpc=<location>
-    Location at which the MPC library was installed.
+ [AS_HELP_STRING([--with-mpc=<location>],
+   [Location at which the MPC library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library.],
+    library.])],
  [if test "$withval" = no; then
     MPC=no
   elif test "$withval" = yes; then
@@ -26,16 +26,15 @@ AC_ARG_WITH([mpc],
 )
 
 AC_ARG_WITH([mpc-include],
- [  --with-mpc-include=<location>
-    Location at which the mpc include files were installed.],
+ [AS_HELP_STRING([--with-mpc-include=<location>],
+   [Location at which the mpc include files were installed.])],
  [MPC=yes
   MPC_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH([mpc-lib],
- [  --with-mpc-lib=<location>
-    Location at which the mpc library files were installed.
- ],
+ [AS_HELP_STRING([--with-mpc-lib=<location>],
+   [Location at which the mpc library files were installed.])],
  [MPC=yes
   MPC_LDFLAGS="-L$withval"]
 )

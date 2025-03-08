@@ -9,12 +9,12 @@ temp_LDFLAGS="$LDFLAGS"
 FPLLL=unknown
 
 AC_ARG_WITH([fplll],
- [  --with-fplll=<location>
-    Location at which the FPLLL library was installed.
+ [AS_HELP_STRING([--with-fplll=<location>],
+   [Location at which the FPLLL library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library.],
+    library.])],
  [if test "$withval" = no; then
     FPLLL=no
   elif test "$withval" = yes; then
@@ -26,16 +26,15 @@ AC_ARG_WITH([fplll],
 )
 
 AC_ARG_WITH([fplll-include],
- [  --with-fplll-include=<location>
-    Location at which the fplll include files were installed.],
+ [AS_HELP_STRING([--with-fplll-include=<location>],
+   [Location at which the fplll include files were installed.])],
  [FPLLL=yes
   FPLLL_CPPFLAGS="-I$withval"]
 )
 
 AC_ARG_WITH([fplll-lib],
- [  --with-fplll-lib=<location>
-    Location at which the fplll library files were installed.
- ],
+ [AS_HELP_STRING([--with-fplll-lib=<location>],
+   [Location at which the fplll library files were installed.])],
  [FPLLL=yes
   FPLLL_LDFLAGS="-L$withval"]
 )

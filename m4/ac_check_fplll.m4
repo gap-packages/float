@@ -1,6 +1,5 @@
 # check for fplll library
 # sets FPLLL_CPPFLAGS, FPLLL_LDFLAGS and FPLLL_LIBS,
-# and FPLLL_WITH, FPLLL_DEPEND,
 # and FPLLL=yes/no
 
 AC_DEFUN([AC_CHECK_FPLLL],[
@@ -8,41 +7,43 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 FPLLL=unknown
-FPLLL_WITH=""
-FPLLL_DEPEND=""
 
-AC_ARG_WITH(fplll,
- [  --with-fplll=<location>
-    Location at which the FPLLL library was installed.
+AC_ARG_WITH([fplll],
+ [AS_HELP_STRING([--with-fplll=<location>],
+   [Location at which the FPLLL library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library.],
+    library.])],
  [if test "$withval" = no; then
     FPLLL=no
   elif test "$withval" = yes; then
     FPLLL=yes
   else
-    FPLLL_WITH="$FPLLL_WITH --with-fplll=$withval"
     FPLLL=yes
-    FPLLL_CPPFLAGS="-I$withval/include"; FPLLL_LDFLAGS="-L$withval/lib"
-  fi]
+    FPLLL_CPPFLAGS="-I$withval/include"
+    FPLLL_LDFLAGS="-L$withval/lib"
+  fi],
+  [AS_IF([command -v brew --prefix fplll >/dev/null 2>&1],[
+    AC_MSG_NOTICE([BREW fplll detected])
+    withval=$(brew --prefix)
+    FPLLL=yes
+    FPLLL_CPPFLAGS="-I$withval/include"
+    FPLLL_LDFLAGS="-L$withval/lib"
+  ])]
 )
 
-AC_ARG_WITH(fplll-include,
- [  --with-fplll-include=<location>
-    Location at which the fplll include files were installed.],
+AC_ARG_WITH([fplll-include],
+ [AS_HELP_STRING([--with-fplll-include=<location>],
+   [Location at which the fplll include files were installed.])],
  [FPLLL=yes
-  FPLLL_WITH="$FPLLL_WITH --with-fplll-include=$withval"
   FPLLL_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(fplll-lib,
- [  --with-fplll-lib=<location>
-    Location at which the fplll library files were installed.
- ],
+AC_ARG_WITH([fplll-lib],
+ [AS_HELP_STRING([--with-fplll-lib=<location>],
+   [Location at which the fplll library files were installed.])],
  [FPLLL=yes
-  FPLLL_WITH="$FPLLL_WITH --with-fplll-lib=$withval"
   FPLLL_LDFLAGS="-L$withval"]
 )
 

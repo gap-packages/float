@@ -26,8 +26,6 @@
 using namespace fplll;
 
 
-typedef Obj (*ObjFunc)(); // I never could get the () and * right
-
 template <class Z> void SET_INTOBJ(Z_NR<Z> &v, Obj z);
 template <class Z> Obj GET_INTOBJ(Z_NR<Z> &v);
 

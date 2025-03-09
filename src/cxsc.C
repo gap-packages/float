@@ -198,8 +198,6 @@ static inline cxsc::cinterval CI_GET(cxsc::real x) { return _cinterval(x); }
     return OBJ_CP(cxsc_name(CI_OBJ(f)));			\
   }
 
-typedef Obj (*ObjFunc)(); // I never could get the () and * right
-
 #define Inc1_CXSC_arg(name,arg)					\
   { #name, 1, arg, (ObjFunc) name, "src/cxsc_float.c:" #name }
 #define Inc1_CXSC(name)					\

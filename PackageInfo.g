@@ -5,12 +5,12 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "1.0.5",
-Date := "30/08/2024", # dd/mm/yyyy format
+Version := "1.0.6",
+Date := "09/03/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 ## <#GAPDoc Label="Version">
-## <!ENTITY Version "1.0.5">
-## <!ENTITY Date "30/08/2024">
+## <!ENTITY Version "1.0.6">
+## <!ENTITY Date "09/03/2025">
 ## <#/GAPDoc>
 Persons := [
   rec( 
@@ -72,7 +72,7 @@ AvailabilityTest := function()
                 Filename(DirectoriesPackagePrograms("float")[1], "float.so"),
                     "' was not compiled, and is needed for the float package."),
              "Run `./configure && make' in its home directory"]);
-    return fail;
+    return false;
   fi;
   return true;
 end,

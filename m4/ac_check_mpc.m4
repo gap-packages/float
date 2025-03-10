@@ -1,6 +1,5 @@
 # check for mpc library
 # sets MPC_CPPFLAGS, MPC_LDFLAGS and MPC_LIBS,
-# and MPC_WITH, MPC_DEPEND,
 # and MPC=yes/no
 
 AC_DEFUN([AC_CHECK_MPC],[
@@ -8,41 +7,43 @@ temp_LIBS="$LIBS"
 temp_CPPFLAGS="$CPPFLAGS"
 temp_LDFLAGS="$LDFLAGS"
 MPC=unknown
-MPC_WITH=""
-MPC_DEPEND=""
 
-AC_ARG_WITH(mpc,
- [  --with-mpc=<location>
-    Location at which the MPC library was installed.
+AC_ARG_WITH([mpc],
+ [AS_HELP_STRING([--with-mpc=<location>],
+   [Location at which the MPC library was installed.
     If the argument is omitted, the library is assumed to be reachable
     under the standard search path (/usr, /usr/local,...).  Otherwise
     you must give the <path> to the directory which contains the
-    library.],
+    library.])],
  [if test "$withval" = no; then
     MPC=no
   elif test "$withval" = yes; then
     MPC=yes
   else
-    MPC_WITH="$MPC_WITH --with-mpc=$withval"
     MPC=yes
-    MPC_CPPFLAGS="-I$withval/include"; MPC_LDFLAGS="-L$withval/lib"
-  fi]
+    MPC_CPPFLAGS="-I$withval/include"
+    MPC_LDFLAGS="-L$withval/lib"
+  fi],
+  [AS_IF([command -v brew --prefix libmpc >/dev/null 2>&1],[
+    AC_MSG_NOTICE([BREW libmpc detected])
+    withval=$(brew --prefix)
+    MPC=yes
+    MPC_CPPFLAGS="-I$withval/include"
+    MPC_LDFLAGS="-L$withval/lib"
+  ])]
 )
 
-AC_ARG_WITH(mpc-include,
- [  --with-mpc-include=<location>
-    Location at which the mpc include files were installed.],
+AC_ARG_WITH([mpc-include],
+ [AS_HELP_STRING([--with-mpc-include=<location>],
+   [Location at which the mpc include files were installed.])],
  [MPC=yes
-  MPC_WITH="$MPC_WITH --with-mpc-include=$withval"
   MPC_CPPFLAGS="-I$withval"]
 )
 
-AC_ARG_WITH(mpc-lib,
- [  --with-mpc-lib=<location>
-    Location at which the mpc library files were installed.
- ],
+AC_ARG_WITH([mpc-lib],
+ [AS_HELP_STRING([--with-mpc-lib=<location>],
+   [Location at which the mpc library files were installed.])],
  [MPC=yes
-  MPC_WITH="$MPC_WITH --with-mpc-lib=$withval"
   MPC_LDFLAGS="-L$withval"]
 )
 

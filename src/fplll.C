@@ -77,15 +77,15 @@ template<> Obj GET_INTOBJ(Z_NR<double> &v) {
   return o;
 }
 
-inline void set(Z_NR<mpz_t> &a, const Z_NR<long>& b) {
+inline void set_value(Z_NR<mpz_t> &a, const Z_NR<long>& b) {
   a = b.get_si();
 }
 
-inline void set(Z_NR<mpz_t> &a, const Z_NR<mpz_t>& b) {
+inline void set_value(Z_NR<mpz_t> &a, const Z_NR<mpz_t>& b) {
   a = b;
 }
 
-inline void set(Z_NR<mpz_t> &a, const Z_NR<double> &b) {
+inline void set_value(Z_NR<mpz_t> &a, const Z_NR<double> &b) {
   a = b.get_d();
 }
 
@@ -179,7 +179,7 @@ template<class Z> Obj dofplll(Obj gapmat, Obj lllargs, Obj svpargs)
 
     for (int i = 0; i < numrows; i++)
       for (int j = 0; j < numcols; j++)
-	set(svpmat[i][j], mat[i][j]);
+	set_value(svpmat[i][j], mat[i][j]);
 
     int result = shortest_vector(svpmat, sol, method, flags);
 

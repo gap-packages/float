@@ -185,21 +185,13 @@ static Int InitLibrary (StructInitInfo *module)
 }
 
 static StructInitInfo module = {
-#ifdef FLOATSTATIC
-    .type = MODULE_STATIC,
-#else
     .type = MODULE_DYNAMIC,
-#endif
     .name = "float",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
 };
 
-#ifdef FLOAT_STATIC
-StructInitInfo *Init__float (void)
-#else
-StructInitInfo *Init__Dynamic (void)
-#endif
+StructInitInfo *Init__Dynamic(void)
 {
   return &module;
 }

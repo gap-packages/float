@@ -1,7 +1,7 @@
 name: float
-version: "1.0.6"
+version: "1.0.7"
 license: "GPL-2.0-or-later"
-date: 2025-03-09
+date: 2025-03-10
 description: |
     Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP
 
@@ -26,7 +26,7 @@ packageinfo: https://gap-packages.github.io/float/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/float/releases/download/v1.0.6/float-1.0.6.tar.gz
+      url: https://github.com/gap-packages/float/releases/download/v1.0.7/float-1.0.7.tar.gz
 
 abstract: |
     The <span class="pkgname">float</span> package allows                     GAP to manipulate floating-point numbers with arbitrary                     precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL
@@ -40,7 +40,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Bar25</span>]   <b class='BibAuthor'>Bartholdi, L.</b>,
      <i class='BibTitle'>float, Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP,
-             Version 1.0.6</i>
+             Version 1.0.7</i>
      (<span class='BibYear'>2025</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/float/">https://gap-packages.github.io/float/</a></span>.
@@ -51,7 +51,7 @@ bibtex: |
     @misc{ float,
       author =           {Bartholdi, L.},
       title =            {{float},  {Integration  of  mpfr, mpfi, mpc, fplll and
-                          cxsc in GAP}, {V}ersion 1.0.6},
+                          cxsc in GAP}, {V}ersion 1.0.7},
       month =            {Mar},
       year =             {2025},
       note =             {GAP package},

@@ -84,7 +84,7 @@ static inline Obj NEW_MPC( mp_prec_t prec )
     return g;						\
   }
 #define Inc1_MPC_arg(name,arg)		\
-  { #name, 1, arg, name, "src/mpc.c:" #name }
+  { #name, 1, arg, (ObjFunc)(void *)(name), "src/mpc.c:" #name }
 #define Inc1_MPC(name) Inc1_MPC_arg(name,"complex")
 
 Func1_MPC(PROJ_MPC,mpc_proj);
@@ -543,7 +543,7 @@ static Obj MPC_MPFR(Obj self, Obj f)
     return g;								\
   }
 #define Inc2_MPC_arg(name,arg)			\
-  { #name, 2, arg, name, "src/mpc.c:" #name }
+  { #name, 2, arg, (ObjFunc)(void *)(name), "src/mpc.c:" #name }
 #define Inc2_MPC(name) Inc2_MPC_arg(name##_MPC,"complex, complex"),	\
     Inc2_MPC_arg(name##_MPC_MPFR,"complex, real"),			\
     Inc2_MPC_arg(name##_MPFR_MPC,"real, complex")			\

@@ -24,10 +24,8 @@ AC_ARG_WITH([mpfr],
     MPFR_CPPFLAGS="-I$withval/include"
     MPFR_LDFLAGS="-L$withval/lib"
   fi],
-  [AS_IF([command -v brew --prefix mpfr >/dev/null 2>&1],[
-    AC_MSG_NOTICE([BREW mpfr detected])
+  [AS_IF([command -v brew >/dev/null 2>&1],[
     withval=$(brew --prefix)
-    MPFR=yes
     MPFR_CPPFLAGS="-I$withval/include"
     MPFR_LDFLAGS="-L$withval/lib"
   ])]

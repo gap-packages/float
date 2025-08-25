@@ -58,7 +58,7 @@ Obj NEW_MPFR (mp_prec_t prec)
     return g;							\
   }
 #define Inc1_MPFR_arg(name,arg)		\
-  { #name, 1, arg, name, "src/mpfr.c:" #name }
+  { #name, 1, arg, (ObjFunc)(void *)(name), "src/mpfr.c:" #name }
 #define Inc1_MPFR(name) Inc1_MPFR_arg(name,"float")
 
 Func1_MPFR(COS_MPFR,mpfr_cos);
@@ -496,7 +496,7 @@ static Obj MPFR_STRING(Obj self, Obj s, Obj prec)
     return g;								\
   }
 #define Inc2_MPFR_arg(name,arg)			\
-  { #name, 2, arg, name, "src/mpfr.c:" #name }
+  { #name, 2, arg, (ObjFunc)(void *)(name), "src/mpfr.c:" #name }
 #define Inc2_MPFR(name) Inc2_MPFR_arg(name,"float, float")
 
 Func2_MPFR(SUM_MPFR,mpfr_add);

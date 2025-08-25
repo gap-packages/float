@@ -91,7 +91,7 @@ static inline Obj NEW_MPFI( mp_prec_t prec )
     return mpfi_name(GET_MPFI(f)) > 0 ? True : False;		\
   }
 #define Inc1_MPFI_arg(name,arg)		\
-  { #name, 1, arg, name, "src/mpfi.c:" #name }
+  { #name, 1, arg, (ObjFunc)(void *)(name), "src/mpfi.c:" #name }
 #define Inc1_MPFI(name) Inc1_MPFI_arg(name,"interval")
 
 Func1_MPFI(COS_MPFI,mpfi_cos);
@@ -666,7 +666,7 @@ static Obj BISECT_MPFI(Obj self, Obj f)
     return g;								\
   }
 #define Inc2_MPFI_arg(name,arg)			\
-  { #name, 2, arg, name, "src/mpfi.c:" #name }
+  { #name, 2, arg, (ObjFunc)(void *)(name), "src/mpfi.c:" #name }
 #define Inc2_MPFI(name) Inc2_MPFI_arg(name,"interval, interval")
 #define Inc2_MPFIX(name) Inc2_MPFI_arg(name##_MPFI,"interval, interval"), \
     Inc2_MPFI_arg(name##_MPFI_MPFR,"interval, real"),			\

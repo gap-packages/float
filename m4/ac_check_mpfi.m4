@@ -24,10 +24,8 @@ AC_ARG_WITH([mpfi],
     MPFI_CPPFLAGS="-I$withval/include"
     MPFI_LDFLAGS="-L$withval/lib"
   fi],
-  [AS_IF([command -v brew --prefix mpfi >/dev/null 2>&1],[
-    AC_MSG_NOTICE([BREW mpfi detected])
+  [AS_IF([command -v brew >/dev/null 2>&1],[
     withval=$(brew --prefix)
-    MPFI=yes
     MPFI_CPPFLAGS="-I$withval/include"
     MPFI_LDFLAGS="-L$withval/lib"
   ])]
@@ -49,7 +47,7 @@ AC_ARG_WITH([mpfi-lib],
 
 if test "$MPFI" != no; then
 
-if test "$MPFR" = no; then
+if test "$MPFI" != unknown && test "$MPFR" = no; then
     AC_MSG_ERROR([Cannot have MPFI without having MPFR too.])
 fi
 

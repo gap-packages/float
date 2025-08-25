@@ -24,10 +24,8 @@ AC_ARG_WITH([fplll],
     FPLLL_CPPFLAGS="-I$withval/include"
     FPLLL_LDFLAGS="-L$withval/lib"
   fi],
-  [AS_IF([command -v brew --prefix fplll >/dev/null 2>&1],[
-    AC_MSG_NOTICE([BREW fplll detected])
+  [AS_IF([command -v brew >/dev/null 2>&1],[
     withval=$(brew --prefix)
-    FPLLL=yes
     FPLLL_CPPFLAGS="-I$withval/include"
     FPLLL_LDFLAGS="-L$withval/lib"
   ])]

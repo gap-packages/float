@@ -24,10 +24,8 @@ AC_ARG_WITH([mpc],
     MPC_CPPFLAGS="-I$withval/include"
     MPC_LDFLAGS="-L$withval/lib"
   fi],
-  [AS_IF([command -v brew --prefix libmpc >/dev/null 2>&1],[
-    AC_MSG_NOTICE([BREW libmpc detected])
+  [AS_IF([command -v brew >/dev/null 2>&1],[
     withval=$(brew --prefix)
-    MPC=yes
     MPC_CPPFLAGS="-I$withval/include"
     MPC_LDFLAGS="-L$withval/lib"
   ])]
@@ -49,7 +47,7 @@ AC_ARG_WITH([mpc-lib],
 
 if test "$MPC" != no; then
 
-if test "$MPFR" = no; then
+if test "$MPC" != unknown &&test "$MPFR" = no; then
     AC_MSG_ERROR([Cannot have MPC without having MPFR too.])
 fi
 

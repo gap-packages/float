@@ -614,7 +614,7 @@ static Obj CI_CXSC_STRING (Obj self, Obj str)
   if (s[0] == '[')
     s >> CI_OBJ(f);
   else if (s[0] == '(') {
-    complex l, r;
+    cxsc::complex l, r;
     std::string t = CSTR_STRING(str);
     s >> RndDown >> l;
     t >> RndUp >> r;
@@ -626,9 +626,9 @@ static Obj CI_CXSC_STRING (Obj self, Obj str)
     s >> RndDown >> l;
     t >> RndUp >> r;
     if (last == 'i' || last == 'I')
-      CI_OBJ(f) = cinterval(complex(0.0,l),complex(0.0,r));
+      CI_OBJ(f) = cinterval(cxsc::complex(0.0,l),cxsc::complex(0.0,r));
     else
-      CI_OBJ(f) = cinterval(complex(l),complex(r));
+      CI_OBJ(f) = cinterval(cxsc::complex(l),cxsc::complex(r));
   } 
     
   return f;
@@ -994,9 +994,9 @@ static inline real ldexp (real f, int s)
   real g = f; times2pown(g, s); return g;
 }
 
-static inline complex ldexp (complex f, int s)
+static inline cxsc::complex ldexp (cxsc::complex f, int s)
 {
-  return complex(ldexp(Re(f),s),ldexp(Im(f),s));
+  return cxsc::complex(ldexp(Re(f),s),ldexp(Im(f),s));
 }
 static inline interval ldexp (interval f, int s)
 {

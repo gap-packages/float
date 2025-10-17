@@ -18,8 +18,8 @@ concurrency:
 jobs:
   # The CI test job
   test:
-    name: ${{ matrix.gap-branch }} ${{ matrix.ABI }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.gap-branch }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -29,30 +29,15 @@ jobs:
           - stable-4.14
           - stable-4.13
           - stable-4.12
-        ABI: ['']
-        os: [ubuntu-latest]
-        include:
-          - gap-branch: master
-            ABI: 32
-            os: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v5
       - uses: gap-actions/setup-gap@v2
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
-          ABI: ${{ matrix.ABI }}
       - name: 'Install additional dependencies'
-        run: |
-          if [ "${{matrix.ABI}}" = "32" ]; then
-            # libmpfi-dev:i386 is missing in ubuntu-20.04
-            sudo apt-get install libmpfr-dev:i386 libmpc-dev:i386
-          else
-            sudo apt-get install libmpfr-dev libmpfi-dev libmpc-dev
-          fi
+        run: sudo apt-get install libmpfr-dev libmpfi-dev libmpc-dev
       - uses: gap-actions/build-pkg@v1
-        with:
-          ABI: ${{ matrix.ABI }}
       - uses: gap-actions/run-pkg-tests@v3
       - uses: gap-actions/run-pkg-tests@v3
         with:

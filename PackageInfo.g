@@ -62,6 +62,10 @@ Dependencies := rec(
   GAP := ">=4.12.0",
   NeededOtherPackages := [["GAPDoc",">=1.0"]],
   SuggestedOtherPackages := [],
+  NeededSystemPackages := rec(
+    Ubuntu   := [["libmpc-dev"], ["libmpfi-dev"], ["libmpfr-dev"]],
+    Homebrew := [["libmpc"],     ["mpfi"],        ["mpfr"]],
+  ),
   ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 

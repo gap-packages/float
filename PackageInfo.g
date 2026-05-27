@@ -5,8 +5,8 @@
 SetPackageInfo( rec(
 PackageName := "float",
 Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
-Version := "1.0.9",
-Date := "26/08/2025", # dd/mm/yyyy format
+Version := "1.0.10",
+Date := "27/05/2026", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 Persons := [
   rec( 

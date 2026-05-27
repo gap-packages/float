@@ -8,10 +8,6 @@ Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
 Version := "1.0.9",
 Date := "26/08/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
-## <#GAPDoc Label="Version">
-## <!ENTITY Version "1.0.9">
-## <!ENTITY Date "26/08/2025">
-## <#/GAPDoc>
 Persons := [
   rec( 
     LastName      := "Bartholdi",
@@ -109,5 +105,15 @@ BannerFunction := function(info)
 end,
 
 TestFile := "tst/testall.g",
-Keywords := ["floating-point"]
+Keywords := ["floating-point"],
+
+AutoDoc := rec(
+    entities := rec(
+        Version := ~.Version,
+        Date := ~.Date,
+    ),
+    MainPage := false,
+    TitlePage := false,
+),
+
 ));

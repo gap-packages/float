@@ -1,103 +1,119 @@
 #############################################################################
 ##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+##  PackageInfo.g for the package `float'                   Laurent Bartholdi
 ##
-
 SetPackageInfo( rec(
-
-PackageName := "GitHubPagesForGAP",
-
-Subtitle := "A GitHub Pages generator for GAP packages",
-Version := "0.4",
-Date := "10/04/2025", # dd/mm/yyyy format
-License := "0BSD",
-
+PackageName := "float",
+Subtitle := "Integration of mpfr, mpfi, mpc, fplll and cxsc in GAP",
+Version := "1.0.10",
+Date := "27/05/2026", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 Persons := [
-  rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
+  rec( 
+    LastName      := "Bartholdi",
+    FirstNames    := "Laurent",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "mhorn@rptu.de",
-    WWWHome       := "https://www.quendi.de/math",
-    GitHubUsername:= "fingolfin",
-    PostalAddress := Concatenation(
-                       "Fachbereich Mathematik\n",
-                       "RPTU Kaiserslautern-Landau\n",
-                       "Gottlieb-Daimler-Straße 48\n",
-                       "67663 Kaiserslautern\n",
-                       "Germany" ),
-    Place         := "Kaiserslautern, Germany",
-    Institution   := "RPTU Kaiserslautern-Landau"
-  ),
-
-  rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
-  ),
-
-  rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
-    IsAuthor      := false,
-    IsMaintainer  := true,
-    #Email         := "janitor@example.com",
-  ),
+    Email         := "laurent.bartholdi@gmail.com",
+    WWWHome       := "https://www.math.uni-sb.de/ag/bartholdi/",
+    PostalAddress := Concatenation( [
+                       "FR Mathematik\n",
+                       "D-68041 Saarbrücken\n",
+                       "Germany" ] ),
+    Place         := "Saarbrücken",
+    Institution   := "Universität des Saarlandes"
+  )
 ],
 
-Status := "other",
+Status := "deposited",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "gap-system",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
+ArchiveFormats := ".tar.gz",
 
-PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
-
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub Pages.",
+AbstractHTML := "The <span class=\"pkgname\">float</span> package allows \
+                    GAP to manipulate floating-point numbers with arbitrary \
+                    precision. It is based on MPFR, MPFI, MPC, CXSC, FPLLL",
+PackageWWWHome := "https://gap-packages.github.io/float/",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  BookName  := "float",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHub Pages generator for GAP packages",
+  LongTitle := "Floating-point numbers",
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.8.1",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
+  GAP := ">=4.12.0",
+  NeededOtherPackages := [["GAPDoc",">=1.0"]],
+  SuggestedOtherPackages := [],
+  NeededSystemPackages := rec(
+    Ubuntu   := [["libmpc-dev"], ["libmpfi-dev"], ["libmpfr-dev"]],
+    Homebrew := [["libmpc"],     ["mpfi"],        ["mpfr"]],
+  ),
+  ExternalConditions := ["GAP compiled with GMP support"]                      
 ),
 
-AvailabilityTest := ReturnTrue,
+AvailabilityTest := function()
+  if not IsKernelExtensionAvailable("float") then
+    LogPackageLoadingMessage(PACKAGE_WARNING,
+            [Concatenation("The DLL program `",
+                Filename(DirectoriesPackagePrograms("float")[1], "float.so"),
+                    "' was not compiled, and is needed for the float package."),
+             "Run `./configure && make' in its home directory"]);
+    return false;
+  fi;
+  return true;
+end,
+                    
+BannerString := Concatenation(~.PackageName, " ", String(~.Version), " with modules [?] ...\n"),
+BannerFunction := function(info)
+    local str, modules;
 
-Keywords := ["GitHub Pages", "GAP"]
+    str:= info.BannerString;
+    modules := [];
+
+    if IsBound(MPFR_INT) then
+        Add(modules,"mpfr");
+    fi;
+    if IsBound(MPFI_INT) then
+        Add(modules,"mpfi");
+    fi;
+    if IsBound(MPC_INT) then
+        Add(modules,"mpc");
+    fi;
+    if IsBound(@FPLLL) then
+        Add(modules,"fplll");
+    fi;
+    if IsBound(CXSC_INT) then
+        Add(modules,"cxsc");
+    fi;
+    modules := JoinStringsWithSeparator(modules, ", ");
+
+    return ReplacedString(str, "?", modules);
+end,
+
+TestFile := "tst/testall.g",
+Keywords := ["floating-point"],
+
+AutoDoc := rec(
+    entities := rec(
+        Version := ~.Version,
+        Date := ~.Date,
+    ),
+    MainPage := false,
+    TitlePage := false,
+),
 
 ));
-
-
